@@ -15,12 +15,13 @@ use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
+})->name('start');
 
 Auth::routes();
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login'])->name('login.custom');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('home', function () {
     return view('home'); // Alterar para a página inicial após login
 })->name('home');

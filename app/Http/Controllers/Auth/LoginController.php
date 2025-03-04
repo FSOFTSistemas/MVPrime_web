@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -6,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission; // Importando o modelo de permissão do Spatie
 
 class LoginController extends Controller
@@ -51,6 +53,9 @@ class LoginController extends Controller
             // Armazenar o ID do usuário na sessão
             Session::put('user_id', $user->id);
 
+            // Faz login do usuário no Laravel
+            Auth::login($user);
+
             return redirect()->route('home');
         } else {
             return back()->withErrors(['email' => 'Credenciais inválidas.']);
@@ -60,5 +65,24 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('vendor.adminlte.auth.login');
+    }
+
+    public function logout(Request $request)
+    {
+        // Chamar a API para invalidar o token
+        $token = session('jwt_token'); // Pega o token da sessão
+
+        if ($token) {
+            Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token,
+            ])->post('https://gestao-api.dev.br:4000/api/auth/logout');
+        }
+
+        // Limpar sessão e deslogar usuário
+        Auth::logout();
+        session()->forget(['jwt_token', 'user_id']);
+        session()->flush(); // Remove toda a sessão
+
+        return redirect()->route('start');
     }
 }
