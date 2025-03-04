@@ -6,5 +6,8 @@ use Illuminate\Http\Request;
 
 class MotoristasController extends Controller
 {
-    //
+    public function index()
+    {
+        return view('motorista.index');
+    }
 }

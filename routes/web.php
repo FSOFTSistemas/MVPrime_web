@@ -32,12 +32,12 @@ Route::middleware('jwt.auth')->group(function () {
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::resource('empresa', [EmpresaController::class])->middleware('auth');
-Route::resource('prefeira', [PrefeiraController::class])->middleware('auth');
-Route::resource('secretarias', [SecretariasController::class])->middleware('auth');
-Route::resource('motoristas', [MotoristasController::class])->middleware('auth');
-Route::resource('veiculos', [VeiculosController::class])->middleware('auth');
-Route::resource('usuarios', [UsuariosController::class])->middleware('auth');
-Route::resource('postos', [PostosController::class])->middleware('auth');
-Route::resource('log', [LogController::class])->middleware('auth');
-Route::resource('abastecimentos', [AbastecimentosController::class])->middleware('auth');
+Route::resource('empresa', EmpresaController::class)->middleware('auth');
+Route::resource('prefeira', PrefeiraController::class)->middleware('auth');
+Route::resource('secretarias', SecretariasController::class)->middleware('auth');
+Route::resource('motoristas', MotoristasController::class)->middleware('auth');
+Route::resource('veiculos', VeiculosController::class)->middleware('auth');
+Route::resource('usuarios', UsuariosController::class)->middleware('auth');
+Route::resource('postos', PostosController::class)->middleware('auth');
+Route::resource('log', LogController::class)->middleware('auth');
+Route::resource('abastecimentos', AbastecimentosController::class)->middleware('auth');
