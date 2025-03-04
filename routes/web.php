@@ -12,6 +12,7 @@ use App\Http\Controllers\PostosController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\AbastecimentosController;
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
