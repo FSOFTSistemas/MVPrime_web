@@ -13,12 +13,12 @@
                     @method('PUT')
                     <!-- Campos do formulário -->
                     <div class="mb-3">
-                        <label for="name" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ $usuario['nome'] }}" required>
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" value="{{ $usuario['nome'] }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ $usuario['nome'] }}" required>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ $usuario['email'] }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Nova Senha (deixe em branco para manter a atual)</label>
@@ -27,6 +27,14 @@
                     <div class="mb-3">
                         <label for="password_confirmation" class="form-label">Confirmar Senha</label>
                         <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                    </div>
+                    <div class="mb-3">
+                        <label for="permissoes" class="form-label">Permissões</label>
+                        <select class="form-select" id="permissoes" name="permissoes[]" multiple required>
+                            @foreach ($permissoes as $permission)
+                                <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-warning">Salvar Alterações</button>
                 </form>
