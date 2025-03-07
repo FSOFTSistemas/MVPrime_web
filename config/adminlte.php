@@ -307,17 +307,17 @@ return [
 
         [
             'text' => 'Empresa',
-            'url'  => 'empresa',
+            'url'  => '/empresas',
             'icon' => 'fas fa-building'
         ],
         [
             'text' => 'Prefeitura',
-            'url'  => 'prefeira',
+            'url'  => '/prefeiras',
             'icon' => 'fas fa-landmark',
         ],
         [
             'text' => 'Secretarias',
-            'url'  => 'secretarias',
+            'url'  => '/secretarias',
             'icon' => 'fas fa-sitemap',
         ],
         [
@@ -327,7 +327,7 @@ return [
         ],
         [
             'text' => 'Veículos',
-            'url'  => 'veiculos',
+            'url'  => '/veiculos',
             'icon' => 'fas fa-car'
         ],
         [

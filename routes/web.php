@@ -12,6 +12,7 @@ use App\Http\Controllers\PostosController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\AbastecimentosController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EnderecoController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -28,7 +29,7 @@ Route::get('home', function () {
 })->name('home');
 
 
-Route::resource('empresa', EmpresaController::class)->middleware('auth');
+Route::resource('empresas', EmpresaController::class)->middleware('auth');
 Route::resource('prefeira', PrefeiraController::class)->middleware('auth');
 Route::resource('secretarias', SecretariasController::class)->middleware('auth');
 Route::resource('motoristas', MotoristasController::class)->middleware('auth');
@@ -37,3 +38,6 @@ Route::resource('usuarios', UsuariosController::class)->middleware('auth');
 Route::resource('postos', PostosController::class)->middleware('auth');
 Route::resource('log', LogController::class)->middleware('auth');
 Route::resource('abastecimentos', AbastecimentosController::class)->middleware('auth');
+Route::get('/enderecos', [EnderecoController::class, 'listarEnderecos'])->name('enderecos.index');
+Route::resource('enderecos', EnderecoController::class)->middleware('auth');
+
