@@ -3,7 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpresaController;
-use App\Http\Controllers\PrefeiraController;
+use App\Http\Controllers\PrefeituraController;
 use App\Http\Controllers\SecretariasController;
 use App\Http\Controllers\MotoristasController;
 use App\Http\Controllers\VeiculosController;
@@ -30,7 +30,7 @@ Route::get('home', function () {
 
 
 Route::resource('empresas', EmpresaController::class)->middleware('auth');
-Route::resource('prefeira', PrefeiraController::class)->middleware('auth');
+Route::resource('prefeituras', PrefeituraController::class)->middleware('auth');
 Route::resource('secretarias', SecretariasController::class)->middleware('auth');
 Route::resource('motoristas', MotoristasController::class)->middleware('auth');
 Route::resource('veiculos', VeiculosController::class)->middleware('auth');

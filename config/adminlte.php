@@ -312,7 +312,7 @@ return [
         ],
         [
             'text' => 'Prefeitura',
-            'url'  => '/prefeiras',
+            'url'  => '/prefeituras',
             'icon' => 'fas fa-landmark',
         ],
         [
