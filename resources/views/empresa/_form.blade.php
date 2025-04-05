@@ -78,7 +78,8 @@
                             <label for="uf" class="form-label">UF</label>
                             <input type="text" class="form-control" id="uf" name="uf" required>
                         </div>
-                        <button type="button" class="btn btn-success w-100" id="salvarEndereco"  data-url="{{ route('enderecos.store') }}">Salvar Endereço</button>
+                        <button type="button" class="btn btn-success w-100" id="salvarEndereco"
+                            data-url="{{ route('enderecos.store') }}">Salvar Endereço</button>
                     </form>
                 </div>
             </div>
@@ -117,7 +118,7 @@
                     });
                 }
             });
-           
+
             $('#salvarEndereco').on('click', function () {
                 let endereco = {
                     cep: $('#cep').val(),
@@ -137,12 +138,19 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
-                        console.log(response)
+                        console.log(response);
                         if (response.success) {
-                            // Adiciona o endereço ao select
-                            $('#endereco').append(new Option(
-                                `${endereco.logradouro}, ${endereco.numero}`, response
-                                .id));
+                            // Cria a nova opção
+                            const texto = `${endereco.logradouro}, ${endereco.numero}`;
+                            const id = response.message.id;
+
+                            // Adiciona ao select
+                            $('#endereco').append(new Option(texto, id));
+
+                            // Seleciona automaticamente o novo endereço
+                            $('#endereco').val(id).trigger('change');
+
+                            // Fecha o modal
                             $('#modalEndereco').modal('hide');
                         } else {
                             alert('Erro ao salvar o endereço.');

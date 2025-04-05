@@ -39,6 +39,7 @@ class EmpresaController extends Controller
 
     public function store(Request $request)
     {
+
         try {
             $this->validate($request, [
                 'cnpj' => 'required|string|max:18',

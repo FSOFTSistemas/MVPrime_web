@@ -37,7 +37,7 @@ class EnderecoService
     public function createEndereco(array $dados)
     {
         try {
-            return $dados;
+
             $token = session('jwt_token');
             $response = Http::withToken($token)->post("https://gestao-api.dev.br:4000/api/enderecos", $dados);
 
