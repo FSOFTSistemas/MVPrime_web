@@ -13,8 +13,8 @@ class EnderecoService
     public function listarEnderecos()
     {
         try {
-            // Realiza a requisição GET para a API
-            $response = Http::get($this->apiUrl);
+            $token = session('jwt_token');
+            $response = Http::withToken($token)->get($this->apiUrl);
 
             // Verifica se a requisição foi bem-sucedida
             if ($response->successful()) {
@@ -37,8 +37,9 @@ class EnderecoService
     public function createEndereco(array $dados)
     {
         try {
-            // Realiza a requisição POST para a API
-            $response = Http::post($this->apiUrl, $dados);
+            return $dados;
+            $token = session('jwt_token');
+            $response = Http::withToken($token)->post("https://gestao-api.dev.br:4000/api/enderecos", $dados);
 
             // Verifica se a requisição foi bem-sucedida
             if ($response->successful()) {
@@ -48,12 +49,12 @@ class EnderecoService
             // Caso a requisição falhe, loga o erro
             Log::error('Erro ao criar endereço: ' . $response->body());
 
-            return null; // Retorna null em caso de falha
+            return response()->json();
         } catch (\Exception $e) {
             // Caso ocorra uma exceção, loga a mensagem
             Log::error('Exceção ao criar endereço: ' . $e->getMessage());
 
-            return null; // Retorna null para indicar falha
+            return ['error' => 'Exceção ao criar endereço: ' . $e->getMessage()];
         }
     }
 }

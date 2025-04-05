@@ -19,32 +19,32 @@ class EnderecoController extends Controller
     // Método para armazenar um novo endereço
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'logradouro' => 'required|string|max:255',
-            'numero' => 'required|string|max:50',
-            'bairro' => 'required|string|max:255',
-            'cidade' => 'required|string|max:255',
-            'cep' => 'required|string|max:20',
-        ]);
+        
+        try {
+            $validator = Validator::make($request->all(), [
+                'logradouro' => 'required|string|max:255',
+                'numero' => 'required|string|max:50',
+                'bairro' => 'required|string|max:255',
+                'cidade' => 'required|string|max:255',
+                'cep' => 'required|string|max:20',
+            ]);
+            
+            
+            $dadosEndereco = [
+                'logradouro' => $request->input('logradouro'),
+                'numero' => $request->input('numero'),
+                'bairro' => $request->input('bairro'),
+                'cidade' => $request->input('cidade'),
+                'cep' => $request->input('cep'),
+            ];
+            
+            $endereco = $this->enderecoService->createEndereco($dadosEndereco);
+            return response()->json(['success' => true, 'message' => $$endereco]);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+            return response()->json(['success' => true, 'id' => $endereco->id]);
 
-        $dadosEndereco = [
-            'logradouro' => $request->input('logradouro'),
-            'numero' => $request->input('numero'),
-            'bairro' => $request->input('bairro'),
-            'cidade' => $request->input('cidade'),
-            'cep' => $request->input('cep'),
-        ];
-
-        $endereco = $this->enderecoService->createEndereco($dadosEndereco);
-
-        if ($endereco) {
-            return redirect()->route('empresa.create')->with('success', 'Endereço cadastrado com sucesso.');
-        } else {
-            return back()->with('error', 'Erro ao cadastrar o endereço. Tente novamente mais tarde.');
+        } catch (\Exception $e) {
+             dd($e->getMessage());
         }
     }
 

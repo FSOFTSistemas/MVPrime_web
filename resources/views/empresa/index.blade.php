@@ -9,8 +9,8 @@
 @section('content')
     <div class="row mb-3">
         <div class="col">
-            <!-- Botão para abrir o modal de criação -->
-            <button class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#createEmpresaModal">+ Nova Empresa</button>
+            <!-- Botão para abrir uma nova tela -->
+            <a href="{{ route('empresas.create') }}" class="btn btn-success float-end">+ Nova Empresa</a>
         </div>
     </div>
 
@@ -35,37 +35,33 @@
             </tr>
         </thead>
         <tbody>
-            @if(is_array($empresas) && count($empresas) > 0)
-                @foreach ($empresas as $empresa)
-                    <tr>
-                        <td>{{ $empresa['id'] }}</td>
-                        <td>{{ $empresa['cnpj'] }}</td>
-                        <td>{{ $empresa['razao_social'] }}</td>
-                        <td>
-                            <!-- Botão Editar -->
-                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#editEmpresaModal{{ $empresa['id'] }}">
-                                ✏️
-                            </button>
-                            <!-- Botão Excluir -->
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteEmpresaModal{{ $empresa['id'] }}">
-                                🗑️
-                            </button>
-                        </td>
-                    </tr>
 
-                    <!-- Modal Editar -->
-                    @include('empresa.modals.edit', ['empresa' => $empresa])
-
-                    <!-- Modal Excluir -->
-                    @include('empresa.modals.delete', ['empresa' => $empresa])
-                @endforeach
-            @else
+            @foreach ($empresas ?? [] as $empresa)
                 <tr>
-                    <td colspan="4" class="text-center">Nenhuma empresa encontrada.</td>
+                    <td>{{ $empresa['id'] }}</td>
+                    <td>{{ $empresa['cnpj'] }}</td>
+                    <td>{{ $empresa['razao_social'] }}</td>
+                    <td>
+                        <!-- Botão Editar -->
+                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#editEmpresaModal{{ $empresa['id'] }}">
+                            ✏️
+                        </button>
+                        <!-- Botão Excluir -->
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#deleteEmpresaModal{{ $empresa['id'] }}">
+                            🗑️
+                        </button>
+                    </td>
                 </tr>
-            @endif
+
+                <!-- Modal Editar -->
+                @include('empresa.modals.edit', ['empresa' => $empresa])
+
+                <!-- Modal Excluir -->
+                @include('empresa.modals.delete', ['empresa' => $empresa])
+            @endforeach
+
         </tbody>
     @endcomponent
 
@@ -75,29 +71,31 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 @stop
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-    // Exibir notificação de sucesso
-    @if (session('success'))
-        Swal.fire({
-            title: 'Sucesso!',
-            text: '{{ session('success') }}',
-            icon: 'success',
-            confirmButtonText: 'OK'
+    <script>
+        // Exibir notificação de sucesso
+        @if (session('success'))
+            Swal.fire({
+                title: 'Sucesso!',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        @endif
+
+        $(document).ready(function() {
+            $('.select2').select2();
         });
-    @endif
-
-    $(document).ready(function() {
-        $('.select2').select2();
-    });
-</script>
+    </script>
 @stop

@@ -35,7 +35,7 @@
                         <div class="input-group">
                             <select class="form-select" id="endereco" name="endereco_id" required>
                                 <option value="">Selecione um endereço</option>
-                                @foreach ($enderecos as $endereco)
+                                @foreach ($enderecos ?? [] as $endereco)
                                     <option value="{{ $endereco['id'] }}" {{ (isset($empresa) && $empresa['endereco_id'] == $endereco['id']) ? 'selected' : '' }}>
                                         {{ $endereco['rua'] }}
                                     </option>

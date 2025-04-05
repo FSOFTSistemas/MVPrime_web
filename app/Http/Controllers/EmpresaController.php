@@ -31,6 +31,12 @@ class EmpresaController extends Controller
         }
     }
 
+    public function create()
+    {
+        $enderecos = $this->enderecoService->listarEnderecos();
+        return view('empresa._form', compact('enderecos'));
+    }
+
     public function store(Request $request)
     {
         try {
