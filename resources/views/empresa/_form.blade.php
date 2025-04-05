@@ -11,15 +11,17 @@
         <div class="card-body">
             <form action="{{ route('empresas.store') }}" method="POST">
                 @csrf
+                <div class="input-group">
+                    <input type="text" class="form-control" id="cnpj" name="cnpj" required>
+                    <button class="btn btn-outline-secondary" type="button" id="btnBuscarCnpj">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
                 <div class="mb-3">
                     <label for="razao_social" class="form-label">Razão Social</label>
                     <input type="text" class="form-control" id="razao_social" name="razao_social" required>
                 </div>
 
-                <div class="mb-3">
-                    <label for="cnpj" class="form-label">CNPJ</label>
-                    <input type="text" class="form-control" id="cnpj" name="cnpj" required>
-                </div>
 
                 <div class="mb-3">
                     <label for="endereco" class="form-label">Endereço</label>
@@ -28,7 +30,8 @@
                             <option value="">Selecione um endereço</option>
                             @foreach ($enderecos ?? [] as $endereco)
                                 <option value="{{ $endereco['id'] }}">{{ $endereco['logradouro'] }},
-                                    {{ $endereco['numero'] }}</option>
+                                    {{ $endereco['numero'] }}
+                                </option>
                             @endforeach
                         </select>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEndereco">+
@@ -75,7 +78,7 @@
                             <label for="uf" class="form-label">UF</label>
                             <input type="text" class="form-control" id="uf" name="uf" required>
                         </div>
-                        <button type="button" class="btn btn-success w-100" id="salvarEndereco">Salvar Endereço</button>
+                        <button type="button" class="btn btn-success w-100" id="salvarEndereco"  data-url="{{ route('enderecos.store') }}">Salvar Endereço</button>
                     </form>
                 </div>
             </div>
@@ -83,18 +86,24 @@
     </div>
 @endsection
 
+@section('css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+@endsection
+
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
+
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#cep').mask('00000-000');
             $('#cnpj').mask('00.000.000/0000-00');
 
-            $('#cep').on('blur', function() {
+            $('#cep').on('blur', function () {
                 let cep = $(this).val().replace(/[^0-9]/g, '');
                 if (cep.length == 8) {
-                    $.getJSON(`https://viacep.com.br/ws/${cep}/json/`, function(data) {
+                    $.getJSON(`https://viacep.com.br/ws/${cep}/json/`, function (data) {
                         if (!data.erro) {
                             $('#logradouro').val(data.logradouro);
                             $('#bairro').val(data.bairro);
@@ -103,13 +112,13 @@
                         } else {
                             alert('CEP não encontrado.');
                         }
-                    }).fail(function() {
+                    }).fail(function () {
                         alert('Erro ao buscar o CEP.');
                     });
                 }
             });
-
-            $('#salvarEndereco').on('click', function() {
+           
+            $('#salvarEndereco').on('click', function () {
                 let endereco = {
                     cep: $('#cep').val(),
                     logradouro: $('#logradouro').val(),
@@ -118,16 +127,16 @@
                     cidade: $('#cidade').val(),
                     uf: $('#uf').val()
                 };
-
+                var url = $('#salvarEndereco').data('url');
                 $.ajax({
-                    url: '{{ route('enderecos.store') }}', // Certifique-se de que a rota está correta
+                    url: url, // Certifique-se de que a rota está correta
                     type: 'POST',
                     data: endereco,
                     dataType: 'json',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function(response) {
+                    success: function (response) {
                         console.log(response)
                         if (response.success) {
                             // Adiciona o endereço ao select
@@ -139,14 +148,41 @@
                             alert('Erro ao salvar o endereço.');
                         }
                     },
-                    error: function(xhr, status, error) {
-                        // Mostra o erro detalhado no console para debug
+                    error: function (xhr, status, error) {
                         console.error('Erro na requisição Ajax:', error);
+                        console.error('Status:', status);
                         alert('Erro na requisição Ajax.');
                     }
                 });
             });
 
+        });
+    </script>
+
+    <script>
+        document.getElementById('btnBuscarCnpj').addEventListener('click', function () {
+            const cnpj = document.getElementById('cnpj').value.replace(/\D/g, ''); // Remove não-dígitos
+
+            if (cnpj.length !== 14) {
+                alert('CNPJ inválido. Deve conter 14 dígitos.');
+                return;
+            }
+
+            fetch(`https://open.cnpja.com/office/${cnpj}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao buscar CNPJ.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const razao = data.company?.name || 'Não encontrado';
+                    document.getElementById('razao_social').value = razao;
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Erro ao buscar CNPJ. Verifique o console.');
+                });
         });
     </script>
 @endsection

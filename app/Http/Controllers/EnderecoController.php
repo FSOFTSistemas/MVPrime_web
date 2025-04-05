@@ -19,7 +19,6 @@ class EnderecoController extends Controller
     // Método para armazenar um novo endereço
     public function store(Request $request)
     {
-        
         try {
             $validator = Validator::make($request->all(), [
                 'logradouro' => 'required|string|max:255',
@@ -37,14 +36,14 @@ class EnderecoController extends Controller
                 'cidade' => $request->input('cidade'),
                 'cep' => $request->input('cep'),
             ];
-            
-            $endereco = $this->enderecoService->createEndereco($dadosEndereco);
-            return response()->json(['success' => true, 'message' => $$endereco]);
 
-            return response()->json(['success' => true, 'id' => $endereco->id]);
+            $endereco = $this->enderecoService->createEndereco($dadosEndereco);
+
+
+            return response()->json(['success' => true, 'message' => $endereco]);
 
         } catch (\Exception $e) {
-             dd($e->getMessage());
+             return response()->json(['success' => false, 'message'=> $e->getMessage()]);
         }
     }
 

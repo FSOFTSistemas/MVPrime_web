@@ -20,14 +20,14 @@
                     @endisset
 
                     <div class="mb-3">
+                        <label for="cnpj" class="form-label">CNPJ</label>
+                        <input type="text" class="form-control" id="cnpj" name="cnpj" value="{{ $empresa['cnpj'] ?? '' }}" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="razao_social" class="form-label">Razão Social</label>
                         <input type="text" class="form-control" id="razao_social" name="razao_social" value="{{ $empresa['razao_social'] ?? '' }}" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="cnpj" class="form-label">CNPJ</label>
-                        <input type="text" class="form-control" id="cnpj" name="cnpj" value="{{ $empresa['cnpj'] ?? '' }}" required>
-                    </div>
 
                     <!-- Campo de Endereço -->
                     <div class="mb-3">
@@ -37,7 +37,7 @@
                                 <option value="">Selecione um endereço</option>
                                 @foreach ($enderecos ?? [] as $endereco)
                                     <option value="{{ $endereco['id'] }}" {{ (isset($empresa) && $empresa['endereco_id'] == $endereco['id']) ? 'selected' : '' }}>
-                                        {{ $endereco['rua'] }}
+                                        {{ $endereco['logradouro'] }}
                                     </option>
                                 @endforeach
                             </select>
