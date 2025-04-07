@@ -52,10 +52,11 @@ class PrefeituraController extends Controller
                 'cnpj' => 'required|string',
                 'razao_social' => 'required|string',
                 'responsavel' => 'required|string',
-                'empresa_id' => 'required|integer',
                 'endereco_id' => 'required|integer',
             ]);
 
+
+            $dados['empresa_id'] = Auth::user()->empresa_id;
             $resultado = $this->prefeituraService->cadastrarPrefeitura($dados);
 
             if ($resultado) {
