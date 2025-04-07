@@ -6,6 +6,7 @@ use App\Services\PrefeituraService;
 use App\Services\EmpresaService;
 use App\Services\EnderecoService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class PrefeituraController extends Controller
@@ -89,14 +90,15 @@ class PrefeituraController extends Controller
     public function update(Request $request, $id)
     {
         try {
+        
             $dados = $request->validate([
                 'cnpj' => 'required|string',
                 'razao_social' => 'required|string',
                 'responsavel' => 'required|string',
-                'empresa_id' => 'required|integer',
                 'endereco_id' => 'required|integer',
             ]);
-
+            
+            $dados['empresa_id'] = Auth::user()->empresa_id;
             $resultado = $this->prefeituraService->atualizarPrefeitura($id, $dados);
 
             if ($resultado) {

@@ -73,6 +73,7 @@ class UsuariosController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            dd($request->all());
             $dados = $request->validate([
                 'nome' => 'required|string|max:255',
                 'email' => 'required|email|max:255',

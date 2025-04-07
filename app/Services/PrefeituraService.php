@@ -38,9 +38,9 @@ class PrefeituraService
     public function atualizarPrefeitura($id, array $dados)
     {
         try {
+            
             $token = session('jwt_token');
             $response = Http::withToken($token)->put("{$this->apiUrl}/{$id}", $dados);
-
             return $response->successful() ? $response->json() : null;
         } catch (\Exception $e) {
             Log::error("Erro ao atualizar prefeitura {$id}: " . $e->getMessage());
@@ -73,4 +73,6 @@ class PrefeituraService
             return null;
         }
     }
+
+
 }

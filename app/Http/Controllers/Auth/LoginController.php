@@ -33,7 +33,10 @@ class LoginController extends Controller
             // Criar ou atualizar o usuário no banco de dados
             $user = User::updateOrCreate(
                 ['email' => $data['usuario']['email']],
-                ['name' => $data['usuario']['nome']]
+                [
+                    'name' => $data['usuario']['nome'],
+                    'empresa_id'=> $data['usuario']['empresa_id']
+                        ]
             );
 
             // 🔹 Criar as permissões no banco de dados, se não existirem
