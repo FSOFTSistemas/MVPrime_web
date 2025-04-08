@@ -5,11 +5,11 @@ namespace App\Services;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class PrefeituraService
+class PostoService
 {
-    protected $apiUrl = 'https://gestao-api.dev.br:4000/api/prefeituras';
+    protected $apiUrl = 'https://gestao-api.dev.br:4000/api/postos';
 
-    public function listarPrefeituras()
+    public function listarPostos()
     {
         try {
             $token = session('jwt_token');
@@ -17,12 +17,12 @@ class PrefeituraService
 
             return $response->successful() ? $response->json() : null;
         } catch (\Exception $e) {
-            Log::error("Erro ao listar prefeituras: " . $e->getMessage());
+            Log::error("Erro ao listar postos: " . $e->getMessage());
             return null;
         }
     }
 
-    public function cadastrarPrefeitura(array $dados)
+    public function cadastrarPosto(array $dados)
     {
         try {
             $token = session('jwt_token');
@@ -30,12 +30,12 @@ class PrefeituraService
 
             return $response->successful() ? $response->json() : null;
         } catch (\Exception $e) {
-            Log::error("Erro ao cadastrar prefeitura: " . $e->getMessage());
+            Log::error("Erro ao cadastrar posto: " . $e->getMessage());
             return null;
         }
     }
 
-    public function atualizarPrefeitura($id, array $dados)
+    public function atualizarPosto($id, array $dados)
     {
         try {
             
@@ -43,25 +43,12 @@ class PrefeituraService
             $response = Http::withToken($token)->put("{$this->apiUrl}/{$id}", $dados);
             return $response->successful() ? $response->json() : null;
         } catch (\Exception $e) {
-            Log::error("Erro ao atualizar prefeitura {$id}: " . $e->getMessage());
+            Log::error("Erro ao atualizar posto {$id}: " . $e->getMessage());
             return null;
         }
     }
 
-    public function PrefeiturasPorEmpresa_id($empresa_id)
-    {
-        try {
-            
-            $token = session('jwt_token');
-            $response = Http::withToken($token)->get("https://gestao-api.dev.br:4000/api/empresa/{$empresa_id}/prefeituras");
-            return $response->successful() ? $response->json() : null;
-        } catch (\Exception $e) {
-            Log::error("Erro ao buscar prefeituras da empresa {$empresa_id}: " . $e->getMessage());
-            return null;
-        }
-    }
-
-    public function excluirPrefeitura($id)
+    public function excluirPosto($id)
     {
         try {
             $token = session('jwt_token');
@@ -69,12 +56,12 @@ class PrefeituraService
 
             return $response->successful();
         } catch (\Exception $e) {
-            Log::error("Erro ao excluir prefeitura {$id}: " . $e->getMessage());
+            Log::error("Erro ao excluir posto {$id}: " . $e->getMessage());
             return false;
         }
     }
 
-    public function buscarPrefeituraPorId($id)
+    public function buscarPostoPorId($id)
     {
         try {
             $token = session('jwt_token');
@@ -82,7 +69,7 @@ class PrefeituraService
 
             return $response->successful() ? $response->json() : null;
         } catch (\Exception $e) {
-            Log::error("Erro ao buscar prefeitura {$id}: " . $e->getMessage());
+            Log::error("Erro ao buscar posto {$id}: " . $e->getMessage());
             return null;
         }
     }
