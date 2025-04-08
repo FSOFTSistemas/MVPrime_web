@@ -17,7 +17,7 @@
                         <label for="cnpj" class="form-label">CNPJ</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="cnpj" name="cnpj" required>
-                            <button type="button" class="btn btn-outline-primary" id="buscar-cnpj">
+                            <button type="button" class="btn btn-outline-primary" id="btnBuscarCnpj">
                                 🔍
                             </button>
                         </div>
@@ -35,7 +35,7 @@
 
                     <div class="col-md-5 mb-3">
                         <label for="endereco_id" class="form-label">Endereço</label>
-                        <select class="form-control" id="endereco_id" name="endereco_id" required>
+                        <select class="form-control" id="endereco" name="endereco_id" required>
                             <option value="">Selecione um endereço</option>
                             @foreach ($enderecos as $endereco)
                                 <option value="{{ $endereco['id'] }}">
@@ -46,8 +46,8 @@
                     </div>
 
                     <div class="col-md-1 mb-3 d-flex align-items-end">
-                        <button type="button" class="btn btn-outline-success w-100" data-bs-toggle="modal"
-                            data-bs-target="#modalNovoEndereco">+
+                        <button type="button" class="btn btn-outline-success w-100" data-toggle="modal"
+                            data-target="#modalEndereco">+
                         </button>
                     </div>
 
