@@ -2,12 +2,108 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\MotoristaService;
+use App\Services\PrefeituraService;
+use App\Services\EnderecoService;
+use App\Services\SecretariaService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class MotoristasController extends Controller
 {
+    protected $motoristaService;
+    protected $secretariaService;
+
+    public function __construct(MotoristaService $motoristaService, SecretariaService $secretariaService)
+    {
+        $this->motoristaService = $motoristaService;
+        $this->secretariaService = $secretariaService;
+    }
+
     public function index()
     {
-        return view('motorista.index');
+        try {
+            $motoristas = $this->motoristaService->listarMotoristas();
+            $secretarias = $this->secretariaService->secretariasPorPrefeitura_id(1);
+            return view('motorista.index', compact('motoristas', 'secretarias'));
+        } catch (\Exception $e) {
+            Log::error('Erro ao listar motoristas: ' . $e->getMessage());
+            return back()->with('error', 'Erro ao carregar as motoristas.');
+        }
+    }
+
+    public function create(PrefeituraService $prefeiturasService, EnderecoService $secretariaService)
+    {
+        try {
+            $prefeituras = $prefeiturasService->listarPrefeituras();
+            $secretarias = $this->secretariaService->secretariasPorPrefeitura_id(1);
+
+            return view('motorista._form', compact('prefeituras', 'secretarias'));
+        } catch (\Exception $e) {
+            Log::error('Erro ao carregar formulário de criação de motorista: ' . $e->getMessage());
+            return back()->with('error', 'Erro ao carregar o formulário.');
+        }
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            
+            $dados = $request->validate([
+                'nome' => 'required|string',
+                'cnh'=> 'required|string',
+                'vencimento_cnh' => 'required|string',
+                'secretaria_id' => 'required|string',
+            ]);
+            $resultado = $this->motoristaService->cadastrarMotorista($dados);
+            if ($resultado) {
+                return redirect()->route('motoristas.index')->with('success', 'Motorista cadastrada com sucesso!');
+            }
+
+            return back()->with('error', 'Erro ao cadastrar motorista.');
+        } catch (\Exception $e) {
+            Log::error('Erro ao cadastrar motorista: ' . $e->getMessage());
+            return back()->with('error', 'Erro inesperado ao cadastrar motorista.');
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            
+            $dados = $request->validate([
+                'nome' => 'required|string',
+                'cnh'=> 'required|string',
+                'vencimento_cnh' => 'required|string',
+                'secretaria_id' => 'required|string',
+            ]);
+            $resultado = $this->motoristaService->atualizarMotorista($id, $dados);
+
+            if ($resultado) {
+                return redirect()->route('motoristas.index')->with('success', 'Motorista atualizada com sucesso!');
+            }
+
+            return back()->with('error', 'Erro ao atualizar motorista.');
+        } catch (\Exception $e) {
+            Log::error("Erro ao atualizar motorista ID {$id}: " . $e->getMessage());
+            return back()->with('error', 'Erro inesperado ao atualizar motorista.');
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $resultado = $this->motoristaService->excluirMotorista($id);
+
+            if ($resultado) {
+                return redirect()->route('motoristas.index')->with('success', 'Motorista excluída com sucesso!');
+            }
+
+            return redirect()->route('motoristas.index')->with('error', 'Erro ao excluir motorista.');
+        } catch (\Exception $e) {
+            Log::error("Erro ao excluir motorista ID {$id}: " . $e->getMessage());
+            return redirect()->route('motoristas.index')->with('error', 'Erro inesperado ao excluir motorista.');
+        }
     }
 }
