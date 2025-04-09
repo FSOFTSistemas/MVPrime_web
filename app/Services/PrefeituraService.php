@@ -48,7 +48,7 @@ class PrefeituraService
         }
     }
 
-    public function PrefeiturasPorEmpresa_id($empresa_id)
+    public function prefeiturasPorEmpresa_id($empresa_id)
     {
         try {
             

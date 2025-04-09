@@ -48,16 +48,14 @@ class PostosController extends Controller
     public function store(Request $request)
     {
         try {
-            dd($request->all());
             $dados = $request->validate([
                 'cnpj' => 'required|string',
                 'nome' => 'required|string',
                 'responsavel' => 'required|string',
                 'endereco_id' => 'required|integer',
+                'prefeitura_id' => 'required|integer'
             ]);
 
-
-            $dados['prefeitura_id'] = 
             $resultado = $this->postoService->cadastrarPosto($dados);
 
             if ($resultado) {
@@ -68,24 +66,6 @@ class PostosController extends Controller
         } catch (\Exception $e) {
             Log::error('Erro ao cadastrar posto: ' . $e->getMessage());
             return back()->with('error', 'Erro inesperado ao cadastrar posto.');
-        }
-    }
-
-    public function edit($id, PrefeituraService $prefeiturasService, EnderecoService $enderecoService)
-    {
-        try {
-            $posto = $this->postoService->buscarPostoPorId($id);
-            $prefeituras = $prefeiturasService->listarPrefeituras();
-            $enderecos = $enderecoService->listarEnderecos();
-
-            if (!$posto) {
-                return redirect()->route('postos.index')->with('error', 'Posto não encontrada.');
-            }
-
-            return view('postos.edit', compact('posto', 'prefeituras', 'enderecos'));
-        } catch (\Exception $e) {
-            Log::error("Erro ao carregar formulário de edição da posto ID {$id}: " . $e->getMessage());
-            return back()->with('error', 'Erro ao carregar o formulário de edição.');
         }
     }
 

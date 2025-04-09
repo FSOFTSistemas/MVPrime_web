@@ -45,12 +45,12 @@
                     <td>
                         <!-- Botão Editar -->
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                            data-target="#editpostoModal{{ $posto['id'] }}">
+                            data-target="#editPostoModal{{ $posto['id'] }}">
                             ✏️
                         </button>
                         <!-- Botão Excluir -->
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#deletepostoModal{{ $posto['id'] }}">
+                            data-bs-target="#deletePostoModal{{ $posto['id'] }}">
                             🗑️
                         </button>
                     </td>

@@ -51,6 +51,18 @@
                         </button>
                     </div>
 
+                    <div class="col-12 mb-3">
+                        <label for="prefeitura_id" class="form-label">Prefeitura</label>
+                        <select class="form-control w-100"  id="prefeitura" name="prefeitura_id" required>
+                            <option value="">Selecione uma Prefeitura</option>
+                            @foreach ($prefeituras as $prefeitura)
+                                <option value="{{ $prefeitura['id'] }}">
+                                    {{ $prefeitura['razao_social'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                </div>
+
                 </div>
 
                 <div class="mt-4 text-end">

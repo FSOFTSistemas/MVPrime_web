@@ -23,11 +23,22 @@ class PrefeituraController extends Controller
     public function index()
     {
         try {
-            $prefeituras = $this->prefeituraService->listarPrefeituras();
+            $prefeituras = $this->litarPrefeiturasPorEmpresa_id(Auth::user()->empresa_id);
             $enderecos = $this->enderecoService->listarEnderecos();
             return view('prefeitura.index', compact('prefeituras', 'enderecos'));
         } catch (\Exception $e) {
             Log::error('Erro ao listar prefeituras: ' . $e->getMessage());
+            return back()->with('error', 'Erro ao carregar as prefeituras.');
+        }
+    }
+
+    public function litarPrefeiturasPorEmpresa_id($empresa_id)
+    {
+        try {
+            $prefeituras = $this->prefeituraService->prefeiturasPorEmpresa_id($empresa_id);
+            return $prefeituras;
+        } catch (\Exception $e) {
+            Log::error('Erro ao listar prefeituras por id: ' . $e->getMessage());
             return back()->with('error', 'Erro ao carregar as prefeituras.');
         }
     }
