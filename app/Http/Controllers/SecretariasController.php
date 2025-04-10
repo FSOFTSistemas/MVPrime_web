@@ -12,27 +12,27 @@ use Illuminate\Support\Facades\Log;
 class SecretariasController extends Controller
 {
     protected $secretariaService;
-    protected $enderecoService;
 
-    public function __construct(SecretariaService $secretariaService, EnderecoService $enderecoService)
+
+    public function __construct(SecretariaService $secretariaService, )
     {
         $this->secretariaService = $secretariaService;
-        $this->enderecoService = $enderecoService;
     }
 
     public function index()
     {
         try {
-            $secretarias = $this->litarSecretariasPorPrefeitura_id(1);
-            $enderecos = $this->enderecoService->listarEnderecos();
-            return view('secretaria.index', compact('secretarias', 'enderecos'));
+            
+            $secretarias = $this->listarSecretariasPorPrefeitura_id(1);
+
+            return view('secretaria.index', compact('secretarias'));
         } catch (\Exception $e) {
             Log::error('Erro ao listar secretarias: ' . $e->getMessage());
             return back()->with('error', 'Erro ao carregar as secretarias.');
         }
     }
 
-    public function litarSecretariasPorPrefeitura_id($prefeitura_id)
+    public function listarSecretariasPorPrefeitura_id($prefeitura_id)
     {
         try {
             $secretarias = $this->secretariaService->secretariasPorPrefeitura_id($prefeitura_id);
@@ -43,13 +43,10 @@ class SecretariasController extends Controller
         }
     }
 
-    public function create(PrefeituraService $prefeituraService, EnderecoService $enderecoService)
+    public function create(PrefeituraService $prefeituraService)
     {
         try {
-            $prefeituras = $prefeituraService->listarPrefeituras();
-            $enderecos = $enderecoService->listarEnderecos();
-
-            return view('secretaria._form', compact('prefeituras', 'enderecos'));
+            return view('secretaria._form');
         } catch (\Exception $e) {
             Log::error('Erro ao carregar formulário de criação de secretaria: ' . $e->getMessage());
             return back()->with('error', 'Erro ao carregar o formulário.');
@@ -60,14 +57,12 @@ class SecretariasController extends Controller
     {
         try {
             $dados = $request->validate([
-                'cnpj' => 'required|string',
-                'razao_social' => 'required|string',
+                'nome' => 'required|string',
                 'responsavel' => 'required|string',
-                'endereco_id' => 'required|integer',
             ]);
 
 
-            $dados['prefeitura_id'] = Auth::user()->prefeitura_id;
+            $dados['prefeitura_id'] = 1;
             $resultado = $this->secretariaService->cadastrarSecretaria($dados);
 
             if ($resultado) {
@@ -85,8 +80,6 @@ class SecretariasController extends Controller
     {
         try {
             $secretaria = $this->secretariaService->buscarSecretariaPorId($id);
-            $prefeituras = $prefeituraService->listarPrefeituras();
-            $enderecos = $enderecoService->listarEnderecos();
 
             if (!$secretaria) {
                 return redirect()->route('secretarias.index')->with('error', 'Secretaria não encontrada.');
@@ -104,13 +97,11 @@ class SecretariasController extends Controller
         try {
         
             $dados = $request->validate([
-                'cnpj' => 'required|string',
-                'razao_social' => 'required|string',
+                'nome' => 'required|string',
                 'responsavel' => 'required|string',
-                'endereco_id' => 'required|integer',
             ]);
             
-            $dados['prefeitura_id'] = Auth::user()->prefeitura_id;
+            $dados['prefeitura_id'] = 1;
             $resultado = $this->secretariaService->atualizarSecretaria($id, $dados);
 
             if ($resultado) {
