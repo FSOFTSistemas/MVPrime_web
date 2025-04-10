@@ -1,3 +1,7 @@
+<?php
+use Carbon\Carbon;
+?>
+
 @extends('adminlte::page')
 
 @section('title', 'Gerenciamento de Motoristas')
@@ -40,7 +44,7 @@
                 <tr>
                     <td>{{ $motorista['id'] }}</td>
                     <td>{{ $motorista['nome'] }}</td>
-                    <td>{{ $motorista['vencimento_cnh'] }}</td>
+                    <td>{{ Carbon::parse($motorista['vencimento_cnh'])->format('d/m/Y') }}</td>
                     <td>{{ $motorista['secretaria']['nome'] }}</td>
                     <td>
                         <!-- Botão Editar -->

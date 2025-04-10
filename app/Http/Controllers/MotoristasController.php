@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Services\MotoristaService;
 use App\Services\PrefeituraService;
 use App\Services\EnderecoService;
@@ -31,42 +31,33 @@ class MotoristasController extends Controller
             Log::error('Erro ao listar motoristas: ' . $e->getMessage());
             return back()->with('error', 'Erro ao carregar as motoristas.');
         }
-    }
+    } 
 
-    public function create(PrefeituraService $prefeiturasService, EnderecoService $secretariaService)
-    {
-        try {
-            $prefeituras = $prefeiturasService->listarPrefeituras();
-            $secretarias = $this->secretariaService->secretariasPorPrefeitura_id(1);
+public function store(Request $request)
+{
+    try {
+        $dados = $request->validate([
+            'nome' => 'required|string',
+            'cnh' => 'required|string',
+            'vencimento_cnh' => 'required|date', // Valida como data
+            'secretaria_id' => 'required|string', // Ou 'string' dependendo do tipo do campo
+        ]);
 
-            return view('motorista._form', compact('prefeituras', 'secretarias'));
-        } catch (\Exception $e) {
-            Log::error('Erro ao carregar formulário de criação de motorista: ' . $e->getMessage());
-            return back()->with('error', 'Erro ao carregar o formulário.');
+        // Formatar a data de vencimento para o formato 'Y-m-d' (YYYY-MM-DD)
+        $dados['vencimento_cnh'] = Carbon::parse($dados['vencimento_cnh'])->format('Y-m-d');
+        // Passar os dados formatados para o serviço
+        $resultado = $this->motoristaService->cadastrarMotorista($dados);
+
+        if ($resultado) {
+            return redirect()->route('motoristas.index')->with('success', 'Motorista cadastrada com sucesso!');
         }
-    }
 
-    public function store(Request $request)
-    {
-        try {
-            
-            $dados = $request->validate([
-                'nome' => 'required|string',
-                'cnh'=> 'required|string',
-                'vencimento_cnh' => 'required|string',
-                'secretaria_id' => 'required|string',
-            ]);
-            $resultado = $this->motoristaService->cadastrarMotorista($dados);
-            if ($resultado) {
-                return redirect()->route('motoristas.index')->with('success', 'Motorista cadastrada com sucesso!');
-            }
-
-            return back()->with('error', 'Erro ao cadastrar motorista.');
-        } catch (\Exception $e) {
-            Log::error('Erro ao cadastrar motorista: ' . $e->getMessage());
-            return back()->with('error', 'Erro inesperado ao cadastrar motorista.');
-        }
+        return back()->with('error', 'Erro ao cadastrar motorista.');
+    } catch (\Exception $e) {
+        Log::error('Erro ao cadastrar motorista: ' . $e->getMessage());
+        return back()->with('error', 'Erro inesperado ao cadastrar motorista.');
     }
+}
 
     public function update(Request $request, $id)
     {
@@ -75,9 +66,11 @@ class MotoristasController extends Controller
             $dados = $request->validate([
                 'nome' => 'required|string',
                 'cnh'=> 'required|string',
-                'vencimento_cnh' => 'required|string',
+                'vencimento_cnh' => 'required|date',
                 'secretaria_id' => 'required|string',
             ]);
+
+            $dados['vencimento_cnh'] = Carbon::parse($dados['vencimento_cnh'])->format('Y-m-d');
             $resultado = $this->motoristaService->atualizarMotorista($id, $dados);
 
             if ($resultado) {

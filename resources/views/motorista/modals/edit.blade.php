@@ -22,7 +22,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Vencimento CNH</label>
-                        <input type="date" class="form-control" name="vencimento_cnh" value="{{'2025-06-09'}}" required>
+                        <input type="date" class="form-control" name="vencimento_cnh" value="{{$motorista['vencimento_cnh']}}" required>
                     </div>
 
 
