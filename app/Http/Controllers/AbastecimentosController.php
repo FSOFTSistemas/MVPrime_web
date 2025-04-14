@@ -32,15 +32,21 @@ class AbastecimentosController extends Controller
     public function update(Request $request, $id)
     {
         try {
-        
+            
             $dados = $request->validate([
-                'cnpj' => 'required|string',
-                'nome' => 'required|string',
-                'responsavel' => 'required|string',
-                'endereco_id' => 'required|integer',
+                'data_abastecimento' => 'required|date',
+               // 'veiculo' => 'required|string',
+               // 'motorista' => 'required|string',
+                //'posto' => 'required|string',
+                //'combustivel' => 'required|string',
+                'km_atual' => 'required|string',
+                'media_km_litro' => 'required|numeric',
+                'litros' => 'required|string',
+                'preco_combustivel' => 'required|string',
+                'valor' => 'required|string',
             ]);
             
-            $dados['prefeituras_id'] = Auth::user()->prefeituras_id;
+            $dados['empresa_id'] = 1;
             $resultado = $this->abastecimentoService->atualizarAbastecimento($id, $dados);
 
             if ($resultado) {
