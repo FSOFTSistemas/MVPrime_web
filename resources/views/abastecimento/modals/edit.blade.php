@@ -22,20 +22,47 @@ use Carbon\Carbon;
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Veículo</label>
-                        <input type="text" class="form-control" name="veiculo" value="{{ $abastecimento['veiculo']['placa'] }}" required>
+                        <select class="form-control select2" name="veiculo_id" required>
+                            @foreach ($veiculos as $veiculo)
+                            <option value="{{ $veiculo['id'] }}{{ $abastecimento['veiculo_id'] == $veiculo['id'] ? 'selected' : '' }}">
+                                    {{ $veiculo['placa'] }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Motorista</label>
-                        <input type="text" class="form-control" name="motorista" value="{{ $abastecimento['motorista']['nome'] }}" required>
+                        <select class="form-control select2" name="motorista_id" required>
+                            <option value="">Selecione o motorista</option>
+                            @foreach ($motoristas as $motorista)
+                                <option value="{{ $motorista['id'] }}" {{ $abastecimento['motorista_id'] == $motorista['id'] ? 'selected' : '' }}>
+                                    {{ $motorista['nome'] }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label">Posto</label>
-                        <input type="text" class="form-control" name="posto" value="{{ $abastecimento['posto']['nome'] }}" required>
+                        <select class="form-control select2" name="posto_id" required>
+                            @foreach ($postos as $posto)
+                            <option value="{{ $posto['id'] }}" {{ $abastecimento['posto_id'] == $posto['id'] ? 'selected' : '' }}>
+                                    {{ $posto['nome'] }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tipo de Combustível</label>
-                        <input type="text" class="form-control" name="combustivel" value="{{ $abastecimento['tipo_combustivel'] }}" required>
+                        <select class="form-control" name="combustivel" required>
+                            <option value="Gasolina" {{ $abastecimento['tipo_combustivel'] == 'Gasolina' ? 'selected' : '' }}>Gasolina</option>
+                            <option value="Gasolina Aditivada" {{ $abastecimento['tipo_combustivel'] == 'Gasolina Aditivada' ? 'selected' : '' }}>Gasolina Aditivada</option>
+                            <option value="Etanol" {{ $abastecimento['tipo_combustivel'] == 'Etanol' ? 'selected' : '' }}>Etanol</option>
+                            <option value="Diesel" {{ $abastecimento['tipo_combustivel'] == 'Diesel' ? 'selected' : '' }}>Diesel</option>
+                        </select>
                     </div>
+
+
                     <div class="mb-3">
                         <label class="form-label">Km Atual</label>
                         <input type="text" class="form-control" name="km_atual" value="{{ $abastecimento['km_atual'] }}" required>
