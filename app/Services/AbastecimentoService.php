@@ -22,6 +22,20 @@ class AbastecimentoService
         }
     }
 
+    public function listarPorPrefeitura($prefeituraId)
+{
+    try {
+        $token = session('jwt_token');
+        $response = Http::withToken($token)->get("{$this->apiUrl}/prefeitura/{$prefeituraId}");
+
+        return $response->successful() ? $response->json() : null;
+    } catch (\Exception $e) {
+        Log::error("Erro ao listar abastecimentos da prefeitura {$prefeituraId}: " . $e->getMessage());
+        return null;
+    }
+}
+
+
     public function atualizarAbastecimento($id, array $dados)
     {
         try {

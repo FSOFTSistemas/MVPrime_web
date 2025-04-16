@@ -31,7 +31,7 @@ class AbastecimentosController extends Controller
     public function index()
     {
         try {
-            $abastecimentos = $this->abastecimentoService->listarAbastecimentos();
+            $abastecimentos = $this->abastecimentoService->listarPorPrefeitura(1);
             $veiculos = $this->veiculosService->listarVeiculos();
             $motoristas = $this->motoristasService->listarMotoristas();
             $postos = $this->postoService->listarPostos();
