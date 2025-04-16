@@ -24,7 +24,7 @@ use Carbon\Carbon;
                         <label class="form-label">Veículo</label>
                         <select class="form-control select2" name="veiculo_id" required>
                             @foreach ($veiculos as $veiculo)
-                            <option value="{{ $veiculo['id'] }}{{ $abastecimento['veiculo_id'] == $veiculo['id'] ? 'selected' : '' }}">
+                            <option value="{{ $veiculo['id'] }}" {{ $abastecimento['veiculo_id'] == $veiculo['id'] ? 'selected' : '' }}>
                                     {{ $veiculo['placa'] }}
                                 </option>
                             @endforeach
@@ -54,7 +54,7 @@ use Carbon\Carbon;
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tipo de Combustível</label>
-                        <select class="form-control" name="combustivel" required>
+                        <select class="form-control" name="tipo_combustivel" required>
                             <option value="Gasolina" {{ $abastecimento['tipo_combustivel'] == 'Gasolina' ? 'selected' : '' }}>Gasolina</option>
                             <option value="Gasolina Aditivada" {{ $abastecimento['tipo_combustivel'] == 'Gasolina Aditivada' ? 'selected' : '' }}>Gasolina Aditivada</option>
                             <option value="Etanol" {{ $abastecimento['tipo_combustivel'] == 'Etanol' ? 'selected' : '' }}>Etanol</option>
@@ -70,10 +70,6 @@ use Carbon\Carbon;
                     <div class="mb-3">
                         <label class="form-label">Média KM/L</label>
                         <input type="text" class="form-control" name="media_km_litro" value="{{ $abastecimento['media_km_litro'] }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Litros</label>
-                        <input type="text" class="form-control" name="litros" value="{{ $abastecimento['valor']/$abastecimento['preco_combustivel'] }}" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Preço do litro</label>

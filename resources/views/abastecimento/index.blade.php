@@ -50,14 +50,14 @@ use Carbon\Carbon;
             @foreach ($abastecimentos ?? [] as $abastecimento)
                 <tr>
                     <td>{{ $abastecimento['id'] }}</td>
-                    <td>{{ Carbon::parse($abastecimento['data_abastecimento'])->format('d/m/Y H:i:s') }}</td>
+                    <td>{{ Carbon::parse($abastecimento['data_abastecimento'])->format('d/m/Y H:i') }}</td>
                     <td>{{ $abastecimento['veiculo']['placa'] }}</td>
                     <td>{{ $abastecimento['motorista']['nome'] }}</td>
                     <td>{{ $abastecimento['posto']['nome'] }}</td>
                     <td>{{ $abastecimento['tipo_combustivel'] }}</td>
                     <td>{{ $abastecimento['km_atual'] }}</td>
                     <td>{{ $abastecimento['media_km_litro'] }}</td>
-                    <td>{{ ($abastecimento['valor']/$abastecimento['preco_combustivel']) }}</td>
+                    <td>{{ number_format(($abastecimento['valor']/$abastecimento['preco_combustivel']), 3, '.' )}}</td>
                     <td>R$ {{ number_format($abastecimento['preco_combustivel'], 2, ',', '.') }}</td>
                     <td>R$ {{ number_format($abastecimento['valor'], 2, ',', '.') }}</td>
                     <td>

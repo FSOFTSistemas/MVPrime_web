@@ -52,17 +52,22 @@ class AbastecimentosController extends Controller
                 'veiculo_id' => 'required|string',
                 'motorista_id' => 'required|string',
                 'posto_id' => 'required|string',
-                'combustivel' => 'required|string',
+                'tipo_combustivel' => 'required|string',
                 'km_atual' => 'required|string',
-                'media_km_litro' => 'required|numeric',
-                'litros' => 'required|string',
+                'media_km_litro' => 'required|string',
                 'preco_combustivel' => 'required|string',
                 'valor' => 'required|string',
             ]);
-            
+            //dd($dados);
             $dados['empresa_id'] = 1;
             $dados['valor'] = (double) $dados['valor'];
             $dados['preco_combustivel'] = (double) $dados['preco_combustivel'];
+            $dados['veiculo_id'] = (int) $dados['veiculo_id'];
+            $dados['motorista_id'] = (int) $dados['motorista_id'];
+            $dados['posto_id'] = (int) $dados['posto_id'];
+            $dados['km_atual'] = (int) $dados['km_atual'];
+            $dados['media_km_litro'] = (double) $dados['media_km_litro'];
+
             $resultado = $this->abastecimentoService->atualizarAbastecimento($id, $dados);
 
             if ($resultado) {
