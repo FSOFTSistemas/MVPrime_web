@@ -23,7 +23,7 @@ class PostosController extends Controller
     public function index()
     {
         try {
-            $postos = $this->postoService->listarPostos();
+            $postos = $this->postoService->listarPostosPorPrefeitura(1);
             $enderecos = $this->enderecoService->listarEnderecos();
             return view('posto.index', compact('postos', 'enderecos'));
         } catch (\Exception $e) {
