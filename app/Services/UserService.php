@@ -34,6 +34,35 @@ class UserService
         }
     }
 
+    public function getUsersByPrefeitura($prefeituraId)
+{
+    try {
+        // Obtém o token JWT da sessão
+        $token = session('jwt_token');
+        
+        // Define a URL da API com o parâmetro de prefeitura
+        $url = "$this->apiUrl/prefeitura/$prefeituraId";  // URL para listar usuários da prefeitura
+        
+        // Faz a requisição para a API
+        $response = Http::withToken($token)->get($url);
+
+        // Verifica se a resposta foi bem-sucedida
+        if ($response->successful()) {
+            return $response->json(); // Retorna os usuários em formato JSON
+        }
+
+        // Se a requisição falhar, loga o erro
+        Log::error("Erro ao buscar usuários pela prefeitura: " . $response->status());
+
+        return null; // Retorna null em caso de falha
+    } catch (\Exception $e) {
+        // Loga a exceção caso ocorra um erro
+        Log::error("Exceção ao buscar usuários pela prefeitura: " . $e->getMessage());
+
+        return null; // Retorna null em caso de erro
+    }
+}
+
     // Método para buscar um usuário específico por ID
     public function getUserById($id)
     {

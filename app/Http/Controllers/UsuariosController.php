@@ -19,7 +19,7 @@ class UsuariosController extends Controller
     {
         try {
             $permissoes = Permission::all();
-            $usuarios = $this->userService->getAllUsers();
+            $usuarios = $this->userService->getUsersByPrefeitura(1);
 
 
             if ($usuarios) {
