@@ -24,7 +24,7 @@ class MotoristasController extends Controller
     public function index()
     {
         try {
-            $motoristas = $this->motoristaService->listarMotoristas();
+            $motoristas = $this->motoristaService->listarMotoristasPorPrefeitura(1);
             $secretarias = $this->secretariaService->secretariasPorPrefeitura_id(1);
             return view('motorista.index', compact('motoristas', 'secretarias'));
         } catch (\Exception $e) {
