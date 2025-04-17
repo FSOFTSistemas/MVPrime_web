@@ -45,16 +45,14 @@ class UserService
         
         // Faz a requisição para a API
         $response = Http::withToken($token)->get($url);
-
-        // Verifica se a resposta foi bem-sucedida
+        
         if ($response->successful()) {
-            return $response->json(); // Retorna os usuários em formato JSON
+            $users = $response->json();
+            return $users;  // Retorna os veículos encontrados
         }
-
-        // Se a requisição falhar, loga o erro
-        Log::error("Erro ao buscar usuários pela prefeitura: " . $response->status());
-
-        return null; // Retorna null em caso de falha
+        // Se a resposta não for bem-sucedida, retorna null
+        return null;
+        
     } catch (\Exception $e) {
         // Loga a exceção caso ocorra um erro
         Log::error("Exceção ao buscar usuários pela prefeitura: " . $e->getMessage());

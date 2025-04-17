@@ -21,10 +21,9 @@ class UsuariosController extends Controller
             $permissoes = Permission::all();
             $usuarios = $this->userService->getUsersByPrefeitura(1);
 
-
-            if ($usuarios) {
-                return view('usuario.index', compact('usuarios','permissoes'));
-            }
+            
+            return view('usuario.index', compact('usuarios','permissoes'));
+            
         } catch (\Exception $e) {
             dd($e->getMessage());
             return redirect()->back()->withErrors('Não foi possível carregar os usuários.');
