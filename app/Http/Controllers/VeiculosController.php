@@ -26,7 +26,7 @@ class VeiculosController extends Controller
     public function index()
     {
         try {
-            $veiculos = $this->veiculoService->listarVeiculos();
+            $veiculos = $this->veiculoService->listarVeiculosPorPrefeitura(1);
             $secretarias = $this->secretariaService->secretariasPorPrefeitura_id(1);
             return view('veiculo.index', compact('veiculos', 'secretarias'));
         } catch (\Exception $e) {
