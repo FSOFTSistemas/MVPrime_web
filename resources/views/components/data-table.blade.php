@@ -1,5 +1,7 @@
 @php
     $uniqueId = 'myTable_' . uniqid();
+    $sortColumnIndex = isset($sortColumnIndex) ? $sortColumnIndex : 0;  // Padrão: ordenar pela primeira coluna
+    $sortDirection = isset($sortDirection) ? $sortDirection : 'asc';  // Padrão: ordenação crescente
 @endphp
 
 <table id="{{ $uniqueId }}" class="w-100">
@@ -59,12 +61,13 @@
 
     <script>
         var valueColumnIndex = {{ $valueColumnIndex }};
+        var sortColumnIndex = {{ $sortColumnIndex }};  // Índice da coluna para ordenação
+        var sortDirection = '{{ $sortDirection }}';  // Direção de ordenação
 
         var table = $('#{{ $uniqueId }}').DataTable({
             responsive: true,
             pageLength: {{ $itemsPerPage }},
             columnDefs: {{ Js::from($responsive) }},
-
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
             },
@@ -97,6 +100,7 @@
                     titleAttr: 'Imprimir tabela',
                 }
             ],
+            order: [[sortColumnIndex, sortDirection]],  // Adiciona a ordenação dinâmica aqui
             initComplete: function() {
                 // Ajusta o tamanho da fonte e o alinhamento
                 $('#{{ $uniqueId }}').css('font-size', '14px');
@@ -111,10 +115,8 @@
                 // Ajusta o tamanho dos botões
                 $('.dt-button').css('font-size', '14px'); // Ajuste o tamanho da fonte para os botões
                 $('.dt-button').addClass('btn-sm'); // Tamanho pequeno dos botões (Bootstrap)
-
             }
         });
-
 
         function calculateTotal() {
             console.log("Calculando o total...");
