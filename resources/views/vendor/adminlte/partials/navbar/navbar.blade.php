@@ -18,6 +18,20 @@
 
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto">
+    <form action="{{ route('filtro.prefeitura') }}" method="POST" class="form-inline ml-2">
+            @csrf
+            <div class="col-md-6 mb-3">
+                        <label for="prefeitura_id" class="form-label">Prefeitura</label>
+                        <select class="form-control"  id="prefeitura" name="prefeitura_id" required>
+                            <option value="">Selecione uma Prefeitura</option>
+                            @foreach ($prefeituras as $prefeitura)
+                                <option value="{{ $prefeitura['id'] }}">
+                                    {{ $prefeitura['razao_social'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+        </form> 
         {{-- Custom right links --}}
         @yield('content_top_nav_right')
 

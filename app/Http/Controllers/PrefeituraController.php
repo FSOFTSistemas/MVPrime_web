@@ -8,6 +8,7 @@ use App\Services\EnderecoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\View;
 
 class PrefeituraController extends Controller
 {
@@ -36,6 +37,7 @@ class PrefeituraController extends Controller
     {
         try {
             $prefeituras = $this->prefeituraService->prefeiturasPorEmpresa_id($empresa_id);
+            View::share('prefeituras', $prefeituras);
             return $prefeituras;
         } catch (\Exception $e) {
             Log::error('Erro ao listar prefeituras por id: ' . $e->getMessage());
