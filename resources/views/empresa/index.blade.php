@@ -3,14 +3,14 @@
 @section('title', 'Gerenciamento de Empresas')
 
 @section('content_header')
-    <h1>Gerenciamento de Empresas</h1>
+    <h1 class="text-dark">Gerenciamento de Empresas</h1>
 @stop
 
 @section('content')
     <div class="row mb-3">
         <div class="col">
             <!-- Botão para abrir uma nova tela -->
-            <a href="{{ route('empresas.create') }}" class="btn btn-success float-end">+ Nova Empresa</a>
+            <a href="{{ route('empresas.create') }}" class="btn btn-primary float-end rounded-pill px-4 py-2">+ Nova Empresa</a>
         </div>
     </div>
 
@@ -26,7 +26,7 @@
         'showTotal' => false,
         'valueColumnIndex' => 1,
     ])
-        <thead class="table-primary">
+        <thead style="background-color: #1E3A5F; color: white;">
             <tr>
                 <th>ID</th>
                 <th>CNPJ</th>
@@ -35,7 +35,6 @@
             </tr>
         </thead>
         <tbody>
-
             @foreach ($empresas ?? [] as $empresa)
                 <tr>
                     <td>{{ $empresa['id'] }}</td>
@@ -43,14 +42,14 @@
                     <td>{{ $empresa['razao_social'] }}</td>
                     <td>
                         <!-- Botão Editar -->
-                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-warning btn-sm rounded-pill" data-bs-toggle="modal"
                             data-bs-target="#editEmpresaModal{{ $empresa['id'] }}">
-                            ✏️
+                            ✏️ Editar
                         </button>
                         <!-- Botão Excluir -->
-                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-danger btn-sm rounded-pill" data-bs-toggle="modal"
                             data-bs-target="#deleteEmpresaModal{{ $empresa['id'] }}">
-                            🗑️
+                            🗑️ Excluir
                         </button>
                     </td>
                 </tr>
@@ -61,7 +60,6 @@
                 <!-- Modal Excluir -->
                 @include('empresa.modals.delete', ['empresa' => $empresa])
             @endforeach
-
         </tbody>
     @endcomponent
 
@@ -73,6 +71,52 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+    <style>
+        /* Custom Styles */
+        .btn-primary {
+            background-color:rgb(3, 34, 75);
+            border-color:rgb(1, 35, 78);
+        }
+
+        .btn-primary:hover {
+            background-color:rgb(3, 37, 68);
+            border-color:rgb(3, 39, 73);
+        }
+
+        .btn-warning {
+            background-color:rgb(238, 255, 0);
+            border-color:rgb(5, 16, 116);
+        }
+
+        .btn-danger {
+            background-color:rgb(204, 14, 0);
+            border-color: #F44336;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+        }
+
+        .modal-header {
+            background-color: #1E3A5F;
+            color: #fff;
+        }
+
+        .modal-footer {
+            background-color: #f1f1f1;
+        }
+
+        .dataTable thead th {
+            background-color: #1E3A5F;
+            color: #fff;
+        }
+
+        .dataTables_wrapper .dataTables_length select,
+        .dataTables_wrapper .dataTables_filter input {
+            border-radius: 4px;
+            border: 1px solid #1E3A5F;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -96,6 +140,16 @@
 
         $(document).ready(function() {
             $('.select2').select2();
+
+            // Inicialização do DataTable
+            $('.data-table').DataTable({
+                responsive: true,
+                order: [[0, 'asc']], // Ordenar pelo ID
+                pageLength: 10, // Itens por página
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json' // Tradução para o português
+                }
+            });
         });
     </script>
 @stop

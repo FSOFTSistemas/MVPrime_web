@@ -3,43 +3,40 @@
 @section('title', 'Gerenciar Empresa')
 
 @section('content_header')
-    <h1>Gerenciar Empresa</h1>
+    <h1 class="text-dark">Gerenciar Empresa</h1>
 @endsection
 
 @section('content')
-    <div class="card">
+    <div class="card shadow-lg rounded">
         <div class="card-body">
             <form action="{{ route('empresas.store') }}" method="POST">
                 @csrf
-                <div class="input-group">
-                    <input type="text" class="form-control" id="cnpj" name="cnpj" required>
-                    <button class="btn btn-outline-secondary" type="button" id="btnBuscarCnpj">
-                        <i class="bi bi-search"></i>
+                <div class="input-group mb-4">
+                    <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="Digite o CNPJ" required>
+                    <button class="btn btn-outline-primary" type="button" id="btnBuscarCnpj">
+                        <i class="bi bi-search"></i> Buscar CNPJ
                     </button>
                 </div>
+
                 <div class="mb-3">
-                    <label for="razao_social" class="form-label">Razão Social</label>
-                    <input type="text" class="form-control" id="razao_social" name="razao_social" required>
+                    <label for="razao_social" class="form-label text-dark">Razão Social</label>
+                    <input type="text" class="form-control" id="razao_social" name="razao_social" placeholder="Razão Social" required>
                 </div>
 
-
                 <div class="mb-3">
-                    <label for="endereco" class="form-label">Endereço</label>
+                    <label for="endereco" class="form-label text-dark">Endereço</label>
                     <div class="input-group">
                         <select class="form-control" id="endereco" name="endereco_id" required>
                             <option value="">Selecione um endereço</option>
                             @foreach ($enderecos ?? [] as $endereco)
-                                <option value="{{ $endereco['id'] }}">{{ $endereco['logradouro'] }},
-                                    {{ $endereco['numero'] }}
-                                </option>
+                                <option value="{{ $endereco['id'] }}">{{ $endereco['logradouro'] }}, {{ $endereco['numero'] }}</option>
                             @endforeach
                         </select>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEndereco">+
-                            Novo</button>
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEndereco">+ Novo</button>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-success">Salvar</button>
+                <button type="submit" class="btn btn-primary w-100 py-2">Salvar</button>
             </form>
         </div>
     </div>
@@ -48,7 +45,7 @@
     <div class="modal fade" id="modalEndereco" tabindex="-1" aria-labelledby="modalEnderecoLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="modalEnderecoLabel">Novo Endereço</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -67,11 +64,11 @@
                             <input type="text" class="form-control" id="numero" name="numero" required>
                         </div>
                         <div class="mb-3">
-                            <label for="bairro" class="form-label">bairro</label>
+                            <label for="bairro" class="form-label">Bairro</label>
                             <input type="text" class="form-control" id="bairro" name="bairro" required>
                         </div>
                         <div class="mb-3">
-                            <label for="cidade" class="form-label">cidade</label>
+                            <label for="cidade" class="form-label">Cidade</label>
                             <input type="text" class="form-control" id="cidade" name="cidade" required>
                         </div>
                         <div class="mb-3">
@@ -89,18 +86,42 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
+    <style>
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .btn-outline-primary {
+            border-color: #1E3A5F;
+            color: #1E3A5F;
+        }
+        .btn-outline-primary:hover {
+            background-color: #1E3A5F;
+            color: #fff;
+        }
+        .modal-header {
+            background-color: #1E3A5F;
+        }
+        .modal-body {
+            background-color: #f8f9fa;
+        }
+        .modal-title {
+            font-size: 18px;
+        }
+    </style>
 @endsection
 
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
-
     <script>
         $(document).ready(function () {
+            // Máscaras de campos
             $('#cep').mask('00000-000');
             $('#cnpj').mask('00.000.000/0000-00');
 
+            // Preenchendo campos de endereço automaticamente
             $('#cep').on('blur', function () {
                 let cep = $(this).val().replace(/[^0-9]/g, '');
                 if (cep.length == 8) {
@@ -119,6 +140,7 @@
                 }
             });
 
+            // Salvando novo endereço
             $('#salvarEndereco').on('click', function () {
                 let endereco = {
                     cep: $('#cep').val(),
@@ -130,7 +152,7 @@
                 };
                 var url = $('#salvarEndereco').data('url');
                 $.ajax({
-                    url: url, // Certifique-se de que a rota está correta
+                    url: url,
                     type: 'POST',
                     data: endereco,
                     dataType: 'json',
@@ -138,7 +160,6 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
-                        console.log(response);
                         if (response.success) {
                             // Cria a nova opção
                             const texto = `${endereco.logradouro}, ${endereco.numero}`;
@@ -158,39 +179,36 @@
                     },
                     error: function (xhr, status, error) {
                         console.error('Erro na requisição Ajax:', error);
-                        console.error('Status:', status);
                         alert('Erro na requisição Ajax.');
                     }
                 });
             });
 
-        });
-    </script>
+            // Função para buscar CNPJ
+            $('#btnBuscarCnpj').on('click', function () {
+                const cnpj = $('#cnpj').val().replace(/\D/g, ''); // Remove não-dígitos
 
-    <script>
-        document.getElementById('btnBuscarCnpj').addEventListener('click', function () {
-            const cnpj = document.getElementById('cnpj').value.replace(/\D/g, ''); // Remove não-dígitos
+                if (cnpj.length !== 14) {
+                    alert('CNPJ inválido. Deve conter 14 dígitos.');
+                    return;
+                }
 
-            if (cnpj.length !== 14) {
-                alert('CNPJ inválido. Deve conter 14 dígitos.');
-                return;
-            }
-
-            fetch(`https://open.cnpja.com/office/${cnpj}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erro ao buscar CNPJ.');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const razao = data.company?.name || 'Não encontrado';
-                    document.getElementById('razao_social').value = razao;
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert('Erro ao buscar CNPJ. Verifique o console.');
-                });
+                fetch(`https://open.cnpja.com/office/${cnpj}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro ao buscar CNPJ.');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const razao = data.company?.name || 'Não encontrado';
+                        $('#razao_social').val(razao);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert('Erro ao buscar CNPJ. Verifique o console.');
+                    });
+            });
         });
     </script>
 @endsection
