@@ -24,9 +24,14 @@ class MotoristasController extends Controller
     public function index()
     {
         try {
-            $motoristas = $this->motoristaService->listarMotoristasPorPrefeitura(1);
-            $secretarias = $this->secretariaService->secretariasPorPrefeitura_id(1);
+            $prefeituraId = session('prefeitura_selecionada');
+            $motoristas = $this->motoristaService->listarMotoristasPorPrefeitura($prefeituraId);
+            $secretarias = $this->secretariaService->secretariasPorPrefeitura_id($prefeituraId);
+
+            $secretarias = $secretarias ?: [];
             return view('motorista.index', compact('motoristas', 'secretarias'));
+
+
         } catch (\Exception $e) {
             Log::error('Erro ao listar motoristas: ' . $e->getMessage());
             return back()->with('error', 'Erro ao carregar as motoristas.');
@@ -36,8 +41,9 @@ class MotoristasController extends Controller
     public function create(SecretariasController $secretariaController)
     {
         try {
-            $secretarias = $secretariaController->listarSecretariasPorPrefeitura_id(1);
-
+            $prefeituraId = session('prefeitura_selecionada');
+            $secretarias = $secretariaController->listarSecretariasPorPrefeitura_id($prefeituraId);
+            $secretarias = $secretarias ?: [];
             return view('motorista._form', compact('secretarias'));
         } catch (\Exception $e) {
             Log::error('Erro ao carregar formulário de criação de motorista: ' . $e->getMessage());

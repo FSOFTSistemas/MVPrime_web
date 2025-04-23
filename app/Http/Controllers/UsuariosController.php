@@ -19,7 +19,8 @@ class UsuariosController extends Controller
     {
         try {
             $permissoes = Permission::all();
-            $usuarios = $this->userService->getUsersByPrefeitura(1);
+            $prefeituraId = session('prefeitura_selecionada');
+            $usuarios = $this->userService->getUsersByPrefeitura($prefeituraId);
 
             
             return view('usuario.index', compact('usuarios','permissoes'));
@@ -55,7 +56,7 @@ class UsuariosController extends Controller
                 'permissoes.*' => 'integer'
             ]);
             
-
+            $validatedData['prefeitura_id'] = session('prefeitura_selecionada');
             $user = $this->userService->createUser($validatedData);
   
             if ($user) {

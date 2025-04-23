@@ -31,7 +31,8 @@ class AbastecimentosController extends Controller
     public function index()
     {
         try {
-            $abastecimentos = $this->abastecimentoService->listarPorPrefeitura(1);
+            $prefeituraId = session('prefeitura_selecionada');
+            $abastecimentos = $this->abastecimentoService->listarPorPrefeitura($prefeituraId);
             $veiculos = $this->veiculosService->listarVeiculos();
             $motoristas = $this->motoristasService->listarMotoristas();
             $postos = $this->postoService->listarPostos();

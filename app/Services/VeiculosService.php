@@ -79,6 +79,7 @@ class VeiculosService
     {
         try {
             $token = session('jwt_token');
+            //dd($dados);
             $response = Http::withToken($token)->post($this->apiUrl, $dados);
 
             return $response->successful() ? $response->json() : null;

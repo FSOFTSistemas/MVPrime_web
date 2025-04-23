@@ -22,8 +22,8 @@ class SecretariasController extends Controller
     public function index()
     {
         try {
-            
-            $secretarias = $this->listarSecretariasPorPrefeitura_id(1);
+            $prefeituraId = session('prefeitura_selecionada');
+            $secretarias = $this->listarSecretariasPorPrefeitura_id( $prefeituraId );
 
             return view('secretaria.index', compact('secretarias'));
         } catch (\Exception $e) {
@@ -62,7 +62,7 @@ class SecretariasController extends Controller
             ]);
 
 
-            $dados['prefeitura_id'] = 1;
+            $dados['prefeitura_id'] = session('prefeitura_selecionada');
             $resultado = $this->secretariaService->cadastrarSecretaria($dados);
 
             if ($resultado) {

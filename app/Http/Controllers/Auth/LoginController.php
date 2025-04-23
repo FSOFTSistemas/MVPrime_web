@@ -7,11 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use App\Models\Prefeitura; // Importando o modelo Prefeitura
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission; // Importando o modelo de permissão do Spatie
+use App\Services\PrefeituraService;
 
 class LoginController extends Controller
 {
+    protected $prefeituraService;
+
+    // Injeção de dependência do PrefeituraService no construtor
+    public function __construct(PrefeituraService $prefeituraService)
+    {
+        $this->prefeituraService = $prefeituraService; // Atribui o serviço à variável da classe
+    }
+
     public function login(Request $request)
     {
         $request->validate([
@@ -35,16 +45,16 @@ class LoginController extends Controller
                 ['email' => $data['usuario']['email']],
                 [
                     'name' => $data['usuario']['nome'],
-                    'empresa_id'=> $data['usuario']['empresa_id']
-                        ]
+                    'empresa_id' => $data['usuario']['empresa_id']
+                ]
             );
 
-            // 🔹 Criar as permissões no banco de dados, se não existirem
+            // Criar as permissões no banco de dados, se não existirem
             foreach ($data['usuario']['permissoes'] as $permission) {
                 Permission::firstOrCreate(['name' => $permission]); // Cria a permissão se não existir
             }
 
-            // 🔹 Verificar se o usuário já tem as permissões e atribuí-las apenas se necessário
+            // Verificar se o usuário já tem as permissões e atribuí-las apenas se necessário
             $userPermissions = $user->permissions->pluck('name')->toArray(); // Obtém as permissões atuais do usuário
 
             foreach ($data['usuario']['permissoes'] as $permission) {
@@ -55,6 +65,12 @@ class LoginController extends Controller
 
             // Armazenar o ID do usuário na sessão
             Session::put('user_id', $user->id);
+
+            // 🔹 Buscar as prefeituras relacionadas ao 'empresa_id' do usuário
+            $prefeituras = $this->prefeituraService->prefeiturasPorEmpresa_id($user->empresa_id);
+            
+            // Armazenar as prefeituras na sessão
+            Session::put('prefeituras', $prefeituras);
 
             // Faz login do usuário no Laravel
             Auth::login($user);

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\Session;
 use App\Services\PrefeituraService;
 use App\Services\EmpresaService;
 use App\Services\EnderecoService;
@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
+
+
 
 class PrefeituraController extends Controller
 {
@@ -124,6 +126,20 @@ class PrefeituraController extends Controller
             Log::error("Erro ao atualizar prefeitura ID {$id}: " . $e->getMessage());
             return back()->with('error', 'Erro inesperado ao atualizar prefeitura.');
         }
+    }
+
+    public function filtroPrefeitura(Request $request)
+    {
+        // Recupera o ID da prefeitura selecionada
+        $prefeituraId = $request->input('prefeitura_id');
+        
+        // Atualiza a sessão com a prefeitura selecionada
+        if ($prefeituraId) {
+            \Session::put('prefeitura_selecionada', $prefeituraId);
+        }
+
+        // Redireciona de volta para a página com os dados filtrados
+        return redirect()->back();
     }
 
     public function destroy($id)

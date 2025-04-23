@@ -26,8 +26,9 @@ class VeiculosController extends Controller
     public function index()
     {
         try {
-            $veiculos = $this->veiculoService->listarVeiculosPorPrefeitura(2);
-            $secretarias = $this->secretariaService->secretariasPorPrefeitura_id(1);
+            $prefeituraId = session('prefeitura_selecionada');
+            $veiculos = $this->veiculoService->listarVeiculosPorPrefeitura($prefeituraId);
+            $secretarias = $this->secretariaService->secretariasPorPrefeitura_id($prefeituraId);
             return view('veiculo.index', compact('veiculos', 'secretarias'));
         } catch (\Exception $e) {
             Log::error('Erro ao listar veiculos: ' . $e->getMessage());
@@ -47,7 +48,10 @@ public function store(Request $request)
             'limite_abastecimento_periodo' => 'required|string',
             'secretaria_id' => 'required|string',
         ]);
-
+        $dados['quantidade_litros'] = (int) $dados['quantidade_litros'];
+        $dados['quantidade_abastecimentos'] = (int) $dados['quantidade_abastecimentos'];
+        $dados['secretaria_id'] = (int) $dados['secretaria_id'];
+        $dados['limite_abastecimento_periodo'] = (int) $dados['limite_abastecimento_periodo'];
         $resultado = $this->veiculoService->cadastrarVeiculo($dados);
 
         if ($resultado) {
@@ -64,7 +68,7 @@ public function store(Request $request)
 public function create(SecretariasController $secretariaController)
     {
         try {
-            $secretarias = $secretariaController->listarSecretariasPorPrefeitura_id(1);
+            $secretarias = $secretariaController->listarSecretariasPorPrefeitura_id(session('prefeitura_selecionada'));
 
             return view('veiculo._form', compact('secretarias'));
         } catch (\Exception $e) {

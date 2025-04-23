@@ -15,6 +15,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EnderecoController;
 use Illuminate\Support\Facades\Auth;
 
+
 Route::get('/', function () {
     return view('welcome');
 })->name('start');
@@ -40,8 +41,6 @@ Route::resource('log', LogController::class)->middleware('auth');
 Route::resource('abastecimentos', AbastecimentosController::class)->middleware('auth');
 Route::get('/enderecos', [EnderecoController::class, 'listarEnderecos'])->name('enderecos.index');
 Route::resource('enderecos', EnderecoController::class)->middleware('auth');
-Route::post('/filtro-prefeitura', function (Illuminate\Http\Request $request) {
-    session(['prefeitura_id' => $request->prefeitura_id]);
-    return back();
-})->name('filtro.prefeitura');
+Route::post('/filtro-prefeitura', [PrefeituraController::class, 'filtroPrefeitura'])->name('filtro.prefeitura');
+
 

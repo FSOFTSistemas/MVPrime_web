@@ -23,7 +23,8 @@ class PostosController extends Controller
     public function index()
     {
         try {
-            $postos = $this->postoService->listarPostosPorPrefeitura(1);
+            $prefeituraId = session('prefeitura_selecionada');
+            $postos = $this->postoService->listarPostosPorPrefeitura($prefeituraId);
             $enderecos = $this->enderecoService->listarEnderecos();
             return view('posto.index', compact('postos', 'enderecos'));
         } catch (\Exception $e) {
@@ -35,7 +36,7 @@ class PostosController extends Controller
     public function create(PrefeituraService $prefeiturasService, EnderecoService $enderecoService)
     {
         try {
-            $prefeituras = $prefeiturasService->listarPrefeituras();
+            $prefeituras = $prefeiturasService->prefeiturasPorEmpresa_id(Auth::user()->empresa_id);
             $enderecos = $enderecoService->listarEnderecos();
 
             return view('posto._form', compact('prefeituras', 'enderecos'));
@@ -80,7 +81,7 @@ class PostosController extends Controller
                 'endereco_id' => 'required|integer',
             ]);
             
-            $dados['prefeituras_id'] = Auth::user()->prefeituras_id;
+            $dados['prefeituras_id'] = session('prefeitura_selecionada');;
             $resultado = $this->postoService->atualizarPosto($id, $dados);
 
             if ($resultado) {
