@@ -4,13 +4,14 @@
 
 @section('content_header')
     <h1>Gerenciamento de Veiculos</h1>
+    <hr>
 @stop
 
 @section('content')
     <div class="row mb-3">
         <div class="col">
             <!-- Botão para abrir uma nova tela -->
-            <a href="{{ route('veiculos.create') }}" class="btn btn-success float-end">+ Novo Veiculo</a>
+            <a href="{{ route('veiculos.create') }}" class="btn bluebtn float-end rounded-pill"><i class="fa fa-plus"></i> Novo Veiculo</a>
         </div>
     </div>
 

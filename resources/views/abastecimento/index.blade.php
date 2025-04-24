@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 @section('content_header')
     <h1>Gerenciamento de Abastecimentos</h1>
+    <hr>
 @stop
 
 @section('content')

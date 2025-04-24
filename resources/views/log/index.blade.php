@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 @section('content_header')
     <h1>Log do sistema</h1>
+    <hr>
 @stop
 
 @section('content')

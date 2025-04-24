@@ -4,39 +4,50 @@
 
 @section('content_header')
     <h1 class="text-dark">Gerenciar Empresa</h1>
+    <hr>
 @endsection
 
 @section('content')
-    <div class="card shadow-lg rounded">
+    <div class="card">
         <div class="card-body">
             <form action="{{ route('empresas.store') }}" method="POST">
                 @csrf
-                <div class="input-group mb-4">
-                    <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="Digite o CNPJ" required>
-                    <button class="btn btn-outline-primary" type="button" id="btnBuscarCnpj">
-                        <i class="bi bi-search"></i> Buscar CNPJ
-                    </button>
-                </div>
-
-                <div class="mb-3">
-                    <label for="razao_social" class="form-label text-dark">Razão Social</label>
-                    <input type="text" class="form-control" id="razao_social" name="razao_social" placeholder="Razão Social" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="endereco" class="form-label text-dark">Endereço</label>
+                <div class="form-group row">
                     <div class="input-group">
+                        <label for="cnpj" class="col-md-3 label-control">* CNPJ:</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="Digite o CNPJ" required>
+                        </div>
+                        <button class="btn btn-outline-primary" type="button" id="btnBuscarCnpj">
+                            <i class="bi bi-search"></i> Buscar CNPJ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                        <label for="razao_social" class=" col-md-3 label-control">* Razão Social</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="razao_social" name="razao_social" placeholder="Razão Social" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="endereco" class="col-md-3 label-control">Endereço</label>
+                    <div class="col-md-3">
                         <select class="form-control" id="endereco" name="endereco_id" required>
                             <option value="">Selecione um endereço</option>
                             @foreach ($enderecos ?? [] as $endereco)
                                 <option value="{{ $endereco['id'] }}">{{ $endereco['logradouro'] }}, {{ $endereco['numero'] }}</option>
                             @endforeach
                         </select>
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEndereco">+ Novo</button>
                     </div>
+                    <button type="button" class="btn bluebtn" data-bs-toggle="modal" data-bs-target="#modalEndereco">+ Novo</button>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100 py-2">Salvar</button>
+                <div class="card-footer">
+                    <a href="{{ route('empresas.index') }}" class="btn btn-secondary">Voltar</a>
+                    <button type="submit" class="btn bluebtn">Salvar</button>
+                </div>
             </form>
         </div>
     </div>

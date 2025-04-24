@@ -1,6 +1,6 @@
 @inject('layoutHelper', 'JeroenNoten\LaravelAdminLte\Helpers\LayoutHelper')
 
-<nav class="main-header navbar navbar-expand-lg navbar-dark" style="background-color: #1E3A5F;">  <!-- Azul marinho escuro -->
+<nav class="main-header navbar navbar-expand-lg navbar-dark" style="background-color: var(--blue-2);">  <!-- Azul marinho escuro -->
     <div class="container-fluid">
         {{-- Navbar left links --}}
         <ul class="navbar-nav">
@@ -18,10 +18,14 @@
         <ul class="navbar-nav ml-auto">
             <form action="{{ route('filtro.prefeitura') }}" method="POST" class="form-inline ml-2 d-flex justify-content-center align-items-center">
                 @csrf
-                <div class="mb-3">
-                    <label for="prefeitura_id" class="form-label text-white d-block text-center" style="font-size: 16px;">Prefeitura</label>
-                    <select class="form-control" id="prefeitura" name="prefeitura_id" required onchange="this.form.submit()" style="border-radius: 5px; width: 250px;">
-                        <option value="">Selecione uma Prefeitura</option>
+                <div class="input-group input-group-sm align-items-center">
+                    <div class="input-group-prepend mr-2">
+                        <span class="input-group-text border-0 p-0 pr-2" style="font-size: 0.875rem; background-color: transparent">
+                            <label for="prefeitura_id" class="mb-0" style="font-size: 16px; color: #fff; font-weight: 400">Prefeitura:</label>
+                        </span>
+                    </div>
+                    <select class="form-control form-control-navbar" id="prefeitura" name="prefeitura_id" required onchange="this.form.submit()" style="border-radius: 5px;">
+                        <option value="">Selecione...</option>
                         @foreach (session('prefeituras', []) as $prefeitura)
                             <option value="{{ $prefeitura['id'] }}" {{ session('prefeitura_selecionada') == $prefeitura['id'] ? 'selected' : '' }}>
                                 {{ $prefeitura['razao_social'] }}
