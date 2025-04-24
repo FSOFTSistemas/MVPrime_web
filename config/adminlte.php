@@ -310,6 +310,10 @@ return [
             'url'  => '/empresas',
             'icon' => 'fas fa-building'
         ],
+        [   
+            'text'    => 'Prefeituras',
+            'icon'    => 'fas fa-landmark',
+            'submenu' => [
         [
             'text' => 'Prefeitura',
             'url'  => '/prefeituras',
@@ -324,6 +328,8 @@ return [
             'text' => 'Motoristas',
             'url'  => '/motoristas',
             'icon' => 'fas fa-id-card'
+        ]
+            ]
         ],
         [
             'text' => 'Veículos',
