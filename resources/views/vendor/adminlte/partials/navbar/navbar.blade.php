@@ -16,10 +16,9 @@
 
         {{-- Navbar right links --}}
         <ul class="navbar-nav ml-auto">
-            <form action="{{ route('filtro.prefeitura') }}" method="POST" class="form-inline ml-2 d-flex justify-content-center align-items-center">
+            <form action="{{ route('filtro.prefeitura') }}" method="POST" class="form-inline ml-2 d-flex align-items-center">
                 @csrf
-                <div class="mb-3">
-                    <label for="prefeitura_id" class="form-label text-white d-block text-center" style="font-size: 16px;">Prefeitura</label>
+                <div class="mb-0 d-flex align-items-center">
                     <select class="form-control" id="prefeitura" name="prefeitura_id" required onchange="this.form.submit()" style="border-radius: 5px; width: 250px;">
                         <option value="">Selecione uma Prefeitura</option>
                         @foreach (session('prefeituras', []) as $prefeitura)
