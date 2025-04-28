@@ -8,13 +8,14 @@ use Carbon\Carbon;
 
 @section('content_header')
     <h1>Gerenciamento de Motoristas</h1>
+    <hr>
 @stop
 
 @section('content')
     <div class="row mb-3">
         <div class="col">
             <!-- Botão para abrir uma nova tela -->
-            <a href="{{ route('motoristas.create') }}" class="btn btn-success float-end">+ Novo Motorista</a>
+            <a href="{{ route('motoristas.create') }}" class="btn bluebtn float-end rounded-pill"><i class="fa fa-plus"></i> Novo Motorista</a>
         </div>
     </div>
 

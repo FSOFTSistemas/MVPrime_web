@@ -4,17 +4,17 @@
 
 @section('content_header')
     <h1>Gerenciamento de Usuários</h1>
+    <hr>
 @stop
 
 @section('content')
     <div class="row mb-3">
         <div class="col">
             <!-- Botão para abrir o modal de criação -->
-            <button class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#createUsuarioModal">+ Novo
+            <button class="btn bluebtn float-end rounded-pill" data-bs-toggle="modal" data-bs-target="#createUsuarioModal"><i class="fa fa-plus"></i> Novo
                 Usuário</button>
         </div>
     </div>
-
     <!-- DataTable Customizado -->
     @component('components.data-table', [
         'responsive' => [

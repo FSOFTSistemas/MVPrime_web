@@ -3,7 +3,8 @@
 @section('title', 'Cadastrar Secretaria')
 
 @section('content_header')
-    <h1>Novo Secretaria</h1>
+    <h1>Nova Secretaria</h1>
+    <hr>
 @stop
 
 @section('content')
@@ -12,25 +13,23 @@
             <form action="{{ route('secretarias.store') }}" method="POST" id="form-secretaria">
                 @csrf
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="nome" class="form-label">Nome</label>
-                        <div class="input-group">
+                <div class="form-group row">
+                        <label for="nome" class="col-md-3 label-control">* Nome</label>
+                        <div class="col-md-3">
                             <input type="text" class="form-control" id="nome" name="nome" required>
+                        </div>
+                </div>
+                    <div class="form-group row">
+                        <label for="responsavel" class="col-md-3 label-control">* Responsável</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="responsavel" name="responsavel" required>
                         </div>
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label for="responsavel" class="form-label">Responsável</label>
-                        <input type="text" class="form-control" id="responsavel" name="responsavel" required>
+                    <div class="card-footer">
+                        <a href="{{ route('secretarias.index') }}" class="btn btn-secondary">Voltar</a>
+                        <button type="submit" class="btn bluebtn">Salvar</button>
                     </div>
-
-                </div>
-
-                <div class="mt-4 text-end">
-                    <a href="{{ route('secretarias.index') }}" class="btn btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Salvar Secretaria</button>
-                </div>
             </form>
         </div>
     </div>

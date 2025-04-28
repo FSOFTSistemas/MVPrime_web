@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1>Novo Veiculo</h1>
+    <hr>
 @stop
 
 @section('content')
@@ -12,36 +13,46 @@
             <form action="{{ route('veiculos.store') }}" method="POST" id="form-veiculo">
                 @csrf
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="nome" class="form-label">Placa</label>
+                <div class="form-group row">
+                    <label for="placa" class="col-md-3 label-control">* Placa:</label>
+                    <div class="col-md-6">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="placa" name="placa"  required>
+                            <input type="text" class="form-control" id="placa" name="placa" required>
                         </div>
                     </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Modelo</label>
+                </div>
+                
+                <div class="form-group row">
+                    <label class="col-md-3 label-control">* Modelo:</label>
+                    <div class="col-md-6">
                         <input type="text" class="form-control" name="modelo" required>
                     </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Ano</label>
-                        <input type="text" class="form-control" name="ano"  required>
+                </div>
+                
+                <div class="form-group row">
+                    <label class="col-md-3 label-control">* Ano:</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" name="ano" required>
                     </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Qtd de litros máxima</label>
+                </div>
+                
+                <div class="form-group row">
+                    <label class="col-md-3 label-control">* Qtd de litros máxima:</label>
+                    <div class="col-md-6">
                         <input type="text" class="form-control" name="quantidade_litros" required>
                     </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Qtd de abastecimentos</label>
+                </div>
+                
+                <div class="form-group row">
+                    <label class="col-md-3 label-control">* Qtd de abastecimentos:</label>
+                    <div class="col-md-6">
                         <input type="text" class="form-control" name="quantidade_abastecimentos" required>
                     </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Período de limite</label>
+                </div>
+                
+                <div class="form-group row">
+                    <label class="col-md-3 label-control">* Período de limite:</label>
+                    <div class="col-md-6">
                         <select class="form-control" name="limite_abastecimento_periodo" required>
                             <option value="" selected disabled>Selecione um período</option>
                             <option value="1">Dia</option>
@@ -49,11 +60,11 @@
                             <option value="3">Mês</option>
                         </select>
                     </div>
-
-
-
-                    <div class="col-12 mb-3">
-                        <label for="secretaria_id" class="form-label">Secretaria</label>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="secretaria_id" class="col-md-3 label-control">* Secretaria:</label>
+                    <div class="col-md-6">
                         <select class="form-control" id="secretaria" name="secretaria_id" required>
                             <option value="">Selecione uma Secretaria</option>
                             @foreach ($secretarias as $secretaria)
@@ -63,13 +74,12 @@
                             @endforeach
                         </select>
                     </div>
-
-
                 </div>
+                
 
-                <div class="mt-4 text-end">
-                    <a href="{{ route('veiculos.index') }}" class="btn btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Salvar Veiculo</button>
+                <div class="card-footer">
+                    <a href="{{ route('veiculos.index') }}" class="btn btn-secondary">Voltar</a>
+                    <button type="submit" class="btn bluebtn">Salvar</button>
                 </div>
             </form>
         </div>

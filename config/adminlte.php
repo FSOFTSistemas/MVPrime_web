@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => '<b>MV</b>Prime',
+    // 'logo_img' => 'vendor/adminlte/dist/img/logoMV.png',
+    'logo_img_class' => 'brand-image elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt' => 'MV Logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/logoMV.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -113,11 +113,11 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+            'path' => 'vendor/adminlte/dist/img/logoMV.png',
+            'alt' => 'Preloader Image',
             'effect' => 'animation__shake',
-            'width' => 60,
-            'height' => 60,
+            'width' => 350,
+            'height' => 170,
         ],
     ],
 
@@ -310,6 +310,10 @@ return [
             'url'  => '/empresas',
             'icon' => 'fas fa-building'
         ],
+        [   
+            'text'    => 'Prefeituras',
+            'icon'    => 'fas fa-landmark',
+            'submenu' => [
         [
             'text' => 'Prefeitura',
             'url'  => '/prefeituras',
@@ -324,6 +328,8 @@ return [
             'text' => 'Motoristas',
             'url'  => '/motoristas',
             'icon' => 'fas fa-id-card'
+        ]
+            ]
         ],
         [
             'text' => 'Veículos',

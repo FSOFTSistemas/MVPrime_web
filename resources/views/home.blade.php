@@ -3,18 +3,192 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
-@stop
-
-@section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+        <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Abastecimentos por Mês</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <canvas id="abastecimentosMes" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 487px;" width="487" height="250" class="chartjs-render-monitor"></canvas>
+              </div>
+            </div>
+          </div>
+    
+        <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Abastecimentos por Dia - <span id="mes-atual"></span></h3>
+            </div>
+            <div class="card-body">
+              <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <canvas id="abastecimentosDia" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 487px;" width="487" height="250" class="chartjs-render-monitor"></canvas>
+              </div>
+            </div>
+          </div>
+    
+        <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Abastecimentos por Prefeitura</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <canvas id="abastecimentosPrefeituras" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 487px;" width="487" height="250" class="chartjs-render-monitor"></canvas>
+              </div>
+            </div>
+          </div>
+    
 @stop
 
 @section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const mesLabels = @json($mesLabels);
+    const mesData = @json($mesData);
+
+    const ctxAbastecimentos = document.getElementById('abastecimentosMes').getContext('2d');
+    const abastecimentoChart = new Chart(ctxAbastecimentos, {
+        type: 'bar',
+        data: {
+            labels: mesLabels,
+            datasets: [{
+                label: 'Valores (R$)',
+                data: mesData,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            aspectRatio: 1,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+    const diaLabels = @json($diaLabels);
+    const diaData = @json($diaData);
+
+    const ctxAbastecimentosDia = document.getElementById('abastecimentosDia').getContext('2d');
+    const abastecimentoDiaChart = new Chart(ctxAbastecimentosDia, {
+        type: 'line',
+        data: {
+            labels: diaLabels,
+            datasets: [{
+                label: 'Valor (R$)',
+                data: diaData,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            aspectRatio: 1,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+    const dados = @json($dadosPrefeitura);
+
+    function formatarMes(anoMes) {
+        const [ano, mes] = anoMes.split('-');
+        const nomesMeses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+        return `${nomesMeses[parseInt(mes) - 1]}/${ano}`;
+    }
+
+    const mesesOriginais = [...new Set(dados.map(item => item.mes))].sort();
+    const mesesFormatados = mesesOriginais.map(formatarMes); 
+    const prefeituras = [...new Set(dados.map(item => item.prefeitura_nome))];
+
+    function randomColor() {
+        const r = Math.floor(Math.random() * 255);
+        const g = Math.floor(Math.random() * 255);
+        const b = Math.floor(Math.random() * 255);
+        return `rgba(${r}, ${g}, ${b}, 1)`;
+    }
+
+    const datasets = prefeituras.map(prefeitura => {
+        const cor = randomColor();
+        return {
+            label: prefeitura,
+            data: mesesOriginais.map(mesOriginal => {
+                const registro = dados.find(d => d.mes === mesOriginal && d.prefeitura_nome === prefeitura);
+                return registro ? registro.total_valor : 0;
+            }),
+            borderColor: cor,
+            backgroundColor: cor,
+            fill: false,
+            tension: 0.4
+        };
+    });
+
+    const ctx = document.getElementById('abastecimentosPrefeituras').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: mesesFormatados,
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
+
+<script>
+    const meses = [
+  "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+];
+
+const dataAtual = new Date();
+const mesAtual = meses[dataAtual.getMonth()];
+
+document.getElementById("mes-atual").textContent = mesAtual;
+</script>
 @stop
+
+@section('css')
+<style>
+    .card-header {
+        background-color: var(--blue-1) !important;
+        color: #fff;
+    }
+</style>
+<style>
+    .card-header {
+        background-color: var(--blue-1) !important;
+        color: #fff;
+    }
+
+    .content-wrapper {
+        min-height: 100vh; /* Força altura mínima */
+    }
+</style>

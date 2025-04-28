@@ -34,7 +34,7 @@ class VeiculosService
             return null;
         } catch (\Exception $e) {
             Log::error("Erro ao listar veiculos: " . $e->getMessage());
-            return null;
+            return $e->getMessage();
         }
     }
 

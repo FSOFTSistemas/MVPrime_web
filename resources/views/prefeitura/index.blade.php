@@ -4,13 +4,14 @@
 
 @section('content_header')
     <h1>Gerenciamento de Prefeituras</h1>
+    <hr>
 @stop
 
 @section('content')
     <div class="row mb-3">
         <div class="col">
             <!-- Botão para abrir uma nova tela -->
-            <a href="{{ route('prefeituras.create') }}" class="btn btn-success float-end">+ Nova Prefeitura</a>
+            <a href="{{ route('prefeituras.create') }}" class="btn bluebtn float-end rounded-pill"><i class="fa fa-plus"></i> Nova Prefeitura</a>
         </div>
     </div>
 

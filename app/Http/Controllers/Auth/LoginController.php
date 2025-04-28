@@ -11,15 +11,18 @@ use App\Models\Prefeitura; // Importando o modelo Prefeitura
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission; // Importando o modelo de permissão do Spatie
 use App\Services\PrefeituraService;
+use App\Services\UserService;
 
 class LoginController extends Controller
 {
     protected $prefeituraService;
+    protected $userService;
 
     // Injeção de dependência do PrefeituraService no construtor
-    public function __construct(PrefeituraService $prefeituraService)
+    public function __construct(PrefeituraService $prefeituraService, UserService $userService)
     {
         $this->prefeituraService = $prefeituraService; // Atribui o serviço à variável da classe
+        $this->userService = $userService;
     }
 
     public function login(Request $request)
@@ -71,6 +74,14 @@ class LoginController extends Controller
             
             // Armazenar as prefeituras na sessão
             Session::put('prefeituras', $prefeituras);
+
+            $userData = $this->userService->getUserById($data['usuario']['id']);
+
+            $prefeituraUser = $userData['prefeitura']['id'];
+
+            if(isset($prefeituraUser)){
+                Session::put('prefeitura_id', $prefeituraUser);
+            }
 
             // Faz login do usuário no Laravel
             Auth::login($user);

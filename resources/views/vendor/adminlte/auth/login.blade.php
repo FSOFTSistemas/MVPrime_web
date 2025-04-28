@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 @stop
 
+@section('adminlte_css')
+    <link rel="stylesheet" href="{{ asset('css/custom-login.css') }}"> <!-- CSS Personalizado -->
+@stop
+
 @php
     $loginUrl = View::getSection('login_url') ?? config('adminlte.login_url', 'login');
     $registerUrl = View::getSection('register_url') ?? config('adminlte.register_url', 'register');
@@ -82,22 +86,5 @@
             </div>
         </div>
     </form>
-@stop
-
-@section('auth_footer')
-    @if($passResetUrl)
-        <p class="my-0">
-            <a href="{{ $passResetUrl }}">
-                {{ __('adminlte::adminlte.i_forgot_my_password') }}
-            </a>
-        </p>
-    @endif
-
-    @if($registerUrl)
-        <p class="my-0">
-            <a href="{{ $registerUrl }}">
-                {{ __('adminlte::adminlte.register_a_new_membership') }}
-            </a>
-        </p>
-    @endif
+    
 @stop

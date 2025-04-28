@@ -4,13 +4,14 @@
 
 @section('content_header')
     <h1 class="text-dark">Gerenciamento de Empresas</h1>
+    <hr>
 @stop
 
 @section('content')
     <div class="row mb-3">
         <div class="col">
             <!-- Botão para abrir uma nova tela -->
-            <a href="{{ route('empresas.create') }}" class="btn btn-primary float-end rounded-pill px-4 py-2">+ Nova Empresa</a>
+            <a href="{{ route('empresas.create') }}" class="btn bluebtn float-end rounded-pill"><i class="fa fa-plus"></i> Nova Empresa</a>
         </div>
     </div>
 

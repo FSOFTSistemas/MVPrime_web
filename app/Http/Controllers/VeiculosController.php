@@ -26,7 +26,7 @@ class VeiculosController extends Controller
     public function index()
     {
         try {
-            $prefeituraId = session('prefeitura_selecionada');
+            $prefeituraId = session('prefeitura_id');
             $veiculos = $this->veiculoService->listarVeiculosPorPrefeitura($prefeituraId);
             $secretarias = $this->secretariaService->secretariasPorPrefeitura_id($prefeituraId);
             return view('veiculo.index', compact('veiculos', 'secretarias'));
@@ -68,7 +68,7 @@ public function store(Request $request)
 public function create(SecretariasController $secretariaController)
     {
         try {
-            $secretarias = $secretariaController->listarSecretariasPorPrefeitura_id(session('prefeitura_selecionada'));
+            $secretarias = $secretariaController->listarSecretariasPorPrefeitura_id(session('prefeitura_id'));
 
             return view('veiculo._form', compact('secretarias'));
         } catch (\Exception $e) {

@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1>Nova Prefeitura</h1>
+    <hr>
 @stop
 
 @section('content')
@@ -12,29 +13,37 @@
             <form action="{{ route('prefeituras.store') }}" method="POST" id="form-prefeitura">
                 @csrf
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="cnpj" class="form-label">CNPJ</label>
+                <div class="form-group row">
+                    <label for="cnpj" class="col-md-3 label-control">* CNPJ:</label>
+                    <div class="col-md-4">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="cnpj" name="cnpj" required>
-                            <button type="button" class="btn btn-outline-primary" id="btnBuscarCnpj">
-                                🔍
-                            </button>
+                            <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="Digite o CNPJ" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="button" id="btnBuscarCnpj">
+                                    <i class="bi bi-search"></i> Buscar CNPJ
+                                </button>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label for="razao_social" class="form-label">Razão Social</label>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="razao_social" class="col-md-3 label-control">* Razão Social:</label>
+                    <div class="col-md-6">
                         <input type="text" class="form-control" id="razao_social" name="razao_social" required>
                     </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label for="responsavel" class="form-label">Responsável</label>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="responsavel" class="col-md-3 label-control">* Responsável:</label>
+                    <div class="col-md-6">
                         <input type="text" class="form-control" id="responsavel" name="responsavel" required>
                     </div>
-
-                    <div class="col-md-5 mb-3">
-                        <label for="endereco_id" class="form-label">Endereço</label>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="endereco_id" class="col-md-3 label-control">* Endereço:</label>
+                    <div class="col-md-4">
                         <select class="form-control" id="endereco" name="endereco_id" required>
                             <option value="">Selecione um endereço</option>
                             @foreach ($enderecos as $endereco)
@@ -44,18 +53,16 @@
                             @endforeach
                         </select>
                     </div>
-
-                    <div class="col-md-1 mb-3 d-flex align-items-end">
-                        <button type="button" class="btn btn-outline-success w-100" data-toggle="modal"
-                            data-target="#modalEndereco">+
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-outline-success w-100" data-toggle="modal" data-target="#modalEndereco">
+                            +
                         </button>
                     </div>
-
                 </div>
-
-                <div class="mt-4 text-end">
-                    <a href="{{ route('prefeituras.index') }}" class="btn btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Salvar Prefeitura</button>
+                
+                <div class="card-footer">
+                    <a href="{{ route('prefeituras.index') }}" class="btn btn-secondary">Voltar</a>
+                    <button type="submit" class="btn bluebtn">Salvar</button>
                 </div>
             </form>
         </div>

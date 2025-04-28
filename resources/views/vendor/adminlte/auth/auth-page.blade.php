@@ -25,14 +25,36 @@
 @section('classes_body'){{ $bodyClasses }}@stop
 
 @section('body')
+<div class="background">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+ </div>
     <div class="{{ $authType }}-box">
 
         {{-- Logo --}}
         <div class="{{ $authType }}-logo">
-            <a href="{{ $dashboardUrl }}">
+            <a href="#">
 
                 {{-- Logo Image --}}
-                @if (config('adminlte.auth_logo.enabled', false))
+                {{-- @if (config('adminlte.auth_logo.enabled', false))
                     <img src="{{ asset(config('adminlte.auth_logo.img.path')) }}"
                          alt="{{ config('adminlte.auth_logo.img.alt') }}"
                          @if (config('adminlte.auth_logo.img.class', null))
@@ -47,7 +69,7 @@
                 @else
                     <img src="{{ asset(config('adminlte.logo_img')) }}"
                          alt="{{ config('adminlte.logo_img_alt') }}" height="50">
-                @endif
+                @endif --}}
 
                 {{-- Logo Label --}}
                 {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}

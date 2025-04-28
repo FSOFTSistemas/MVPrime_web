@@ -12,29 +12,37 @@
             <form action="{{ route('postos.store') }}" method="POST" id="form-posto">
                 @csrf
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="cnpj" class="form-label">CNPJ</label>
+                <div class="form-group row">
+                    <label for="cnpj" class="col-md-3 label-control">* CNPJ:</label>
+                    <div class="col-md-6">
                         <div class="input-group">
                             <input type="text" class="form-control" id="cnpj" name="cnpj" required>
-                            <button type="button" class="btn btn-outline-primary" id="btnBuscarCnpj">
-                                🔍
-                            </button>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-outline-primary" id="btnBuscarCnpj">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label for="nome" class="form-label">Nome</label>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="nome" class="col-md-3 label-control">* Nome:</label>
+                    <div class="col-md-6">
                         <input type="text" class="form-control" id="nome" name="nome" required>
                     </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label for="responsavel" class="form-label">Responsável</label>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="responsavel" class="col-md-3 label-control">* Responsável:</label>
+                    <div class="col-md-6">
                         <input type="text" class="form-control" id="responsavel" name="responsavel" required>
                     </div>
-
-                    <div class="col-md-5 mb-3">
-                        <label for="endereco_id" class="form-label">Endereço</label>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="endereco_id" class="col-md-3 label-control">* Endereço:</label>
+                    <div class="col-md-5">
                         <select class="form-control" id="endereco" name="endereco_id" required>
                             <option value="">Selecione um endereço</option>
                             @foreach ($enderecos as $endereco)
@@ -44,16 +52,17 @@
                             @endforeach
                         </select>
                     </div>
-
-                    <div class="col-md-1 mb-3 d-flex align-items-end">
-                        <button type="button" class="btn btn-outline-success w-100" data-toggle="modal"
-                            data-target="#modalEndereco">+
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-outline-success w-100" data-toggle="modal" data-target="#modalEndereco">
+                            +
                         </button>
                     </div>
-
-                    <div class="col-12 mb-3">
-                        <label for="prefeitura_id" class="form-label">Prefeitura</label>
-                        <select class="form-control w-100"  id="prefeitura" name="prefeitura_id" required>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="prefeitura_id" class="col-md-3 label-control">* Prefeitura:</label>
+                    <div class="col-md-6">
+                        <select class="form-control" id="prefeitura" name="prefeitura_id" required>
                             <option value="">Selecione uma Prefeitura</option>
                             @foreach ($prefeituras as $prefeitura)
                                 <option value="{{ $prefeitura['id'] }}">
@@ -61,13 +70,13 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div>
                 </div>
+                
 
-                </div>
-
-                <div class="mt-4 text-end">
-                    <a href="{{ route('postos.index') }}" class="btn btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Salvar Posto</button>
+                <div class="card-footer">
+                    <a href="{{ route('postos.index') }}" class="btn btn-secondary">Voltar</a>
+                    <button type="submit" class="btn bluebtn">Salvar</button>
                 </div>
             </form>
         </div>
