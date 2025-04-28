@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -9,6 +10,15 @@ class UserService
 {
     protected $apiUrl = 'https://gestao-api.dev.br:4000/api/usuarios';
 
+    public function getuser()
+    {
+        if(Auth::user()->id == 1)
+        {
+            return $this->getAllUsers();
+        }else{
+            return $this->getUsersByPrefeitura(session('prefeitura_id'));
+        }
+    }
     // Método para buscar todos os usuários
     public function getAllUsers()
     {
@@ -89,8 +99,9 @@ class UserService
     {
         try {
             $token = session('jwt_token');
-
+            
             $response = Http::withToken($token)->post("https://gestao-api.dev.br:4000/api/usuarios", $data);
+            
 
             if ($response->successful()) {
                 return $response->json();

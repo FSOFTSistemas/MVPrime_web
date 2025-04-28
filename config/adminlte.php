@@ -305,36 +305,37 @@ return [
         ],
         ['header' => 'Gerenciamento'],
 
-        [
-            'text' => 'Empresa',
-            'url'  => '/empresas',
-            'icon' => 'fas fa-building'
-        ],
+        
         [   
             'text'    => 'Prefeituras',
             'icon'    => 'fas fa-landmark',
             'submenu' => [
-        [
-            'text' => 'Prefeitura',
-            'url'  => '/prefeituras',
-            'icon' => 'fas fa-landmark',
-        ],
-        [
-            'text' => 'Secretarias',
-            'url'  => '/secretarias',
-            'icon' => 'fas fa-sitemap',
-        ],
-        [
-            'text' => 'Motoristas',
-            'url'  => '/motoristas',
-            'icon' => 'fas fa-id-card'
-        ]
+                [
+                    'text' => 'Prefeitura',
+                    'url'  => '/prefeituras',
+                    'icon' => 'fas fa-landmark',
+                ],
+                [
+                    'text' => 'Secretarias',
+                    'url'  => '/secretarias',
+                    'icon' => 'fas fa-sitemap',
+                ],
+                [
+                    'text' => 'Motoristas',
+                    'url'  => '/motoristas',
+                    'icon' => 'fas fa-id-card'
+                ],
+                [
+                    'text' => 'Abastecimentos',
+                    'url'  => 'abastecimentos',
+                    'icon' => 'fas fa-tint'
+                ],
+                [
+                    'text' => 'Veículos',
+                    'url'  => '/veiculos',
+                    'icon' => 'fas fa-car'
+                ]
             ]
-        ],
-        [
-            'text' => 'Veículos',
-            'url'  => '/veiculos',
-            'icon' => 'fas fa-car'
         ],
         [
             'text' => 'Usuários',
@@ -342,19 +343,19 @@ return [
             'icon' => 'fas fa-users'
         ],
         [
-            'text' => 'Postos',
-            'url'  => 'postos',
-            'icon' => 'fas fa-gas-pump'
-        ],
-        [
             'text' => 'Log do Sistema',
             'url'  => 'log',
             'icon' => 'fas fa-clipboard-list'
         ],
         [
-            'text' => 'Abastecimentos',
-            'url'  => 'abastecimentos',
-            'icon' => 'fas fa-tint'
+            'text' => 'Postos',
+            'url'  => 'postos',
+            'icon' => 'fas fa-gas-pump'
+        ],
+        [
+            'text' => 'Empresa',
+            'url'  => '/empresas',
+            'icon' => 'fas fa-building'
         ],
     ],
 

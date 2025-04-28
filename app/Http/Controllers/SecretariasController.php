@@ -23,7 +23,7 @@ class SecretariasController extends Controller
     {
         try {
             $prefeituraId = session('prefeitura_selecionada');
-            $secretarias = $this->listarSecretariasPorPrefeitura_id( $prefeituraId );
+            $secretarias = $this->secretariaService->getSecretarias();
 
             return view('secretaria.index', compact('secretarias'));
         } catch (\Exception $e) {
@@ -32,16 +32,6 @@ class SecretariasController extends Controller
         }
     }
 
-    public function listarSecretariasPorPrefeitura_id($prefeitura_id)
-    {
-        try {
-            $secretarias = $this->secretariaService->secretariasPorPrefeitura_id($prefeitura_id);
-            return $secretarias;
-        } catch (\Exception $e) {
-            Log::error('Erro ao listar secretarias por id: ' . $e->getMessage());
-            return back()->with('error', 'Erro ao carregar as secretarias.');
-        }
-    }
 
     public function create(PrefeituraService $prefeituraService)
     {

@@ -2,12 +2,23 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class PrefeituraService
 {
     protected $apiUrl = 'https://gestao-api.dev.br:4000/api/prefeituras';
+
+    public function getPrefeituras()
+    {
+        if(Auth::user()->id == 1)
+        {
+            return $this->listarPrefeituras();
+        }else{
+            return $this->buscarPrefeituraPorId(session('prefeitura_id'));
+        }
+    }
 
     public function listarPrefeituras()
     {

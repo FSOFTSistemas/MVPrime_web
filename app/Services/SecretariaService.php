@@ -2,12 +2,23 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class SecretariaService
 {
     protected $apiUrl = 'https://gestao-api.dev.br:4000/api/secretarias';
+
+    public function getSecretarias()
+    {
+        if(Auth::user()->id == 1)
+        {
+            return $this->listarSecretaria();
+        }else{
+            return $this->secretariasPorPrefeitura_id(session('prefeitura_id'));
+        }
+    }
 
     public function listarSecretaria()
     {
