@@ -13,21 +13,20 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\AbastecimentosController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EnderecoController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('start');
+    return redirect('/login');
+});
 
 Auth::routes();
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login'])->name('login.custom');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('home', function () {
-    return view('home'); // Alterar para a página inicial após login
-})->name('home');
+Route::get('home', [HomeController::class, 'index'])->name('home');
 
 
 Route::resource('empresas', EmpresaController::class)->middleware('auth');
@@ -42,5 +41,4 @@ Route::resource('abastecimentos', AbastecimentosController::class)->middleware('
 Route::get('/enderecos', [EnderecoController::class, 'listarEnderecos'])->name('enderecos.index');
 Route::resource('enderecos', EnderecoController::class)->middleware('auth');
 Route::post('/filtro-prefeitura', [PrefeituraController::class, 'filtroPrefeitura'])->name('filtro.prefeitura');
-
 

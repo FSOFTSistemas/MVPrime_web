@@ -21,10 +21,10 @@
                 <div class="input-group input-group-sm align-items-center">
                     <div class="input-group-prepend mr-2">
                         <span class="input-group-text border-0 p-0 pr-2" style="font-size: 0.875rem; background-color: transparent">
-                            <label for="prefeitura_id" class="mb-0" style="font-size: 16px; color: #fff; font-weight: 400">Prefeitura:</label>
+                            <label for="prefeitura_id" class="mb-0" style="font-size: 16px; color: #fff; font-weight: 400;">Prefeitura:</label>
                         </span>
                     </div>
-                    <select class="form-control form-control-navbar" id="prefeitura" name="prefeitura_id" required onchange="this.form.submit()" style="border-radius: 5px;">
+                    <select class="form-control" id="prefeitura" name="prefeitura_id" required onchange="this.form.submit()" style="border-radius: 5px;">
                         <option value="">Selecione...</option>
                         @foreach (session('prefeituras', []) as $prefeitura)
                             <option value="{{ $prefeitura['id'] }}" {{ session('prefeitura_selecionada') == $prefeitura['id'] ? 'selected' : '' }}>

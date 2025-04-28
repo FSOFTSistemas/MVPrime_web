@@ -116,8 +116,8 @@ return [
             'path' => 'vendor/adminlte/dist/img/logoMV.png',
             'alt' => 'Preloader Image',
             'effect' => 'animation__shake',
-            'width' => 420,
-            'height' => 204,
+            'width' => 350,
+            'height' => 170,
         ],
     ],
 
