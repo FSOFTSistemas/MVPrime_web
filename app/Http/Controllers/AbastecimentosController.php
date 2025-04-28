@@ -31,11 +31,11 @@ class AbastecimentosController extends Controller
     public function index()
     {
         try {
-            $prefeituraId = session('prefeitura_selecionada');
-            $abastecimentos = $this->abastecimentoService->listarPorPrefeitura($prefeituraId);
-            $veiculos = $this->veiculosService->listarVeiculos();
-            $motoristas = $this->motoristasService->listarMotoristas();
-            $postos = $this->postoService->listarPostos();
+
+            $abastecimentos = $this->abastecimentoService->getAbastecimentos();
+            $veiculos = $this->veiculosService->getVeiculos();
+            $motoristas = $this->motoristasService->getMotoristas();
+            $postos = $this->postoService->getPostos();
             return view('abastecimento.index', compact('abastecimentos', 'veiculos', 'motoristas', 'postos'));
         } catch (\Exception $e) {
             Log::error('Erro ao listar abastecimentos: ' . $e->getMessage());

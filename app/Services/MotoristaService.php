@@ -5,11 +5,22 @@ namespace App\Services;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 class MotoristaService
 {
     protected $apiUrl = 'https://gestao-api.dev.br:4000/api/motoristas';
 
     
+    public function getMotoristas()
+    {
+        if(Auth::user()->id == 1)
+        {
+            return $this->listarMotoristas();
+        }else{
+            return $this->listarMotoristasPorPrefeitura(session('prefeitura_id'));
+        }
+    }
 
 public function listarMotoristas()
 {

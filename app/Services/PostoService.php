@@ -2,12 +2,23 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class PostoService
 {
     protected $apiUrl = 'https://gestao-api.dev.br:4000/api/postos';
+
+    public function getPostos()
+    {
+        if(Auth::user()->id == 1)
+        {
+            return $this->listarPostos();
+        }else{
+            return $this->listarPostosPorPrefeitura(session('prefeitura_id'));
+        }
+    }
 
     public function listarPostos()
     {
