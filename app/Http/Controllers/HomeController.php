@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\HomeService;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -20,8 +20,24 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $dados = $this->homeService->listarAbastecimentos();
+        Carbon::setLocale('pt_BR');
 
-        return view('home');
+        $dadosDias = collect($this->homeService->listarAbastecimentosDia());
+        $diaLabels = $dadosDias->pluck('dia')->map(function ($dia) {
+            return \Carbon\Carbon::parse($dia)->translatedFormat('d');
+        })->toArray();
+        $diaData = $dadosDias->pluck('total_valor')->toArray();
+
+
+        $dadosMes = collect($this->homeService->listarAbastecimentosMes());
+        $mesLabels = $dadosMes->pluck('mes')->map(function ($mes) {
+            return \Carbon\Carbon::parse($mes)->translatedFormat('M-Y');
+        })->toArray();
+        $mesData = $dadosMes->pluck('total_valor')->toArray();
+        
+        
+        $dadosPrefeitura = $this->homeService->listarAbastecimentosPrefeitura();
+
+        return view('home', compact('mesLabels', 'mesData', 'diaLabels', 'diaData', 'dadosPrefeitura'));
     }
 }

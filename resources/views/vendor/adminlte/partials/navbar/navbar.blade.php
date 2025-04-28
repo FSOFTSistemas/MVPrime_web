@@ -18,6 +18,7 @@
         <ul class="navbar-nav ml-auto">
             <form action="{{ route('filtro.prefeitura') }}" method="POST" class="form-inline ml-2 d-flex justify-content-center align-items-center">
                 @csrf
+                @if(Auth::user()->id == 1)
                 <div class="input-group input-group-sm align-items-center">
                     <div class="input-group-prepend mr-2">
                         <span class="input-group-text border-0 p-0 pr-2" style="font-size: 0.875rem; background-color: transparent">
@@ -27,12 +28,13 @@
                     <select class="form-control" id="prefeitura" name="prefeitura_id" required onchange="this.form.submit()" style="border-radius: 5px;">
                         <option value="">Selecione...</option>
                         @foreach (session('prefeituras', []) as $prefeitura)
-                            <option value="{{ $prefeitura['id'] }}" {{ session('prefeitura_selecionada') == $prefeitura['id'] ? 'selected' : '' }}>
+                            <option value="{{ $prefeitura['id'] }}">
                                 {{ $prefeitura['razao_social'] }}
                             </option>
                         @endforeach
                     </select>
                 </div>
+                @endif
             </form>
 
             {{-- Custom right links --}}

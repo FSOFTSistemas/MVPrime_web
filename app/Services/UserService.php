@@ -65,7 +65,8 @@ class UserService
     public function getUserById($id)
     {
         try {
-            $response = Http::get("{$this->apiUrl}/{$id}");
+            $token = session('jwt_token');
+            $response = Http::withToken($token)->get("{$this->apiUrl}/{$id}");
 
             // Verifica se a requisição foi bem-sucedida
             if ($response->successful()) {
