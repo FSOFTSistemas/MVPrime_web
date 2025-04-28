@@ -26,7 +26,7 @@ class PrefeituraController extends Controller
     public function index()
     {
         try {
-            $prefeituras = $this->litarPrefeiturasPorEmpresa_id(Auth::user()->empresa_id);
+            $prefeituras = $this->prefeituraService->getPrefeituras();
             $enderecos = $this->enderecoService->listarEnderecos();
             return view('prefeitura.index', compact('prefeituras', 'enderecos'));
         } catch (\Exception $e) {
@@ -135,7 +135,7 @@ class PrefeituraController extends Controller
         
         // Atualiza a sessão com a prefeitura selecionada
         if ($prefeituraId) {
-            \Session::put('prefeitura_selecionada', $prefeituraId);
+            Session::put('prefeitura_selecionada', $prefeituraId);
         }
 
         // Redireciona de volta para a página com os dados filtrados

@@ -5,11 +5,22 @@ namespace App\Services;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 class VeiculosService
 {
     protected $apiUrl = 'https://gestao-api.dev.br:4000/api/veiculos';
-
     
+    public function getVeiculos()
+    {
+        if(Auth::user()->id == 1)
+        {
+            return $this->listarVeiculos();
+        }else{
+            return $this->listarVeiculosPorPrefeitura(session('prefeitura_id'));
+        }
+
+    }
 
     public function listarVeiculos()
     {

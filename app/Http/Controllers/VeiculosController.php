@@ -27,8 +27,8 @@ class VeiculosController extends Controller
     {
         try {
             $prefeituraId = session('prefeitura_id');
-            $veiculos = $this->veiculoService->listarVeiculosPorPrefeitura($prefeituraId);
-            $secretarias = $this->secretariaService->secretariasPorPrefeitura_id($prefeituraId);
+            $veiculos = $this->veiculoService->getVeiculos();
+            $secretarias = $this->secretariaService->getSecretarias();
             return view('veiculo.index', compact('veiculos', 'secretarias'));
         } catch (\Exception $e) {
             Log::error('Erro ao listar veiculos: ' . $e->getMessage());
