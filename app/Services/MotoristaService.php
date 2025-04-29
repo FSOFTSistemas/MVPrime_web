@@ -91,7 +91,8 @@ public function listarMotoristasPorPrefeitura($prefeituraId)
         try {
             $token = session('jwt_token');
             $response = Http::withToken($token)->post($this->apiUrl, $dados);
-
+            // dd($response);
+            
             return $response->successful() ? $response->json() : null;
         } catch (\Exception $e) {
             Log::error("Erro ao cadastrar motorista: " . $e->getMessage());

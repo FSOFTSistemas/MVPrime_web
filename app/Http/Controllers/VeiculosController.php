@@ -9,7 +9,7 @@ use App\Services\SecretariaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\SecretariaController;
+use App\Http\Controllers\SecretariasController;
 
 
 class VeiculosController extends Controller
@@ -65,11 +65,10 @@ public function store(Request $request)
     }
 }
 
-public function create(SecretariasController $secretariaController)
+    public function create(SecretariaService $secretariaService)
     {
         try {
-            $secretarias = $secretariaController->listarSecretariasPorPrefeitura_id(session('prefeitura_id'));
-
+            $secretarias = $secretariaService->getSecretarias();
             return view('veiculo._form', compact('secretarias'));
         } catch (\Exception $e) {
             Log::error('Erro ao carregar formulário de criação de veiculo: ' . $e->getMessage());

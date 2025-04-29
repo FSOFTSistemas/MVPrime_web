@@ -1,6 +1,6 @@
 <div class="modal fade" id="viewUsuarioModal{{ $usuario['id'] }}" tabindex="-1" aria-labelledby="viewUsuarioModalLabel{{ $usuario['id'] }}"
     aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="viewUsuarioModalLabel{{ $usuario['id'] }}">Visualizar Usuário</h5>

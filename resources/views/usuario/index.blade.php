@@ -11,7 +11,7 @@
     <div class="row mb-3">
         <div class="col">
             <!-- Botão para ir para a tela de criação -->
-            <a href="{{ route('usuarios.create') }}" class="btn btn-primary float-end rounded-pill">
+            <a href="{{ route('usuarios.create') }}" class="btn bluebtn float-end rounded-pill">
                 <i class="fa fa-plus"></i> Novo Usuário
             </a>
         </div>

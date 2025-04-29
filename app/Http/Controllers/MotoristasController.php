@@ -24,7 +24,7 @@ class MotoristasController extends Controller
     public function index()
     {
         try {
-            $prefeituraId = session('prefeitura_selecionada');
+            $prefeituraId = session('prefeitura_id');
             $motoristas = $this->motoristaService->listarMotoristasPorPrefeitura($prefeituraId);
             $secretarias = $this->secretariaService->secretariasPorPrefeitura_id($prefeituraId);
 
@@ -38,12 +38,11 @@ class MotoristasController extends Controller
         }
     } 
 
-    public function create(SecretariasController $secretariaController)
+    public function create(SecretariaService $secretariaService)
     {
         try {
             $prefeituraId = session('prefeitura_selecionada');
-            $secretarias = $secretariaController->listarSecretariasPorPrefeitura_id($prefeituraId);
-            $secretarias = $secretarias ?: [];
+            $secretarias = $secretariaService->getSecretarias();
             return view('motorista._form', compact('secretarias'));
         } catch (\Exception $e) {
             Log::error('Erro ao carregar formulário de criação de motorista: ' . $e->getMessage());
@@ -60,12 +59,11 @@ public function store(Request $request)
             'vencimento_cnh' => 'required|date', // Valida como data
             'secretaria_id' => 'required|string', // Ou 'string' dependendo do tipo do campo
         ]);
-
         // Formatar a data de vencimento para o formato 'Y-m-d' (YYYY-MM-DD)
         $dados['vencimento_cnh'] = Carbon::parse($dados['vencimento_cnh'])->format('Y-m-d');
         // Passar os dados formatados para o serviço
         $resultado = $this->motoristaService->cadastrarMotorista($dados);
-
+        
         if ($resultado) {
             return redirect()->route('motoristas.index')->with('success', 'Motorista cadastrada com sucesso!');
         }
