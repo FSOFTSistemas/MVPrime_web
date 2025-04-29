@@ -38,11 +38,10 @@ class MotoristasController extends Controller
         }
     } 
 
-    public function create(SecretariaService $secretariaService)
+    public function create()
     {
         try {
-            $prefeituraId = session('prefeitura_selecionada');
-            $secretarias = $secretariaService->getSecretarias();
+            $secretarias = $this->secretariaService->getSecretarias();
             return view('motorista._form', compact('secretarias'));
         } catch (\Exception $e) {
             Log::error('Erro ao carregar formulário de criação de motorista: ' . $e->getMessage());
