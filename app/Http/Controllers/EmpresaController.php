@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\EmpresaService;
 use App\Services\EnderecoService;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class EmpresaController extends Controller
 {
@@ -25,7 +26,14 @@ class EmpresaController extends Controller
             $empresas = $this->empresaService->getEmpresa();
             $enderecos = $this->enderecoService->listarEnderecos();
 
-            return view('empresa.index', compact('empresas', 'enderecos'));
+            dd(Auth::user()->tipo_usuario);
+            if (Auth::user()->tipo_usuario == 0)
+            {
+                return view('empresa.index', compact('empresas', 'enderecos'));
+            }else{
+                return view('empresa._form', compact('empresas', 'enderecos'));
+            }
+            
         } catch (Exception $e) {
             dd($e->getMessage());
         }

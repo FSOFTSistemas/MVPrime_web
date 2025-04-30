@@ -10,13 +10,19 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('empresas.store') }}" method="POST">
+            <form action="{{ isset($empresas) ? route('empresas.update', $empresas['id']) : route('empresas.store') }}"
+                method="POST">
                 @csrf
+                @if (isset($empresas))
+                    @method('PUT')
+                @endif
                 <div class="form-group row">
                     <div class="input-group">
                         <label for="cnpj" class="col-md-3 label-control">* CNPJ:</label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="Digite o CNPJ" required>
+                            <input type="text" class="form-control" id="cnpj" name="cnpj"
+                                placeholder="Digite o CNPJ" required value="{{ old('cnpj', $empresas['cnpj'] ?? '') }}">
+
                         </div>
                         <button class="btn btn-outline-primary" type="button" id="btnBuscarCnpj">
                             <i class="bi bi-search"></i> Buscar CNPJ
@@ -25,9 +31,12 @@
                 </div>
 
                 <div class="form-group row">
-                        <label for="razao_social" class=" col-md-3 label-control">* Razão Social</label>
+                    <label for="razao_social" class=" col-md-3 label-control">* Razão Social</label>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="razao_social" name="razao_social" placeholder="Razão Social" required>
+                        <input type="text" class="form-control" id="razao_social" name="razao_social"
+                            placeholder="Razão Social" required
+                            value="{{ old('razao_social', $empresas['razao_social'] ?? '') }}">
+
                     </div>
                 </div>
 
@@ -36,17 +45,21 @@
                     <div class="col-md-3">
                         <select class="form-control" id="endereco" name="endereco_id" required>
                             <option value="">Selecione um endereço</option>
-                            @foreach ($enderecos ?? [] as $endereco)
-                                <option value="{{ $endereco['id'] }}">{{ $endereco['logradouro'] }}, {{ $endereco['numero'] }}</option>
+                            @foreach ($empresas->endereco ?? [] as $endereco)
+                                <option value="{{ $endereco['id'] }}"
+                                    {{ old('endereco_id', $empresas['endereco_id'] ?? '') == $endereco['id'] ? 'selected' : '' }}>
                             @endforeach
                         </select>
                     </div>
-                    <button type="button" class="btn bluebtn" data-bs-toggle="modal" data-bs-target="#modalEndereco">+ Novo</button>
+                    <button type="button" class="btn bluebtn" data-bs-toggle="modal" data-bs-target="#modalEndereco">+
+                        Novo</button>
                 </div>
 
                 <div class="card-footer">
                     <a href="{{ route('empresas.index') }}" class="btn btn-secondary">Voltar</a>
-                    <button type="submit" class="btn bluebtn">Salvar</button>
+                    <button type="submit" class="btn bluebtn">
+                        {{ isset($empresas) ? 'Atualizar' : 'Salvar' }}
+                    </button>
                 </div>
             </form>
         </div>
@@ -105,20 +118,25 @@
             border-radius: 10px;
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
         }
+
         .btn-outline-primary {
             border-color: #1E3A5F;
             color: #1E3A5F;
         }
+
         .btn-outline-primary:hover {
             background-color: #1E3A5F;
             color: #fff;
         }
+
         .modal-header {
             background-color: #1E3A5F;
         }
+
         .modal-body {
             background-color: #f8f9fa;
         }
+
         .modal-title {
             font-size: 18px;
         }
@@ -130,16 +148,16 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Máscaras de campos
             $('#cep').mask('00000-000');
             $('#cnpj').mask('00.000.000/0000-00');
 
             // Preenchendo campos de endereço automaticamente
-            $('#cep').on('blur', function () {
+            $('#cep').on('blur', function() {
                 let cep = $(this).val().replace(/[^0-9]/g, '');
                 if (cep.length == 8) {
-                    $.getJSON(`https://viacep.com.br/ws/${cep}/json/`, function (data) {
+                    $.getJSON(`https://viacep.com.br/ws/${cep}/json/`, function(data) {
                         if (!data.erro) {
                             $('#logradouro').val(data.logradouro);
                             $('#bairro').val(data.bairro);
@@ -148,14 +166,14 @@
                         } else {
                             alert('CEP não encontrado.');
                         }
-                    }).fail(function () {
+                    }).fail(function() {
                         alert('Erro ao buscar o CEP.');
                     });
                 }
             });
 
             // Salvando novo endereço
-            $('#salvarEndereco').on('click', function () {
+            $('#salvarEndereco').on('click', function() {
                 let endereco = {
                     cep: $('#cep').val(),
                     logradouro: $('#logradouro').val(),
@@ -173,7 +191,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (response.success) {
                             // Cria a nova opção
                             const texto = `${endereco.logradouro}, ${endereco.numero}`;
@@ -191,7 +209,7 @@
                             alert('Erro ao salvar o endereço.');
                         }
                     },
-                    error: function (xhr, status, error) {
+                    error: function(xhr, status, error) {
                         console.error('Erro na requisição Ajax:', error);
                         alert('Erro na requisição Ajax.');
                     }
@@ -199,7 +217,7 @@
             });
 
             // Função para buscar CNPJ
-            $('#btnBuscarCnpj').on('click', function () {
+            $('#btnBuscarCnpj').on('click', function() {
                 const cnpj = $('#cnpj').val().replace(/\D/g, ''); // Remove não-dígitos
 
                 if (cnpj.length !== 14) {
