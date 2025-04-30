@@ -98,21 +98,32 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request)
-    {
-        // Chamar a API para invalidar o token
-        $token = session('jwt_token'); // Pega o token da sessão
+{
+    // Pega o token JWT da sessão
+    $token = session('jwt_token');
 
-        if ($token) {
+    // Verifica se o token existe antes de chamar a API para invalidar
+    if ($token) {
+        try {
+            // Chama a API para invalidar o token de autenticação
             Http::withHeaders([
                 'Authorization' => 'Bearer ' . $token,
             ])->post('https://gestao-api.dev.br:4000/api/auth/logout');
+        } catch (\Exception $e) {
+            // Caso ocorra um erro ao tentar invalidar o token na API, registra o erro
+            \Log::error('Erro ao invalidar o token na API de logout: ' . $e->getMessage());
         }
-
-        // Limpar sessão e deslogar usuário
-        Auth::logout();
-        session()->forget(['jwt_token', 'user_id']);
-        session()->flush(); // Remove toda a sessão
-
-        return redirect()->route('start');
     }
+
+    // Faz o logout no Laravel
+    Auth::logout();
+
+    // Limpar os dados da sessão
+    session()->forget(['jwt_token', 'user_id', 'prefeituras', 'prefeitura_id']); // Remove tokens e outras variáveis da sessão
+    session()->flush(); // Limpa toda a sessão
+
+    // Redireciona para a página de login ou outra página inicial
+    return redirect()->route('login');
+}
+
 }

@@ -1,6 +1,7 @@
 @inject('layoutHelper', 'JeroenNoten\LaravelAdminLte\Helpers\LayoutHelper')
 
-<nav class="main-header navbar navbar-expand-lg navbar-dark" style="background-color: var(--blue-2);">  <!-- Azul marinho escuro -->
+<nav class="main-header navbar navbar-expand-lg navbar-dark" style="background-color: var(--blue-2);">
+    <!-- Azul marinho escuro -->
     <div class="container-fluid">
         {{-- Navbar left links --}}
         <ul class="navbar-nav">
@@ -16,27 +17,21 @@
 
         {{-- Navbar right links --}}
         <ul class="navbar-nav ml-auto">
-            <form action="{{ route('filtro.prefeitura') }}" method="POST" class="form-inline ml-2 d-flex align-items-center">
+            <form action="{{ route('filtro.prefeitura') }}" method="POST" id="prefeitura-form">
                 @csrf
-                @if(Auth::user()->id == 1)
-                <div class="input-group input-group-sm align-items-center">
-                    <div class="input-group-prepend mr-2">
-                        <span class="input-group-text border-0 p-0 pr-2" style="font-size: 0.875rem; background-color: transparent">
-                            <label for="prefeitura_id" class="mb-0" style="font-size: 16px; color: #fff; font-weight: 400;">Prefeitura:</label>
-                        </span>
-                    </div>
-                    <select class="form-control" id="prefeitura" name="prefeitura_id" required onchange="this.form.submit()" style="border-radius: 5px;">
-                        <option value="">Selecione...</option>
+                <select class="form-control" id="prefeitura" name="prefeitura_id" required
+                    onchange="document.getElementById('prefeitura-form').submit();" style="border-radius: 5px;">
+                    <option value="">Selecione...</option>
 
-                        @foreach (session('prefeituras', []) as $prefeitura)
-                            <option value="{{ $prefeitura['id'] }}">
-                                {{ $prefeitura['razao_social'] }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                @endif
+                    @foreach (session('prefeituras', []) as $prefeitura)
+                        <option value="{{ $prefeitura['id'] }}" @if (session('prefeitura_selecionada') == $prefeitura['id']) selected
+                        @endif>
+                            {{ $prefeitura['razao_social'] }}
+                        </option>
+                    @endforeach
+                </select>
             </form>
+
 
             {{-- Custom right links --}}
             @yield('content_top_nav_right')

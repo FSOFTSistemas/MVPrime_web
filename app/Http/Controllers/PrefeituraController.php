@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Controllers\Session;
+use Illuminate\Support\Facades\Session;
 use App\Services\PrefeituraService;
 use App\Services\EmpresaService;
 use App\Services\EnderecoService;
