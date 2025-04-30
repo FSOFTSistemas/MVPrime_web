@@ -22,7 +22,7 @@ class SecretariasController extends Controller
     public function index()
     {
         try {
-            $prefeituraId = session('prefeitura_selecionada');
+            $prefeituraId = session('prefeitura_id');
             $secretarias = $this->secretariaService->getSecretarias();
 
             return view('secretaria.index', compact('secretarias'));
@@ -33,7 +33,7 @@ class SecretariasController extends Controller
     }
 
 
-    public function create(PrefeituraService $prefeituraService)
+    public function create()
     {
         try {
             return view('secretaria._form');
@@ -50,11 +50,11 @@ class SecretariasController extends Controller
                 'nome' => 'required|string',
                 'responsavel' => 'required|string',
             ]);
-
-
-            $dados['prefeitura_id'] = session('prefeitura_selecionada');
+            
+            
+            $dados['prefeitura_id'] = session('prefeitura_id');
             $resultado = $this->secretariaService->cadastrarSecretaria($dados);
-
+            
             if ($resultado) {
                 return redirect()->route('secretarias.index')->with('success', 'Secretaria cadastrada com sucesso!');
             }

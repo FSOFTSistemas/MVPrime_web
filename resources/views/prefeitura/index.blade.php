@@ -37,7 +37,10 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($prefeituras ?? [] as $prefeitura)
+            @php
+                $listaPrefeituras = isset($prefeituras[0]) ? $prefeituras : [$prefeituras];
+            @endphp
+            @foreach ($listaPrefeituras ?? [] as $prefeitura)
                 <tr>
                     <td>{{ $prefeitura['id'] }}</td>
                     <td>{{ $prefeitura['cnpj'] }}</td>

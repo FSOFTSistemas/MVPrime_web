@@ -6,39 +6,37 @@
 @stop
 
 @section('content')
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Abastecimentos por Mês</h3>
+                <h3 class="card-title">Abastecimentos por Mês</h3>
             </div>
-            <div class="card-body">
-              <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                <canvas id="abastecimentosMes" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 487px;" width="487" height="250" class="chartjs-render-monitor"></canvas>
-              </div>
+            <div class="card-body chart-container">
+                <canvas id="abastecimentosMes"></canvas>
             </div>
-          </div>
-    
+        </div>
+    </div>
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Abastecimentos por Dia - <span id="mes-atual"></span></h3>
+                <h3 class="card-title">Abastecimentos por Dia - <span id="mes-atual"></span></h3>
             </div>
-            <div class="card-body">
-              <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                <canvas id="abastecimentosDia" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 487px;" width="487" height="250" class="chartjs-render-monitor"></canvas>
-              </div>
+            <div class="card-body chart-container">
+                <canvas id="abastecimentosDia"></canvas>
             </div>
-          </div>
-    
+        </div>
+    </div>
+
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Abastecimentos por Prefeitura</h3>
+                <h3 class="card-title">Abastecimentos por Prefeitura</h3>
             </div>
-            <div class="card-body">
-              <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                <canvas id="abastecimentosPrefeituras" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 487px;" width="487" height="250" class="chartjs-render-monitor"></canvas>
-              </div>
+            <div class="card-body chart-container">
+                <canvas id="abastecimentosPrefeituras"></canvas>
             </div>
-          </div>
-    
+        </div>
+    </div>
 @stop
 
 @section('js')
@@ -62,6 +60,7 @@
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             aspectRatio: 1,
             scales: {
                 y: {
@@ -91,6 +90,7 @@
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             aspectRatio: 1,
             scales: {
                 y: {
@@ -145,6 +145,7 @@
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     display: true,
@@ -176,19 +177,27 @@ document.getElementById("mes-atual").textContent = mesAtual;
 @stop
 
 @section('css')
-<style>
-    .card-header {
-        background-color: var(--blue-1) !important;
-        color: #fff;
-    }
-</style>
-<style>
+    <style>
     .card-header {
         background-color: var(--blue-1) !important;
         color: #fff;
     }
 
     .content-wrapper {
-        min-height: 100vh; /* Força altura mínima */
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .card-body {
+    position: relative;
+    height: 300px;
+}
+
+    .card-body canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
     }
 </style>

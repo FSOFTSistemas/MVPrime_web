@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Controllers\Session;
+use Illuminate\Support\Facades\Session;
 use App\Services\PrefeituraService;
 use App\Services\EmpresaService;
 use App\Services\EnderecoService;
@@ -28,7 +28,7 @@ class PrefeituraController extends Controller
         try {
             $prefeituras = $this->prefeituraService->getPrefeituras();
             $enderecos = $this->enderecoService->listarEnderecos();
-            return view('prefeitura.index', compact('prefeituras', 'enderecos'));
+                return view('prefeitura.index', compact('prefeituras', 'enderecos'));
         } catch (\Exception $e) {
             Log::error('Erro ao listar prefeituras: ' . $e->getMessage());
             return back()->with('error', 'Erro ao carregar as prefeituras.');
@@ -135,7 +135,7 @@ class PrefeituraController extends Controller
         
         // Atualiza a sessão com a prefeitura selecionada
         if ($prefeituraId) {
-            Session::put('prefeitura_selecionada', $prefeituraId);
+            Session::put('prefeitura_id', $prefeituraId);
         }
 
         // Redireciona de volta para a página com os dados filtrados

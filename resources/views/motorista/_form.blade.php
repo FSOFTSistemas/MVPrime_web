@@ -25,7 +25,16 @@
             <div class="form-group row">
                 <label for="cnh" class="col-md-3 label-control">* CNH:</label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="cnh" name="cnh" required>
+                    <input type="text" 
+                           class="form-control" 
+                           id="cnh" 
+                           name="cnh" 
+                           required 
+                           minlength="7" 
+                           maxlength="11"
+                           inputmode="numeric"
+                           pattern="\d{7,11}">
+                    <div class="invalid-feedback">Digite entre 7 e 11 números.</div>
                 </div>
             </div>
             
@@ -71,4 +80,19 @@
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
+    <script>
+        $(document).ready(function(){
+            $('#cnh').mask('00000000000', {
+                translation: { '0': { pattern: /[0-9]/ } },
+                onKeyPress: function(val, e, field, options) {
+                    let length = val.replace(/\D/g, '').length;
+                    if (length < 7) {
+                        field.removeClass('is-valid').addClass('is-invalid');
+                    } else {
+                        field.removeClass('is-invalid').addClass('is-valid');
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

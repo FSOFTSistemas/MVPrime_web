@@ -23,7 +23,7 @@ class PostosController extends Controller
     public function index()
     {
         try {
-            $prefeituraId = session('prefeitura_selecionada');
+            $prefeituraId = session('prefeitura_id');
             $postos = $this->postoService->listarPostosPorPrefeitura($prefeituraId);
             $enderecos = $this->enderecoService->listarEnderecos();
             return view('posto.index', compact('postos', 'enderecos'));
@@ -81,7 +81,7 @@ class PostosController extends Controller
                 'endereco_id' => 'required|integer',
             ]);
             
-            $dados['prefeituras_id'] = session('prefeitura_selecionada');;
+            $dados['prefeituras_id'] = session('prefeitura_id');;
             $resultado = $this->postoService->atualizarPosto($id, $dados);
 
             if ($resultado) {

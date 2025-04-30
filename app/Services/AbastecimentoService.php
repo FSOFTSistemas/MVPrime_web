@@ -2,12 +2,24 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class AbastecimentoService
 {
     protected $apiUrl = 'https://gestao-api.dev.br:4000/api/abastecimentos';
+
+
+    public function getAbastecimentos()
+    {
+        if( Auth::user()->id == 1)
+        {
+            return $this->listarAbastecimentos();
+        }else{
+            return $this->listarPorPrefeitura(session('prefeitura_id'));
+        }
+    }
 
     public function listarAbastecimentos()
     {
