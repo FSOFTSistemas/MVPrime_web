@@ -23,8 +23,8 @@ class PostosController extends Controller
     public function index()
     {
         try {
-            $prefeituraId = session('prefeitura_id');
-            $postos = $this->postoService->listarPostosPorPrefeitura($prefeituraId);
+
+            $postos = $this->postoService->getPostos();
             $enderecos = $this->enderecoService->listarEnderecos();
             return view('posto.index', compact('postos', 'enderecos'));
         } catch (\Exception $e) {

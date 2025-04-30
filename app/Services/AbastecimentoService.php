@@ -13,7 +13,7 @@ class AbastecimentoService
 
     public function getAbastecimentos()
     {
-        if( Auth::user()->id == 1)
+        if(session('prefeitura_id') == 99)
         {
             return $this->listarAbastecimentos();
         }else{

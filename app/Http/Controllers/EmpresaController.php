@@ -22,7 +22,7 @@ class EmpresaController extends Controller
     {
         try {
             
-            $empresas = $this->empresaService->listarEmpresas();
+            $empresas = $this->empresaService->getEmpresa();
             $enderecos = $this->enderecoService->listarEnderecos();
 
             return view('empresa.index', compact('empresas', 'enderecos'));

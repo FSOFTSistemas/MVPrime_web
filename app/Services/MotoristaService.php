@@ -14,8 +14,9 @@ class MotoristaService
     
     public function getMotoristas()
     {
-        if(Auth::user()->id == 1)
+        if(session('prefeitura_id') == 99)
         {
+
             return $this->listarMotoristas();
         }else{
             return $this->listarMotoristasPorPrefeitura(session('prefeitura_id'));
@@ -25,14 +26,17 @@ class MotoristaService
 public function listarMotoristas()
 {
     try {
+
         $token = session('jwt_token');
         $response = Http::withToken($token)->get($this->apiUrl);
 
+
         if ($response->successful()) {
+
             $motoristas = $response->json();
 
             // Itera sobre os motoristas e formata a data de vencimento_cnh
-            foreach ($motoristas as &$motorista) {
+            foreach ($motoristas as $motorista) {
                 if (isset($motorista['vencimento_cnh'])) {
                     // Converte a data de vencimento_cnh para o formato Y-m-d
                     $motorista['vencimento_cnh'] = Carbon::parse($motorista['vencimento_cnh'])->format('Y-m-d');

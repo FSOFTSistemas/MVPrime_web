@@ -13,7 +13,7 @@ class VeiculosService
     
     public function getVeiculos()
     {
-        if(Auth::user()->id == 1)
+        if(session('prefeitura_id') == 99)
         {
             return $this->listarVeiculos();
         }else{

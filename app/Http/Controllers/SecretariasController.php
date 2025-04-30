@@ -22,7 +22,7 @@ class SecretariasController extends Controller
     public function index()
     {
         try {
-            $prefeituraId = session('prefeitura_id');
+
             $secretarias = $this->secretariaService->getSecretarias();
 
             return view('secretaria.index', compact('secretarias'));

@@ -133,6 +133,7 @@ class PrefeituraController extends Controller
         // Recupera o ID da prefeitura selecionada
         $prefeituraId = $request->input('prefeitura_id');
         
+
         // Atualiza a sessão com a prefeitura selecionada
         if ($prefeituraId) {
             Session::put('prefeitura_id', $prefeituraId);

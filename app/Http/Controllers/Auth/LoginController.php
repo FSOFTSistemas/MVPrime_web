@@ -42,13 +42,13 @@ class LoginController extends Controller
 
             // Armazenar o token JWT na sessão
             Session::put('jwt_token', $data['token']);
-
             // Criar ou atualizar o usuário no banco de dados
             $user = User::updateOrCreate(
                 ['email' => $data['usuario']['email']],
                 [
                     'name' => $data['usuario']['nome'],
-                    'empresa_id' => $data['usuario']['empresa_id']
+                    'empresa_id' => $data['usuario']['empresa_id'],
+                    'tipo_usuario' => $data['usuario']['tipo_usuario']
                 ]
             );
 

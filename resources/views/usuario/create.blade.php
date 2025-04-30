@@ -51,6 +51,18 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="tipo_usuario" class="col-md-3 label-control">* Prefeitura:</label>
+                            <div class="col-md-6">
+                                <select name="tipo_usuario" id="tipo_usuario" class="form-control select2" required data-placeholder="Selecione a Prefeitura">
+                                    <option value="">Selecione o tipo</option>
+                                        <option value="1">Master</option>
+                                        <option value="2">Posto</option>
+                                        <option value="3">Prefeitura</option>
+                                </select>
+                            </div>
+                        </div>
                         
                         <div class="row mb-3">
                             <label for="permissoes" class="col-md-3 label-control">* Permissões:</label>

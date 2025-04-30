@@ -12,7 +12,7 @@ class UserService
 
     public function getuser()
     {
-        if(Auth::user()->id == 1)
+        if(session('prefeitura_id') == 99)
         {
             return $this->getAllUsers();
         }else{

@@ -26,7 +26,7 @@ class VeiculosController extends Controller
     public function index()
     {
         try {
-            $prefeituraId = session('prefeitura_id');
+
             $veiculos = $this->veiculoService->getVeiculos();
             $secretarias = $this->secretariaService->getSecretarias();
             return view('veiculo.index', compact('veiculos', 'secretarias'));

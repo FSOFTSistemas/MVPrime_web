@@ -24,9 +24,9 @@ class MotoristasController extends Controller
     public function index()
     {
         try {
-            $prefeituraId = session('prefeitura_id');
-            $motoristas = $this->motoristaService->listarMotoristasPorPrefeitura($prefeituraId);
-            $secretarias = $this->secretariaService->secretariasPorPrefeitura_id($prefeituraId);
+
+            $motoristas = $this->motoristaService->getMotoristas();
+            $secretarias = $this->secretariaService->getSecretarias();
 
             $secretarias = $secretarias ?: [];
             return view('motorista.index', compact('motoristas', 'secretarias'));

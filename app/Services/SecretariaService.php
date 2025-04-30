@@ -12,7 +12,7 @@ class SecretariaService
 
     public function getSecretarias()
     {
-        if(Auth::user()->id == 1)
+        if(session('prefeitura_id') == 99)
         {
             return $this->listarSecretaria();
         }else{
