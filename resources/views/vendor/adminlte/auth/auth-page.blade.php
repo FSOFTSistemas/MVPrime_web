@@ -25,55 +25,43 @@
 @section('classes_body'){{ $bodyClasses }}@stop
 
 @section('body')
-<div class="background">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
- </div>
+
+    <div class="background">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+     {{-- Loader --}}
+     <div id="login-loader">
+        <div class="dots-loader">
+            <span>.</span><span>.</span><span>.</span>
+        </div>
+    </div>
+
     <div class="{{ $authType }}-box">
 
         {{-- Logo --}}
         <div class="{{ $authType }}-logo">
             <a href="#">
-
-                {{-- Logo Image --}}
-                {{-- @if (config('adminlte.auth_logo.enabled', false))
-                    <img src="{{ asset(config('adminlte.auth_logo.img.path')) }}"
-                         alt="{{ config('adminlte.auth_logo.img.alt') }}"
-                         @if (config('adminlte.auth_logo.img.class', null))
-                            class="{{ config('adminlte.auth_logo.img.class') }}"
-                         @endif
-                         @if (config('adminlte.auth_logo.img.width', null))
-                            width="{{ config('adminlte.auth_logo.img.width') }}"
-                         @endif
-                         @if (config('adminlte.auth_logo.img.height', null))
-                            height="{{ config('adminlte.auth_logo.img.height') }}"
-                         @endif>
-                @else
-                    <img src="{{ asset(config('adminlte.logo_img')) }}"
-                         alt="{{ config('adminlte.logo_img_alt') }}" height="50">
-                @endif --}}
-
-                {{-- Logo Label --}}
                 {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
-
             </a>
         </div>
 
@@ -109,4 +97,57 @@
 @section('adminlte_js')
     @stack('js')
     @yield('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            const loader = document.getElementById('login-loader');
+            console.log(form)
+            console.log(loader)
+    
+            if (form && loader) {
+                form.addEventListener('submit', function () {
+                    loader.style.display = 'flex';
+                });
+            }
+        });
+    </script>    
 @stop
+@section('css')
+<style>
+    #login-loader {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dots-loader {
+        color: white;
+        font-size: 3rem;
+        display: flex;
+        gap: 0.3rem;
+    }
+
+    .dots-loader span {
+        animation: blink 1.5s infinite;
+    }
+
+    .dots-loader span:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .dots-loader span:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
+    @keyframes blink {
+        0%, 80%, 100% { opacity: 0; }
+        40% { opacity: 1; }
+    }
+</style>
