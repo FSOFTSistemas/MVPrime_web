@@ -7,7 +7,7 @@
                 @method('PUT')
                 <div class="modal-header bg-warning">
                     <h5 class="modal-title text-white">Editar Motorista</h5>
-                    <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Fechar">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-warning text-white">Atualizar</button>
                 </div>
             </form>

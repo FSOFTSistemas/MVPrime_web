@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\HomeService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -20,6 +21,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+
+    if ($user->id == 1) {
+    
         Carbon::setLocale('pt_BR');
 
         $dadosDias = collect($this->homeService->listarAbastecimentosDia());
@@ -40,4 +45,6 @@ class HomeController extends Controller
 
         return view('home', compact('mesLabels', 'mesData', 'diaLabels', 'diaData', 'dadosPrefeitura'));
     }
+    return view('home2');
+}
 }

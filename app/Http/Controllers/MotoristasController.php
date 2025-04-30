@@ -62,7 +62,7 @@ public function store(Request $request)
         $dados['vencimento_cnh'] = Carbon::parse($dados['vencimento_cnh'])->format('Y-m-d');
         // Passar os dados formatados para o serviço
         $resultado = $this->motoristaService->cadastrarMotorista($dados);
-        
+
         if ($resultado) {
             return redirect()->route('motoristas.index')->with('success', 'Motorista cadastrada com sucesso!');
         }
@@ -87,6 +87,7 @@ public function store(Request $request)
 
             $dados['vencimento_cnh'] = Carbon::parse($dados['vencimento_cnh'])->format('Y-m-d');
             $resultado = $this->motoristaService->atualizarMotorista($id, $dados);
+            // dd($dados);
 
             if ($resultado) {
                 return redirect()->route('motoristas.index')->with('success', 'Motorista atualizada com sucesso!');

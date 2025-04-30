@@ -106,6 +106,7 @@ public function listarMotoristasPorPrefeitura($prefeituraId)
             
             $token = session('jwt_token');
             $response = Http::withToken($token)->put("{$this->apiUrl}/{$id}", $dados);
+            // dd($response);
             return $response->successful() ? $response->json() : null;
         } catch (\Exception $e) {
             Log::error("Erro ao atualizar motorista {$id}: " . $e->getMessage());
