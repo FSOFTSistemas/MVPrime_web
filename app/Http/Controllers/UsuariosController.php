@@ -7,6 +7,7 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
+use SweetAlert2\Laravel\Swal;
 
 class UsuariosController extends Controller
 {
@@ -68,6 +69,12 @@ class UsuariosController extends Controller
             $user = $this->userService->createUser($validatedData);
 
             if ($user) {
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Usuário criado com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
                 return redirect()->route('usuarios.index')->with('success', 'Usuário criado com sucesso.');
             }
 
@@ -92,7 +99,13 @@ class UsuariosController extends Controller
             $dados['empresa_id'] = Auth::user()->empresa_id;
             $usuarioAtualizado = $this->userService->updateUser($id, $dados);
 
-            if ($usuarioAtualizado) {
+            if ($usuarioAtualizado) { 
+                Swal::fire([
+                'title' => 'Sucesso !',
+                'text' => 'Usuário atualizado com sucesso!',
+                'icon' => 'success',
+                'confirmButtonText' => 'OK'
+            ]);
                 return redirect()->route('usuarios.index')->with('success', 'Usuário atualizado com sucesso.');
             }
 
@@ -109,6 +122,12 @@ class UsuariosController extends Controller
             $deleted = $this->userService->deleteUser($id);
 
             if ($deleted) {
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Usuário excluído com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
                 return redirect()->route('usuarios.index')->with('success', 'Usuário excluído com sucesso.');
             }
 

@@ -8,6 +8,7 @@ use App\Services\EnderecoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use SweetAlert2\Laravel\Swal;
 
 class PostosController extends Controller
 {
@@ -60,6 +61,13 @@ class PostosController extends Controller
             $resultado = $this->postoService->cadastrarPosto($dados);
 
             if ($resultado) {
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Posto cadastrada com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
+
                 return redirect()->route('postos.index')->with('success', 'Posto cadastrada com sucesso!');
             }
 
@@ -73,22 +81,38 @@ class PostosController extends Controller
     public function update(Request $request, $id)
     {
         try {
-        
+
             $dados = $request->validate([
                 'cnpj' => 'required|string',
                 'nome' => 'required|string',
                 'responsavel' => 'required|string',
                 'endereco_id' => 'required|integer',
             ]);
-            
-            $dados['prefeituras_id'] = session('prefeitura_id');;
+
+            $dados['prefeituras_id'] = session('prefeitura_id');
+            ;
             $resultado = $this->postoService->atualizarPosto($id, $dados);
 
-            if ($resultado) {
-                return redirect()->route('postos.index')->with('success', 'Posto atualizada com sucesso!');
+            if ($resultado && $resultado->successful()) {
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Posto atualizado com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
+
+                return redirect()->route('postos.index')->with('success', 'Posto atualizado com sucesso!');
             }
 
-            return back()->with('error', 'Erro ao atualizar posto.');
+            Swal::fire([
+                'title' => 'Erro !',
+                'text' => $resultado ? $resultado->json()['error'] ?? 'Erro desconhecido' : 'Erro na requisição',
+                'icon' => 'error',
+                'confirmButtonText' => 'OK'
+            ]);
+            return back()->with('error', $resultado ? $resultado->status() : 500);
+
+
         } catch (\Exception $e) {
             Log::error("Erro ao atualizar posto ID {$id}: " . $e->getMessage());
             return back()->with('error', 'Erro inesperado ao atualizar posto.');
@@ -101,6 +125,13 @@ class PostosController extends Controller
             $resultado = $this->postoService->excluirPosto($id);
 
             if ($resultado) {
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Posto excluído com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
+
                 return redirect()->route('postos.index')->with('success', 'Posto excluída com sucesso!');
             }
 

@@ -9,6 +9,7 @@ use App\Services\VeiculosService;
 use App\Services\PostoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use SweetAlert2\Laravel\Swal;
 
 class AbastecimentosController extends Controller
 {
@@ -19,7 +20,7 @@ class AbastecimentosController extends Controller
 
     protected $postoService;
 
-    public function __construct(AbastecimentoService $abastecimentoService, VeiculosService $veiculosService, MotoristaService  $motoristasService, PostoService $postoService)
+    public function __construct(AbastecimentoService $abastecimentoService, VeiculosService $veiculosService, MotoristaService $motoristasService, PostoService $postoService)
     {
         $this->abastecimentoService = $abastecimentoService;
         $this->veiculosService = $veiculosService;
@@ -47,7 +48,7 @@ class AbastecimentosController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            
+
             $dados = $request->validate([
                 'data_abastecimento' => 'required|date',
                 'veiculo_id' => 'required|string',
@@ -72,6 +73,12 @@ class AbastecimentosController extends Controller
             $resultado = $this->abastecimentoService->atualizarAbastecimento($id, $dados);
 
             if ($resultado) {
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Abastecimento atualizado com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
                 return redirect()->route('abastecimentos.index')->with('success', 'Abastecimento atualizada com sucesso!');
             }
 
@@ -88,6 +95,12 @@ class AbastecimentosController extends Controller
             $resultado = $this->abastecimentoService->excluirAbastecimento($id);
 
             if ($resultado) {
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Abastecimento excluído com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
                 return redirect()->route('abastecimentos.index')->with('success', 'Abastecimento excluída com sucesso!');
             }
 

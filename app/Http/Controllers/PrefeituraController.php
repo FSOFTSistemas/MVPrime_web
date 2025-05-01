@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
+use SweetAlert2\Laravel\Swal;
 
 
 
@@ -75,6 +76,12 @@ class PrefeituraController extends Controller
             $resultado = $this->prefeituraService->cadastrarPrefeitura($dados);
 
             if ($resultado) {
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Prefeitura cadastrada com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
                 return redirect()->route('prefeituras.index')->with('success', 'Prefeitura cadastrada com sucesso!');
             }
 
@@ -118,6 +125,13 @@ class PrefeituraController extends Controller
             $resultado = $this->prefeituraService->atualizarPrefeitura($id, $dados);
 
             if ($resultado) {
+
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Prefeitura atualizada com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
                 return redirect()->route('prefeituras.index')->with('success', 'Prefeitura atualizada com sucesso!');
             }
 
@@ -144,18 +158,35 @@ class PrefeituraController extends Controller
     }
 
     public function destroy($id)
-    {
-        try {
-            $resultado = $this->prefeituraService->excluirPrefeitura($id);
+{
+    try {
+        $response = $this->prefeituraService->excluirPrefeitura($id);
 
-            if ($resultado) {
-                return redirect()->route('prefeituras.index')->with('success', 'Prefeitura excluída com sucesso!');
-            }
-
-            return redirect()->route('prefeituras.index')->with('error', 'Erro ao excluir prefeitura.');
-        } catch (\Exception $e) {
-            Log::error("Erro ao excluir prefeitura ID {$id}: " . $e->getMessage());
-            return redirect()->route('prefeituras.index')->with('error', 'Erro inesperado ao excluir prefeitura.');
+        if ($response && $response->successful()) {
+            Swal::fire([
+                'title' => 'Sucesso !',
+                'text' => 'Prefeitura excluída com sucesso!',
+                'icon' => 'success',
+                'confirmButtonText' => 'OK'
+            ]);
+            return redirect()->route('prefeituras.index')->with('success', 'Prefeitura excluída com sucesso!');
         }
+
+        // Se houver erro conhecido na resposta:
+        $erro = $response ? ($response->json()['error'] ?? 'Erro desconhecido ao excluir.') : 'Erro na requisição';
+
+        Swal::fire([
+            'title' => 'Erro !',
+            'text' => $erro,
+            'icon' => 'error',
+            'confirmButtonText' => 'OK'
+        ]);
+
+        return redirect()->route('prefeituras.index')->with('error', $erro);
+    } catch (\Exception $e) {
+        Log::error("Erro ao excluir prefeitura ID {$id}: " . $e->getMessage());
+        return redirect()->route('prefeituras.index')->with('error', 'Erro inesperado ao excluir prefeitura.');
     }
+}
+
 }

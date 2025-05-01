@@ -12,10 +12,9 @@ class PostoService
 
     public function getPostos()
     {
-        if(session('prefeitura_id') == 99)
-        {
+        if (session('prefeitura_id') == 99) {
             return $this->listarPostos();
-        }else{
+        } else {
             return $this->listarPostosPorPrefeitura(session('prefeitura_id'));
         }
     }
@@ -34,30 +33,30 @@ class PostoService
     }
 
     public function listarPostosPorPrefeitura($prefeituraId)
-{
-    try {
-        // Obtém o token JWT da sessão
-        $token = session('jwt_token');
-        
-        // Define a URL da API com o parâmetro de prefeitura
-        $url = "$this->apiUrl/prefeitura/$prefeituraId";  // URL para listar postos da prefeitura
-        
-        // Faz a requisição para a API
-        $response = Http::withToken($token)->get($url);
+    {
+        try {
+            // Obtém o token JWT da sessão
+            $token = session('jwt_token');
 
-        // Verifica se a resposta foi bem-sucedida
-        if ($response->successful()) {
-            return $response->json();  // Retorna os postos encontrados
+            // Define a URL da API com o parâmetro de prefeitura
+            $url = "$this->apiUrl/prefeitura/$prefeituraId";  // URL para listar postos da prefeitura
+
+            // Faz a requisição para a API
+            $response = Http::withToken($token)->get($url);
+
+            // Verifica se a resposta foi bem-sucedida
+            if ($response->successful()) {
+                return $response->json();  // Retorna os postos encontrados
+            }
+
+            // Se a resposta não foi bem-sucedida, retorna null
+            return null;
+        } catch (\Exception $e) {
+            // Em caso de erro, loga a mensagem de erro
+            Log::error("Erro ao listar postos da prefeitura: " . $e->getMessage());
+            return null;
         }
-
-        // Se a resposta não foi bem-sucedida, retorna null
-        return null;
-    } catch (\Exception $e) {
-        // Em caso de erro, loga a mensagem de erro
-        Log::error("Erro ao listar postos da prefeitura: " . $e->getMessage());
-        return null;
     }
-}
 
     public function cadastrarPosto(array $dados)
     {
@@ -75,13 +74,14 @@ class PostoService
     public function atualizarPosto($id, array $dados)
     {
         try {
-            
+
             $token = session('jwt_token');
             $response = Http::withToken($token)->put("{$this->apiUrl}/{$id}", $dados);
-            return $response->successful() ? $response->json() : null;
+
+            return $response;
         } catch (\Exception $e) {
             Log::error("Erro ao atualizar posto {$id}: " . $e->getMessage());
-            return null;
+            return $e->getMessage();
         }
     }
 

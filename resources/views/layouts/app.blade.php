@@ -15,6 +15,7 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @include('sweetalert2::index')
 </head>
 <body>
     <div id="app">

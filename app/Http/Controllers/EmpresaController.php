@@ -7,6 +7,7 @@ use App\Services\EmpresaService;
 use App\Services\EnderecoService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use SweetAlert2\Laravel\Swal;
 
 class EmpresaController extends Controller
 {
@@ -22,18 +23,17 @@ class EmpresaController extends Controller
     public function index()
     {
         try {
-            
+
             $empresas = $this->empresaService->getEmpresa();
             $enderecos = $this->enderecoService->listarEnderecos();
 
             dd(Auth::user()->tipo_usuario);
-            if (Auth::user()->tipo_usuario == 0)
-            {
+            if (Auth::user()->tipo_usuario == 0) {
                 return view('empresa.index', compact('empresas', 'enderecos'));
-            }else{
+            } else {
                 return view('empresa._form', compact('empresas', 'enderecos'));
             }
-            
+
         } catch (Exception $e) {
             dd($e->getMessage());
         }
@@ -55,10 +55,20 @@ class EmpresaController extends Controller
                 'endereco_id' => 'required|integer',
             ]);
 
-            $this->empresaService->cadastrarEmpresa($request->all());
-            return redirect()->route('empresas.index')->with('success', 'Empresa cadastrada com sucesso!');
+            $empresa = $this->empresaService->cadastrarEmpresa($request->all());
+            if ($empresa) {
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Empresa cadastrada com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
+                return redirect()->route('empresas.index')->with('success', 'Empresa cadastrada com sucesso!');
+            }
+            return redirect()->back()->withInput()->withErrors('error', 'Error');
+
         } catch (Exception $e) {
-            dd($e->getMessage());
+            return redirect()->back()->withInput()->withErrors('error', 'Error');
         }
     }
 
@@ -71,20 +81,40 @@ class EmpresaController extends Controller
                 'endereco_id' => 'required|integer',
             ]);
 
-            $this->empresaService->atualizarEmpresa($id, $request->all());
-            return redirect()->route('empresas.index')->with('success', 'Empresa atualizada com sucesso!');
+            $empresa = $this->empresaService->atualizarEmpresa($id, $request->all());
+            if ($empresa) {
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Empresa atualizada com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
+                return redirect()->route('empresas.index')->with('success', 'Empresa atualizada com sucesso!');
+            }
+            return redirect()->back()->withInput()->withErrors('error', 'Error');
         } catch (Exception $e) {
-            dd($e->getMessage());
+            return redirect()->back()->withInput()->withErrors('error', 'Error');
         }
     }
 
     public function destroy($id)
     {
         try {
-            $this->empresaService->excluirEmpresa($id);
-            return redirect()->route('empresas.index')->with('success', 'Empresa excluída com sucesso!');
+            $empresa = $this->empresaService->excluirEmpresa($id);
+            if ($empresa) {
+
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Empresa excluída com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
+
+                return redirect()->route('empresas.index')->with('success', 'Empresa excluída com sucesso!');
+            }
+            return redirect()->back()->withInput()->withErrors('error', '500');
         } catch (Exception $e) {
-            dd($e->getMessage());
+            return redirect()->back()->withInput()->withErrors('error', '500');
         }
     }
 }

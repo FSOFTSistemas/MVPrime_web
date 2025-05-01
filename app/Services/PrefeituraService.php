@@ -73,17 +73,17 @@ class PrefeituraService
     }
 
     public function excluirPrefeitura($id)
-    {
-        try {
-            $token = session('jwt_token');
-            $response = Http::withToken($token)->delete("{$this->apiUrl}/{$id}");
-
-            return $response->successful();
-        } catch (\Exception $e) {
-            Log::error("Erro ao excluir prefeitura {$id}: " . $e->getMessage());
-            return false;
-        }
+{
+    try {
+        $token = session('jwt_token');
+        $response = Http::withToken($token)->delete("{$this->apiUrl}/{$id}");
+        return $response; 
+    } catch (\Exception $e) {
+        Log::error("Erro ao excluir prefeitura {$id}: " . $e->getMessage());
+        return null;
     }
+}
+
 
     public function buscarPrefeituraPorId($id)
     {

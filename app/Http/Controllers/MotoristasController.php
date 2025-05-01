@@ -9,6 +9,7 @@ use App\Services\SecretariaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use SweetAlert2\Laravel\Swal;
 
 class MotoristasController extends Controller
 {
@@ -64,6 +65,14 @@ public function store(Request $request)
         $resultado = $this->motoristaService->cadastrarMotorista($dados);
 
         if ($resultado) {
+
+            Swal::fire([
+                'title' => 'Sucesso !',
+                'text' => 'Motorista cadastrado com sucesso!',
+                'icon' => 'success',
+                'confirmButtonText' => 'OK'
+            ]);
+
             return redirect()->route('motoristas.index')->with('success', 'Motorista cadastrada com sucesso!');
         }
 
@@ -90,6 +99,14 @@ public function store(Request $request)
             // dd($dados);
 
             if ($resultado) {
+
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Motorista atualizado com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
+
                 return redirect()->route('motoristas.index')->with('success', 'Motorista atualizada com sucesso!');
             }
 
@@ -106,6 +123,14 @@ public function store(Request $request)
             $resultado = $this->motoristaService->excluirMotorista($id);
 
             if ($resultado) {
+
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Motorista excluído com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
+
                 return redirect()->route('motoristas.index')->with('success', 'Motorista excluída com sucesso!');
             }
 

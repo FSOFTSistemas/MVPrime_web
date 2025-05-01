@@ -59,6 +59,8 @@
     @yield('css')
 @stop
 
+@include('sweetalert2::index')
+
 @section('classes_body', $layoutHelper->makeBodyClasses())
 
 @section('body_data', $layoutHelper->makeBodyData())

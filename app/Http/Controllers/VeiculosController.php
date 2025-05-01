@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\SecretariasController;
+use SweetAlert2\Laravel\Swal;
 
 
 class VeiculosController extends Controller
@@ -31,8 +32,8 @@ class VeiculosController extends Controller
             $secretarias = $this->secretariaService->getSecretarias();
             return view('veiculo.index', compact('veiculos', 'secretarias'));
         } catch (\Exception $e) {
-            Log::error('Erro ao listar veiculos: ' . $e->getMessage());
-            return back()->with('error', 'Erro ao carregar as veiculos.');
+            Log::error('Erro ao listar veículos: ' . $e->getMessage());
+            return back()->with('error', 'Erro ao carregar as veículos.');
         }
     } 
 
@@ -55,7 +56,13 @@ public function store(Request $request)
         $resultado = $this->veiculoService->cadastrarVeiculo($dados);
 
         if ($resultado) {
-            return redirect()->route('veiculos.index')->with('success', 'Veiculo cadastrada com sucesso!');
+            Swal::fire([
+                'title' => 'Sucesso !',
+                'text' => 'Veículo cadastrado com sucesso!',
+                'icon' => 'success',
+                'confirmButtonText' => 'OK'
+            ]);
+            return redirect()->route('veiculos.index')->with('success', 'Veículo cadastrado com sucesso!');
         }
 
         return back()->with('error', 'Erro ao cadastrar veiculo.');
@@ -71,7 +78,7 @@ public function store(Request $request)
             $secretarias = $secretariaService->getSecretarias();
             return view('veiculo._form', compact('secretarias'));
         } catch (\Exception $e) {
-            Log::error('Erro ao carregar formulário de criação de veiculo: ' . $e->getMessage());
+            Log::error('Erro ao carregar formulário de criação de veículo: ' . $e->getMessage());
             return back()->with('error', 'Erro ao carregar o formulário.');
         }
     }
@@ -92,10 +99,16 @@ public function store(Request $request)
             $resultado = $this->veiculoService->atualizarVeiculo($id, $dados);
 
             if ($resultado) {
-                return redirect()->route('veiculos.index')->with('success', 'Veiculo atualizada com sucesso!');
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Veículo atualizado com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
+                return redirect()->route('veiculos.index')->with('success', 'Veículo atualizada com sucesso!');
             }
             
-            return back()->with('error', 'Erro ao atualizar veiculo.');
+            return back()->with('error', 'Erro ao atualizar veículo.');
         } catch (\Exception $e) {
             Log::error("Erro ao atualizar veiculo ID {$id}: " . $e->getMessage());
             return back()->with('error', 'Erro inesperado ao atualizar veiculo.');
@@ -108,6 +121,14 @@ public function store(Request $request)
             $resultado = $this->veiculoService->excluirVeiculo($id);
 
             if ($resultado) {
+
+                Swal::fire([
+                    'title' => 'Sucesso !',
+                    'text' => 'Veículo excluído com sucesso!',
+                    'icon' => 'success',
+                    'confirmButtonText' => 'OK'
+                ]);
+
                 return redirect()->route('veiculos.index')->with('success', 'Veiculo excluída com sucesso!');
             }
 
