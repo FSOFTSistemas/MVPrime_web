@@ -61,7 +61,7 @@ class UsuariosController extends Controller
                 'prefeitura_id' => 'required|integer',
                 'posto_id' => 'nullable|integer',
                 'permissoes' => 'required|array',
-                'permissoes.*' => 'integer'
+                'permissoes.*' => 'string'
             ]);
 
             $validatedData['empresa_id'] = Auth::user()->empresa_id;
@@ -81,17 +81,15 @@ class UsuariosController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            dd($request->all());
+
             $dados = $request->validate([
                 'nome' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
-                'empresa_id' => 'nullable|integer',
-                'prefeitura_id' => 'nullable|integer',
-                'posto_id' => 'nullable|integer',
                 'permissoes' => 'required|array',
-                'permissoes.*' => 'integer'
+                'permissoes.*' => 'string'
             ]);
 
+            $dados['empresa_id'] = Auth::user()->empresa_id;
             $usuarioAtualizado = $this->userService->updateUser($id, $dados);
 
             if ($usuarioAtualizado) {

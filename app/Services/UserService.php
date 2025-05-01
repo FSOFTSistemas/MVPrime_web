@@ -159,6 +159,7 @@ class UserService
                 return $response->json(); // Retorna os dados atualizados
             }
 
+            dd($response->json());
             // Loga o erro caso a API retorne falha
             Log::error("Erro ao atualizar usuário ID {$id}: " . $response->body());
 

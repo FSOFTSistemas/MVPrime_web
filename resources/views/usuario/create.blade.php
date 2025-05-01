@@ -74,7 +74,7 @@
                         
                                 <select name="permissoes[]" id="permissoes" class="form-select select2" multiple required data-placeholder="Selecione permissões">
                                     @foreach ($permissoes as $permission)
-                                        <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                                        <option value="{{ $permission->name }}">{{ $permission->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

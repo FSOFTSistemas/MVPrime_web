@@ -59,7 +59,6 @@ class LoginController extends Controller
 
             // Verificar se o usuário já tem as permissões e atribuí-las apenas se necessário
             $userPermissions = $user->permissions->pluck('name')->toArray(); // Obtém as permissões atuais do usuário
-
             foreach ($data['usuario']['permissoes'] as $permission) {
                 if (!in_array($permission, $userPermissions)) {
                     $user->givePermissionTo($permission); // Apenas adiciona se ainda não tiver

@@ -300,62 +300,71 @@ return [
     'menu' => [
         [
             'text' => 'Home',
-            'url'  => 'home',
+            'url' => 'home',
             'icon' => 'fas fa-home',
         ],
         ['header' => 'Gerenciamento'],
 
-        
-        [   
-            'text'    => 'Prefeituras',
-            'icon'    => 'fas fa-landmark',
+        [
+            'text' => 'Abastecimentos',
+            'url' => 'abastecimentos',
+            'icon' => 'fas fa-tint',
+            'can' => 'gerenciar_abastecimentos',
+        ],
+        [
+            'text' => 'Prefeituras',
+            'icon' => 'fas fa-landmark',
             'submenu' => [
                 [
                     'text' => 'Prefeitura',
-                    'url'  => '/prefeituras',
+                    'url' => '/prefeituras',
                     'icon' => 'fas fa-landmark',
+                    'can' => 'gerenciar_prefeituras'
                 ],
                 [
                     'text' => 'Secretarias',
-                    'url'  => '/secretarias',
+                    'url' => '/secretarias',
                     'icon' => 'fas fa-sitemap',
+                    'can' => 'gerenciar_secretarias'
                 ],
                 [
                     'text' => 'Motoristas',
-                    'url'  => '/motoristas',
-                    'icon' => 'fas fa-id-card'
-                ],
-                [
-                    'text' => 'Abastecimentos',
-                    'url'  => 'abastecimentos',
-                    'icon' => 'fas fa-tint'
+                    'url' => '/motoristas',
+                    'icon' => 'fas fa-id-card',
+                    'can' => 'gerenciar_motoristas'
                 ],
                 [
                     'text' => 'Veículos',
-                    'url'  => '/veiculos',
-                    'icon' => 'fas fa-car'
+                    'url' => '/veiculos',
+                    'icon' => 'fas fa-car',
+                    'can' => 'gerenciar_veiculos'
                 ]
-            ]
-        ],
-        [
-            'text' => 'Usuários',
-            'url'  => '/usuarios',
-            'icon' => 'fas fa-users'
-        ],
-        [
-            'text' => 'Log do Sistema',
-            'url'  => 'log',
-            'icon' => 'fas fa-clipboard-list'
+            ],
+            'can' => 'gerenciar_prefeituras'
         ],
         [
             'text' => 'Postos',
-            'url'  => 'postos',
-            'icon' => 'fas fa-gas-pump'
+            'url' => 'postos',
+            'icon' => 'fas fa-gas-pump',
+            'can' => 'gerenciar_postos'
+        ],
+        [
+            'text' => 'Usuários',
+            'url' => '/usuarios',
+            'icon' => 'fas fa-users',
+            'can' => 'gerenciar_usuarios'
         ],
         [
             'text' => 'Empresa',
-            'url'  => '/empresas',
-            'icon' => 'fas fa-building'
+            'url' => '/empresas',
+            'icon' => 'fas fa-building',
+            'can' => 'gerenciar_empresas'
+        ],
+        [
+            'text' => 'Log do Sistema',
+            'url' => 'log',
+            'icon' => 'fas fa-clipboard-list',
+            'can' => 'gerenciar_usuarios'
         ],
     ],
 

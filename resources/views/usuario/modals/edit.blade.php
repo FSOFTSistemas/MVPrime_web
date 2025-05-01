@@ -32,7 +32,7 @@
                         <label for="permissoes" class="form-label">Permissões</label>
                         <select class="form-select" id="permissoes" name="permissoes[]" multiple required>
                             @foreach ($permissoes as $permission)
-                                <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                                <option value="{{ $permission->name }}">{{ $permission->name }}</option>
                             @endforeach
                         </select>
                     </div>
