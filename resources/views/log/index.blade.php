@@ -64,67 +64,9 @@ use Carbon\Carbon;
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+   
 @stop
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        // Exibir notificação de sucesso
-        @if (session('success'))
-            Swal.fire({
-                title: 'Sucesso!',
-                text: '{{ session('success') }}',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        @endif
-
-        $(document).ready(function() {
-            // Inicializar o DataTable usando o ID único da tabela
-            var table = $('#{{ $uniqueId }}').DataTable({
-                responsive: true,
-                pageLength: {{ $itemsPerPage }},
-                columnDefs: {{ Js::from($responsive) }},
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
-                },
-                dom: 'Bfrtip',
-                buttons: [{
-                        extend: 'copyHtml5',
-                        text: '<i class="fas fa-copy"></i>', // Ícone de copiar
-                        titleAttr: 'Copiar para a área de transferência',
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        text: '<i class="fas fa-file-excel"></i>', // Ícone de Excel
-                        titleAttr: 'Exportar para Excel',
-                    },
-                    {
-                        extend: 'csvHtml5',
-                        text: '<i class="fas fa-file-csv"></i>', // Ícone de CSV
-                        titleAttr: 'Exportar para CSV',
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i>', // Ícone de PDF
-                        titleAttr: 'Exportar para PDF',
-                        orientation: 'landscape',
-                        pageSize: 'A4'
-                    },
-                    {
-                        extend: 'print',
-                        text: '<i class="fas fa-print"></i>', // Ícone de Impressora
-                        titleAttr: 'Imprimir tabela',
-                    }
-                ],
-            });
-        });
-    </script>
+   
 @stop
