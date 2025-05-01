@@ -27,8 +27,8 @@ class EmpresaController extends Controller
             $empresas = $this->empresaService->getEmpresa();
             $enderecos = $this->enderecoService->listarEnderecos();
 
-            dd(Auth::user()->tipo_usuario);
-            if (Auth::user()->tipo_usuario == 0) {
+            $user = Auth::user()->refresh();
+            if ($user->tipo_usuario == 0) {
                 return view('empresa.index', compact('empresas', 'enderecos'));
             } else {
                 return view('empresa._form', compact('empresas', 'enderecos'));

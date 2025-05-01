@@ -39,15 +39,14 @@
 
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <label for="endereco" class="col-md-3 label-control">Endereço</label>
                     <div class="col-md-3">
                         <select class="form-control" id="endereco" name="endereco_id" required>
                             <option value="">Selecione um endereço</option>
-                            @foreach ($empresas->endereco ?? [] as $endereco)
+                            @foreach ($enderecos ?? [] as $endereco)
                                 <option value="{{ $endereco['id'] }}"
-                                    {{ old('endereco_id', $empresas['endereco_id'] ?? '') == $endereco['id'] ? 'selected' : '' }}>
+                                    {{ old('endereco_id', $endereco['id'] ?? '') == $endereco['id'] ? 'selected' : '' }}>{{ $endereco['logradouro'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -243,13 +242,5 @@
             });
         });
     </script>
-    {{-- <script>
-        $(document).ready(function() {
-            $('select').select2({
-                width: '100%',
-                placeholder: 'Selecione...',
-                allowClear: true
-            });
-        });
-    </script> --}}
+
 @endsection

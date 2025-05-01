@@ -349,6 +349,19 @@ return [
             'can' => 'gerenciar_postos'
         ],
         [
+            'text' => 'Relatórios',
+            'icon' => 'fas fa-chart-bar',
+            'can' => 'gerenciar_usuarios',
+            'submenu' => [
+                [
+                    'text' => 'Abastecimentos',
+                    'url' => '/rel-data',
+                    'icon' => 'fas fa-chart-line', 
+                    'can' => 'gerenciar_usuarios'
+                ],
+            ]
+        ],        
+        [
             'text' => 'Usuários',
             'url' => '/usuarios',
             'icon' => 'fas fa-users',
