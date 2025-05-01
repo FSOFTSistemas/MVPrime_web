@@ -57,7 +57,6 @@ class UsuariosController extends Controller
                 'nome' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
                 'password' => 'required|string|confirmed|min:4',
-                'empresa_id' => 'nullable|integer',
                 'tipo_usuario' => 'required|integer',
                 'prefeitura_id' => 'required|integer',
                 'posto_id' => 'nullable|integer',

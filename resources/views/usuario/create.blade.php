@@ -53,9 +53,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="tipo_usuario" class="col-md-3 label-control">* Prefeitura:</label>
+                            <label for="tipo_usuario" class="col-md-3 label-control">* Tipo de usuário:</label>
                             <div class="col-md-6">
-                                <select name="tipo_usuario" id="tipo_usuario" class="form-control select2" required data-placeholder="Selecione a Prefeitura">
+                                <select name="tipo_usuario" id="tipo_usuario" class="form-control" required data-placeholder="Selecione o tipo">
                                     <option value="">Selecione o tipo</option>
                                         <option value="1">Master</option>
                                         <option value="2">Posto</option>

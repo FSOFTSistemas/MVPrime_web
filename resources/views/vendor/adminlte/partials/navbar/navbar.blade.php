@@ -20,6 +20,7 @@
             <form action="{{ route('filtro.prefeitura') }}" method="POST" id="prefeitura-form"
                 class="d-flex align-items-center">
                 @csrf
+                @if(Auth::user()->tipo_usuario == 1)
                 <label for="prefeitura" class="text-white mb-0 mr-2 text-nowrap">Selecione a Prefeitura:</label>
                 <select class="form-control" id="prefeitura" name="prefeitura_id" required
                     onchange="document.getElementById('prefeitura-form').submit();"
@@ -32,6 +33,7 @@
                         </option>
                     @endforeach
                 </select>
+                @endif
             </form>
 
 

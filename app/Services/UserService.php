@@ -75,6 +75,7 @@ class UserService
     public function getUserById($id)
     {
         try {
+
             $token = session('jwt_token');
             $response = Http::withToken($token)->get("{$this->apiUrl}/{$id}");
 
@@ -82,7 +83,6 @@ class UserService
             if ($response->successful()) {
                 return $response->json(); // Retorna o usuário encontrado
             }
-
             // Se a requisição falhar, loga o erro
             Log::error("Erro ao buscar usuário com ID {$id}: " . $response->status());
 
@@ -99,7 +99,6 @@ class UserService
     {
         try {
             $token = session('jwt_token');
-            
             $response = Http::withToken($token)->post("https://gestao-api.dev.br:4000/api/usuarios", $data);
             
 
@@ -107,6 +106,7 @@ class UserService
                 return $response->json();
             }
 
+            dd($response->json());
             // Loga o erro caso não tenha sucesso
             Log::error("Erro ao criar usuário: " . $response->body());
 

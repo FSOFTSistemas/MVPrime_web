@@ -77,7 +77,7 @@ class LoginController extends Controller
 
             $userData = $this->userService->getUserById($data['usuario']['id']);
 
-            $prefeituraUser = $userData['prefeitura']['id'];
+            $prefeituraUser = $userData['prefeitura_id'];
 
             if(isset($prefeituraUser)){
                 Session::put('prefeitura_id', $prefeituraUser);
