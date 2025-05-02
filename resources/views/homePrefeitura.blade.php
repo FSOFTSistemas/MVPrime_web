@@ -6,23 +6,54 @@
 @stop
 
 @section('content')
+
+<div class="row mt-3">
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>10</h3>
+    
+            <p>Veículos</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-car"></i>
+          </div>
+        </div>
+      </div> 
+
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>14</h3>
+    
+            <p>Motoristas</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-users"></i>
+          </div>
+        </div>
+      </div>    
+
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>R$ 1457</h3>
+    
+            <p>Abastecimentos no mês</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-gas-pump"></i>
+          </div>
+        </div>
+      </div>    
+</div>
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Abastecimentos por Mês</h3>
+                <h3 class="card-title">Abastecimentos por Secretaria</h3>
             </div>
             <div class="card-body chart-container">
                 <canvas id="abastecimentosMes"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Abastecimentos por Dia - <span id="mes-atual"></span></h3>
-            </div>
-            <div class="card-body chart-container">
-                <canvas id="abastecimentosDia"></canvas>
             </div>
         </div>
     </div>
@@ -43,36 +74,6 @@
             datasets: [{
                 label: 'Valores (R$)',
                 data: mesData,
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            aspectRatio: 1,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
-
-<script>
-    const diaLabels = @json($diaLabels);
-    const diaData = @json($diaData);
-
-    const ctxAbastecimentosDia = document.getElementById('abastecimentosDia').getContext('2d');
-    const abastecimentoDiaChart = new Chart(ctxAbastecimentosDia, {
-        type: 'line',
-        data: {
-            labels: diaLabels,
-            datasets: [{
-                label: 'Valor (R$)',
-                data: diaData,
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1

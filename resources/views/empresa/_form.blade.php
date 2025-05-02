@@ -21,7 +21,7 @@
                         <label for="cnpj" class="col-md-3 label-control">* CNPJ:</label>
                         <div class="col-md-3">
                             <input type="text" class="form-control" id="cnpj" name="cnpj"
-                                placeholder="Digite o CNPJ" required value="{{ old('cnpj', $empresas['cnpj'] ?? '') }}">
+                                placeholder="Digite o CNPJ" required value="{{ old('cnpj', $empresas['cnpj'] ?? '') }}" readonly>
 
                         </div>
                         <button class="btn btn-outline-primary" type="button" id="btnBuscarCnpj">
@@ -35,74 +35,16 @@
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="razao_social" name="razao_social"
                             placeholder="Razão Social" required
-                            value="{{ old('razao_social', $empresas['razao_social'] ?? '') }}">
+                            value="{{ old('razao_social', $empresas['razao_social'] ?? '') }}" readonly>
 
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="endereco" class="col-md-3 label-control">Endereço</label>
-                    <div class="col-md-3">
-                        <select class="form-control" id="endereco" name="endereco_id" required>
-                            <option value="">Selecione um endereço</option>
-                            @foreach ($enderecos ?? [] as $endereco)
-                                <option value="{{ $endereco['id'] }}"
-                                    {{ old('endereco_id', $endereco['id'] ?? '') == $endereco['id'] ? 'selected' : '' }}>{{ $endereco['logradouro'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <button type="button" class="btn bluebtn" data-bs-toggle="modal" data-bs-target="#modalEndereco">+
-                        Novo</button>
-                </div>
 
-                <div class="card-footer">
-                    <a href="{{ route('empresas.index') }}" class="btn btn-secondary">Voltar</a>
-                    <button type="submit" class="btn bluebtn">
-                        {{ isset($empresas) ? 'Atualizar' : 'Salvar' }}
-                    </button>
-                </div>
+                <div class="card-footer text-end">
+                    <button type="button" class="btn bg-gradient-info btn-edit mt-2">Editar</button>
+                    <button type="submit" class="btn new btn-success mt-2 d-none btn-save">Salvar</button>
+                  </div>
             </form>
-        </div>
-    </div>
-
-    <!-- Modal para Criar Endereço -->
-    <div class="modal fade" id="modalEndereco" tabindex="-1" aria-labelledby="modalEnderecoLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="modalEnderecoLabel">Novo Endereço</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formEndereco">
-                        <div class="mb-3">
-                            <label for="cep" class="form-label">CEP</label>
-                            <input type="text" class="form-control" id="cep" name="cep" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="logradouro" class="form-label">Logradouro</label>
-                            <input type="text" class="form-control" id="logradouro" name="logradouro" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="numero" class="form-label">Número</label>
-                            <input type="text" class="form-control" id="numero" name="numero" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="bairro" class="form-label">Bairro</label>
-                            <input type="text" class="form-control" id="bairro" name="bairro" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="cidade" class="form-label">Cidade</label>
-                            <input type="text" class="form-control" id="cidade" name="cidade" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="uf" class="form-label">UF</label>
-                            <input type="text" class="form-control" id="uf" name="uf" required>
-                        </div>
-                        <button type="button" class="btn btn-success w-100" id="salvarEndereco"
-                            data-url="{{ route('enderecos.store') }}">Salvar Endereço</button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 @endsection
@@ -139,6 +81,7 @@
         .modal-title {
             font-size: 18px;
         }
+       
     </style>
 @endsection
 
@@ -171,50 +114,6 @@
                 }
             });
 
-            // Salvando novo endereço
-            $('#salvarEndereco').on('click', function() {
-                let endereco = {
-                    cep: $('#cep').val(),
-                    logradouro: $('#logradouro').val(),
-                    numero: $('#numero').val(),
-                    bairro: $('#bairro').val(),
-                    cidade: $('#cidade').val(),
-                    uf: $('#uf').val()
-                };
-                var url = $('#salvarEndereco').data('url');
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: endereco,
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            // Cria a nova opção
-                            const texto = `${endereco.logradouro}, ${endereco.numero}`;
-                            const id = response.message.id;
-
-                            // Adiciona ao select
-                            $('#endereco').append(new Option(texto, id));
-
-                            // Seleciona automaticamente o novo endereço
-                            $('#endereco').val(id).trigger('change');
-
-                            // Fecha o modal
-                            $('#modalEndereco').modal('hide');
-                        } else {
-                            alert('Erro ao salvar o endereço.');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Erro na requisição Ajax:', error);
-                        alert('Erro na requisição Ajax.');
-                    }
-                });
-            });
-
             // Função para buscar CNPJ
             $('#btnBuscarCnpj').on('click', function() {
                 const cnpj = $('#cnpj').val().replace(/\D/g, ''); // Remove não-dígitos
@@ -242,5 +141,16 @@
             });
         });
     </script>
+
+<script>
+    document.querySelectorAll('.btn-edit').forEach(button => {
+        button.addEventListener('click', function () {
+            const form = this.closest('form');
+            form.querySelectorAll('input').forEach(input => input.removeAttribute('readonly'));
+            form.querySelector('.btn-save').classList.remove('d-none');
+            this.classList.add('d-none');
+        });
+    });
+</script>
 
 @endsection

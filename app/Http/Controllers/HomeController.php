@@ -13,6 +13,7 @@ class HomeController extends Controller
     public function __construct(HomeService $home_service)
     {
         $this->homeService = $home_service;
+        
     }
     /**
      * Show the application dashboard.
@@ -30,6 +31,12 @@ class HomeController extends Controller
                 $dadosDias = $this->formatarDadosDia($this->homeService->listarAbastecimentosDia());
                 $dadosMes = $this->formatarDadosMes($this->homeService->listarAbastecimentosMes());
                 $dadosPrefeitura = $this->homeService->listarAbastecimentosPrefeitura();
+                $dadosMaster = $this->homeService->listarMaster($user->empresa_id);
+                $totalPrefeituras = $dadosMaster['total_prefeituras'];
+                $totalUsuarios = $dadosMaster['total_usuarios'];
+                $totalAbastecimento = $dadosMaster['total_abastecimento_hoje'];
+
+                
 
                 return view('home', [
                     'diaLabels' => $dadosDias['labels'],
@@ -37,17 +44,25 @@ class HomeController extends Controller
                     'mesLabels' => $dadosMes['labels'],
                     'mesData' => $dadosMes['data'],
                     'dadosPrefeitura' => $dadosPrefeitura,
+                    'totalPrefeituras' => $totalPrefeituras,
+                    'totalUsuarios' => $totalUsuarios,
+                    'totalAbastecimento' => $totalAbastecimento
+                    
                 ]);
 
             case 2:
                 $dadosDias = $this->formatarDadosDia($this->homeService->listarAbastecimentosPostoDia($user->posto_id));
                 $dadosMes = $this->formatarDadosMes($this->homeService->listarAbastecimentosPostoMes($user->posto_id));
+                $totalAbastecimentosDia = count($dadosDias['data']);
+                $totalAbastecimentosMes = count($dadosMes['data']);
 
                 return view('homePosto', [
                     'diaLabels' => $dadosDias['labels'],
                     'diaData' => $dadosDias['data'],
                     'mesLabels' => $dadosMes['labels'],
                     'mesData' => $dadosMes['data'],
+                    'totalAbastecimentosDia' => $totalAbastecimentosDia,
+                    'totalAbastecimentosMes' => $totalAbastecimentosMes,
                 ]);
 
             case 3:

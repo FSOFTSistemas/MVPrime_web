@@ -11,25 +11,38 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>10</h3>
+                <h3>{{ $totalPrefeituras }}</h3>
         
                 <p>Prefeituras</p>
               </div>
               <div class="icon">
-                <i class="fa fa-person-add"></i>
+                <i class="fa fa-landmark"></i>
               </div>
             </div>
           </div> 
 
         <div class="col-lg-3 col-6">
-            <div class="small-box bg-success">
+            <div class="small-box bg-info">
               <div class="inner">
-                <h3>14</h3>
+                <h3>{{ $totalUsuarios }}</h3>
         
                 <p>Usuários</p>
               </div>
               <div class="icon">
-                <i class="fa fa-person-add"></i>
+                <i class="fa fa-users"></i>
+              </div>
+            </div>
+          </div>    
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3> R${{ $totalAbastecimento }}</h3>
+        
+                <p>Abastecimentos Hoje</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-gas-pump"></i>
               </div>
             </div>
           </div>    
