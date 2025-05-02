@@ -7,6 +7,34 @@
 
 @section('content')
 
+    <div class="row mt-3">
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>10</h3>
+        
+                <p>Prefeituras</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-person-add"></i>
+              </div>
+            </div>
+          </div> 
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>14</h3>
+        
+                <p>Usuários</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-person-add"></i>
+              </div>
+            </div>
+          </div>    
+    </div>
+    
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">

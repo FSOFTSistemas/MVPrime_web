@@ -8,7 +8,6 @@ use App\Services\EnderecoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use SweetAlert2\Laravel\Swal;
 
 class PostosController extends Controller
 {
@@ -61,13 +60,6 @@ class PostosController extends Controller
             $resultado = $this->postoService->cadastrarPosto($dados);
 
             if ($resultado) {
-                Swal::fire([
-                    'title' => 'Sucesso !',
-                    'text' => 'Posto cadastrada com sucesso!',
-                    'icon' => 'success',
-                    'confirmButtonText' => 'OK'
-                ]);
-
                 return redirect()->route('postos.index')->with('success', 'Posto cadastrada com sucesso!');
             }
 
@@ -94,22 +86,10 @@ class PostosController extends Controller
             $resultado = $this->postoService->atualizarPosto($id, $dados);
 
             if ($resultado && $resultado->successful()) {
-                Swal::fire([
-                    'title' => 'Sucesso !',
-                    'text' => 'Posto atualizado com sucesso!',
-                    'icon' => 'success',
-                    'confirmButtonText' => 'OK'
-                ]);
 
                 return redirect()->route('postos.index')->with('success', 'Posto atualizado com sucesso!');
             }
 
-            Swal::fire([
-                'title' => 'Erro !',
-                'text' => $resultado ? $resultado->json()['error'] ?? 'Erro desconhecido' : 'Erro na requisição',
-                'icon' => 'error',
-                'confirmButtonText' => 'OK'
-            ]);
             return back()->with('error', $resultado ? $resultado->status() : 500);
 
 
@@ -125,13 +105,7 @@ class PostosController extends Controller
             $resultado = $this->postoService->excluirPosto($id);
 
             if ($resultado) {
-                Swal::fire([
-                    'title' => 'Sucesso !',
-                    'text' => 'Posto excluído com sucesso!',
-                    'icon' => 'success',
-                    'confirmButtonText' => 'OK'
-                ]);
-
+                
                 return redirect()->route('postos.index')->with('success', 'Posto excluída com sucesso!');
             }
 

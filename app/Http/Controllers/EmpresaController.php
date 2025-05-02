@@ -7,7 +7,6 @@ use App\Services\EmpresaService;
 use App\Services\EnderecoService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
-use SweetAlert2\Laravel\Swal;
 
 class EmpresaController extends Controller
 {
@@ -57,12 +56,6 @@ class EmpresaController extends Controller
 
             $empresa = $this->empresaService->cadastrarEmpresa($request->all());
             if ($empresa) {
-                Swal::fire([
-                    'title' => 'Sucesso !',
-                    'text' => 'Empresa cadastrada com sucesso!',
-                    'icon' => 'success',
-                    'confirmButtonText' => 'OK'
-                ]);
                 return redirect()->route('empresas.index')->with('success', 'Empresa cadastrada com sucesso!');
             }
             return redirect()->back()->withInput()->withErrors('error', 'Error');
@@ -83,12 +76,6 @@ class EmpresaController extends Controller
 
             $empresa = $this->empresaService->atualizarEmpresa($id, $request->all());
             if ($empresa) {
-                Swal::fire([
-                    'title' => 'Sucesso !',
-                    'text' => 'Empresa atualizada com sucesso!',
-                    'icon' => 'success',
-                    'confirmButtonText' => 'OK'
-                ]);
                 return redirect()->route('empresas.index')->with('success', 'Empresa atualizada com sucesso!');
             }
             return redirect()->back()->withInput()->withErrors('error', 'Error');
@@ -102,14 +89,7 @@ class EmpresaController extends Controller
         try {
             $empresa = $this->empresaService->excluirEmpresa($id);
             if ($empresa) {
-
-                Swal::fire([
-                    'title' => 'Sucesso !',
-                    'text' => 'Empresa excluída com sucesso!',
-                    'icon' => 'success',
-                    'confirmButtonText' => 'OK'
-                ]);
-
+                
                 return redirect()->route('empresas.index')->with('success', 'Empresa excluída com sucesso!');
             }
             return redirect()->back()->withInput()->withErrors('error', '500');

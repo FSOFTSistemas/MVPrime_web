@@ -8,7 +8,6 @@ use App\Services\EnderecoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use SweetAlert2\Laravel\Swal;
 
 class SecretariasController extends Controller
 {
@@ -57,12 +56,7 @@ class SecretariasController extends Controller
             $resultado = $this->secretariaService->cadastrarSecretaria($dados);
             
             if ($resultado) {
-                Swal::fire([
-                    'title' => 'Sucesso !',
-                    'text' => 'Secretaria cadastrada com sucesso!',
-                    'icon' => 'success',
-                    'confirmButtonText' => 'OK'
-                ]);
+                
                 return redirect()->route('secretarias.index')->with('success', 'Secretaria cadastrada com sucesso!');
             }
 
@@ -102,12 +96,7 @@ class SecretariasController extends Controller
             $resultado = $this->secretariaService->atualizarSecretaria($id, $dados);
 
             if ($resultado) {
-                Swal::fire([
-                    'title' => 'Sucesso !',
-                    'text' => 'Secretaria atualizada com sucesso!',
-                    'icon' => 'success',
-                    'confirmButtonText' => 'OK'
-                ]);
+                
                 return redirect()->route('secretarias.index')->with('success', 'Secretaria atualizada com sucesso!');
             }
 
@@ -124,12 +113,7 @@ class SecretariasController extends Controller
             $resultado = $this->secretariaService->excluirSecretaria($id);
 
             if ($resultado) {
-                Swal::fire([
-                    'title' => 'Sucesso !',
-                    'text' => 'Secretaria excluída com sucesso!',
-                    'icon' => 'success',
-                    'confirmButtonText' => 'OK'
-                ]);
+                
                 return redirect()->route('secretarias.index')->with('success', 'Secretaria excluída com sucesso!');
             }
 

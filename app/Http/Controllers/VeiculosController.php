@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\SecretariasController;
-use SweetAlert2\Laravel\Swal;
 
 
 class VeiculosController extends Controller
@@ -56,12 +55,7 @@ public function store(Request $request)
         $resultado = $this->veiculoService->cadastrarVeiculo($dados);
 
         if ($resultado) {
-            Swal::fire([
-                'title' => 'Sucesso !',
-                'text' => 'Veículo cadastrado com sucesso!',
-                'icon' => 'success',
-                'confirmButtonText' => 'OK'
-            ]);
+           
             return redirect()->route('veiculos.index')->with('success', 'Veículo cadastrado com sucesso!');
         }
 
@@ -99,12 +93,7 @@ public function store(Request $request)
             $resultado = $this->veiculoService->atualizarVeiculo($id, $dados);
 
             if ($resultado) {
-                Swal::fire([
-                    'title' => 'Sucesso !',
-                    'text' => 'Veículo atualizado com sucesso!',
-                    'icon' => 'success',
-                    'confirmButtonText' => 'OK'
-                ]);
+               
                 return redirect()->route('veiculos.index')->with('success', 'Veículo atualizada com sucesso!');
             }
             
@@ -121,13 +110,6 @@ public function store(Request $request)
             $resultado = $this->veiculoService->excluirVeiculo($id);
 
             if ($resultado) {
-
-                Swal::fire([
-                    'title' => 'Sucesso !',
-                    'text' => 'Veículo excluído com sucesso!',
-                    'icon' => 'success',
-                    'confirmButtonText' => 'OK'
-                ]);
 
                 return redirect()->route('veiculos.index')->with('success', 'Veiculo excluída com sucesso!');
             }
