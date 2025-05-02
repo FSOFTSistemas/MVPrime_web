@@ -355,12 +355,12 @@ return [
             'submenu' => [
                 [
                     'text' => 'Abastecimentos',
-                    'url' => '/rel-data',
-                    'icon' => 'fas fa-chart-line', 
+                    'url' => '/rel-abastecimento-data',
+                    'icon' => 'fas fa-chart-line',
                     'can' => 'gerenciar_usuarios'
                 ],
             ]
-        ],        
+        ],
         [
             'text' => 'Usuários',
             'url' => '/usuarios',

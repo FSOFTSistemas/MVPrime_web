@@ -14,6 +14,7 @@ use App\Http\Controllers\AbastecimentosController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EnderecoController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Relatorio;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -40,5 +41,6 @@ Route::resource('log', LogController::class)->middleware('auth');
 Route::resource('abastecimentos', AbastecimentosController::class)->middleware('auth');
 Route::get('/enderecos', [EnderecoController::class, 'listarEnderecos'])->name('enderecos.index');
 Route::resource('enderecos', EnderecoController::class)->middleware('auth');
-Route::post('/filtro-prefeitura', [PrefeituraController::class, 'filtroPrefeitura'])->name('filtro.prefeitura');
+Route::post('/filtro-prefeitura', [PrefeituraController::class, 'filtroPrefeitura'])->name('filtro.prefeitura')->middleware('auth');
+Route::get('/rel-abastecimento-data', [Relatorio::class, 'abastecimentoPorData'])->middleware('auth');
 
