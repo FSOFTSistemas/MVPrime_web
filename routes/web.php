@@ -43,4 +43,6 @@ Route::get('/enderecos', [EnderecoController::class, 'listarEnderecos'])->name('
 Route::resource('enderecos', EnderecoController::class)->middleware('auth');
 Route::post('/filtro-prefeitura', [PrefeituraController::class, 'filtroPrefeitura'])->name('filtro.prefeitura')->middleware('auth');
 Route::get('/rel-abastecimento-data', [Relatorio::class, 'abastecimentoPorData'])->middleware('auth');
+Route::get('/relatorios/abastecimentos/pdf', [Relatorio::class, 'gerarAbastecimentosPDF'])->name('relatorios.abastecimentos.pdf');
+
 
