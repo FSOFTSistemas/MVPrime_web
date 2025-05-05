@@ -12,7 +12,7 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
             <div class="inner">
-                <h3> {{ $totalAbastecimentosDia }}</h3>
+                <h3> R${{ $totalAbastecimentosHoje }}</h3>
         
                 <p>Abastecimentos no dia</p>
             </div>
@@ -25,9 +25,9 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
             <div class="inner">
-                <h3>{{ $totalAbastecimentosMes }}</h3>
+                <h3> R${{ $abastecimentosMesAtual }}</h3>
         
-                <p>Abastecimentos no mês</p>
+                <p>Abastecimentos nesse mês</p>
             </div>
             <div class="icon">
                 <i class="fa fa-gas-pump"></i>
@@ -64,29 +64,39 @@
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const mesLabels = @json($mesLabels);
-    const mesData = @json($mesData);
+    const dadosMensais = @json($totalAbastecimentosMes);
 
-    const ctxAbastecimentos = document.getElementById('abastecimentosMes').getContext('2d');
-    const abastecimentoChart = new Chart(ctxAbastecimentos, {
-        type: 'bar',
+    const labels = dadosMensais.map(item => item.mes);
+    const valores = dadosMensais.map(item => parseFloat(item.total_valor));
+
+    const ctx = document.getElementById('abastecimentosMes').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
         data: {
-            labels: mesLabels,
+            labels: labels,
             datasets: [{
-                label: 'Valores (R$)',
-                data: mesData,
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                label: 'Valor Total por Mês (R$)',
+                data: valores,
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
-            aspectRatio: 1,
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'R$'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Mês'
+                    }
                 }
             }
         }
@@ -94,41 +104,39 @@
 </script>
 
 <script>
-    const diaLabels = @json($diaLabels);
-const diaData = @json($diaData);
 
-const ctxAbastecimentosCombustivel = document.getElementById('abastecimentosPorCombustivel').getContext('2d');
-const abastecimentoCombustivelChart = new Chart(ctxAbastecimentosCombustivel, {
-    type: 'doughnut', // Alterado de 'line' para 'doughnut'
-    data: {
-        labels: diaLabels,
+    const combustivel = @json($combustivel);
+    const labels = combustivel.map(item => item.tipo_combustivel);
+    const valores = combustivel.map(item => Number(item.total_valor))
+  
+    const ctx = document.getElementById('abastecimentosPorCombustivel').getContext('2d');
+    const grafico = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: labels,
         datasets: [{
-            label: 'Valor (R$)',
-            data: diaData,
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.6)',
-                'rgba(255, 99, 132, 0.6)',
-                'rgba(255, 206, 86, 0.6)',
-                'rgba(75, 192, 192, 0.6)',
-                'rgba(153, 102, 255, 0.6)',
-                'rgba(255, 159, 64, 0.6)'
-            ],
-            borderColor: '#fff', 
-            borderWidth: 2
+          label: 'Valor por Combustível (Mês Atual)',
+          data: valores,
+          backgroundColor: [
+            '#4CAF50', '#2196F3', '#FFC107', '#F44336', '#9C27B0' 
+          ],
+          borderWidth: 1
         }]
-    },
-    options: {
+      },
+      options: {
         responsive: true,
-        maintainAspectRatio: false,
-        aspectRatio: 1,
         plugins: {
-            legend: {
-                position: 'top' 
-            }
+          legend: {
+            position: 'bottom'
+          },
+          title: {
+            display: true,
+            text: 'Distribuição de Abastecimento por Combustível - Mês Atual'
+          }
         }
-    }
-});
-</script>
+      }
+    });
+  </script>
 
 <script>
     const meses = [

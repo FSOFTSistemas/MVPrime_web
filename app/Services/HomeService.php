@@ -120,5 +120,17 @@ class HomeService
         return null;
     }
   }
+  public function listarPosto($posto_id)
+  {
+    try {
+        $token = session('jwt_token');
+        $response = Http::withToken($token)->get("{$this->apiUrl}/cads_posto/{$posto_id}");
+
+        return $response->successful() ? $response->json() : null;
+    } catch (\Exception $e) {
+        Log::error("Erro ao listar abastecimentos do Posto: " . $e->getMessage());
+        return null;
+    }
+  }
 
 }

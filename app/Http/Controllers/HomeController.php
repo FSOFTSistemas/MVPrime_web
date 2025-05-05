@@ -51,18 +51,24 @@ class HomeController extends Controller
                 ]);
 
             case 2:
+                $dadosPosto = $this->homeService->listarPosto($user->posto_id);
+                $totalAbastecimentosHoje = $dadosPosto['total_abastecimentos_hoje'] ?? 0;
+                $totalAbastecimentosMes = $dadosPosto['valor_total_mes'] ?? 0;
+                $AbastecimentosMesAtual = $dadosPosto['abastecimentos_mes_atual'] ?? 0;
+                $valorPorCombustivel = $dadosPosto['combustivel'] ?? 0;
+
                 $dadosDias = $this->formatarDadosDia($this->homeService->listarAbastecimentosPostoDia($user->posto_id));
                 $dadosMes = $this->formatarDadosMes($this->homeService->listarAbastecimentosPostoMes($user->posto_id));
-                $totalAbastecimentosDia = count($dadosDias['data']);
-                $totalAbastecimentosMes = count($dadosMes['data']);
 
                 return view('homePosto', [
                     'diaLabels' => $dadosDias['labels'],
                     'diaData' => $dadosDias['data'],
                     'mesLabels' => $dadosMes['labels'],
                     'mesData' => $dadosMes['data'],
-                    'totalAbastecimentosDia' => $totalAbastecimentosDia,
+                    'totalAbastecimentosHoje' => $totalAbastecimentosHoje,
+                    'abastecimentosMesAtual' => $AbastecimentosMesAtual,
                     'totalAbastecimentosMes' => $totalAbastecimentosMes,
+                    'combustivel' => $valorPorCombustivel
                 ]);
 
             case 3:
