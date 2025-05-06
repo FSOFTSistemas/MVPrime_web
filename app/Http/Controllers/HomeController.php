@@ -31,10 +31,11 @@ class HomeController extends Controller
                 $dadosDias = $this->formatarDadosDia($this->homeService->listarAbastecimentosDia());
                 $dadosMes = $this->formatarDadosMes($this->homeService->listarAbastecimentosMes());
                 $dadosPrefeitura = $this->homeService->listarAbastecimentosPrefeitura();
+
                 $dadosMaster = $this->homeService->listarMaster($user->empresa_id);
                 $totalPrefeituras = $dadosMaster['total_prefeituras'];
                 $totalUsuarios = $dadosMaster['total_usuarios'];
-                $totalAbastecimento = $dadosMaster['total_abastecimento_hoje'];
+                $totalAbastecimento = number_format($dadosMaster['total_abastecimento_hoje'], 2, ',', '.');
 
                 
 
@@ -52,19 +53,14 @@ class HomeController extends Controller
 
             case 2:
                 $dadosPosto = $this->homeService->listarPosto($user->posto_id);
-                $totalAbastecimentosHoje = $dadosPosto['total_abastecimentos_hoje'] ?? 0;
-                $totalAbastecimentosMes = $dadosPosto['valor_total_mes'] ?? 0;
-                $AbastecimentosMesAtual = $dadosPosto['abastecimentos_mes_atual'] ?? 0;
-                $valorPorCombustivel = $dadosPosto['combustivel'] ?? 0;
+                $totalAbastecimentosHoje = number_format($dadosPosto['total_abastecimento_hoje'], 2, ',', '.');
+                $totalAbastecimentosMes = $dadosPosto['valor_total_mes'];
+                $AbastecimentosMesAtual = number_format($dadosPosto['abastecimentos_mes_atual'] ?? 0 ,2, ',', '.');
+                $valorPorCombustivel = $dadosPosto['combustivel'];
 
-                $dadosDias = $this->formatarDadosDia($this->homeService->listarAbastecimentosPostoDia($user->posto_id));
-                $dadosMes = $this->formatarDadosMes($this->homeService->listarAbastecimentosPostoMes($user->posto_id));
+                
 
                 return view('homePosto', [
-                    'diaLabels' => $dadosDias['labels'],
-                    'diaData' => $dadosDias['data'],
-                    'mesLabels' => $dadosMes['labels'],
-                    'mesData' => $dadosMes['data'],
                     'totalAbastecimentosHoje' => $totalAbastecimentosHoje,
                     'abastecimentosMesAtual' => $AbastecimentosMesAtual,
                     'totalAbastecimentosMes' => $totalAbastecimentosMes,
@@ -72,6 +68,20 @@ class HomeController extends Controller
                 ]);
 
             case 3:
+                $totalVeiculos = count($this->homeService->veiculosPorPrefeitura(1));
+                $totalMotoristas = count($this->homeService->motoristaPorPrefeitura(1));
+                $abastecimentoPorPrefeitura = $this->homeService->abastecimentoPorPrefeitura(1);
+                $mesAtual = Carbon::now()->format('Y-m');
+                $totalValorMesAtual = collect($abastecimentoPorPrefeitura)
+                    ->filter(function ($item) use ($mesAtual) {
+                        return Carbon::parse($item['data_abastecimento'])->format('Y-m') === $mesAtual;
+                    })
+                    ->sum('valor');
+
+
+                
+                // dd($abastecimentoPorPrefeitura);
+
                 $dadosDias = $this->formatarDadosDia($this->homeService->listarAbastecimentosPrefeituraDia($user->prefeitura_id));
                 $dadosMes = $this->formatarDadosMes($this->homeService->listarAbastecimentosPrefeituraMes($user->prefeitura_id));
 
@@ -80,6 +90,9 @@ class HomeController extends Controller
                     'diaData' => $dadosDias['data'],
                     'mesLabels' => $dadosMes['labels'],
                     'mesData' => $dadosMes['data'],
+                    'totalVeiculos' => $totalVeiculos,
+                    'totalMotoristas' => $totalMotoristas,
+                    'totalMes' => $totalValorMesAtual
                 ]);
         }
     }

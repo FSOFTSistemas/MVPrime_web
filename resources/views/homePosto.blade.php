@@ -64,6 +64,7 @@
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    console.log("abastecimentos aqui")
     const dadosMensais = @json($totalAbastecimentosMes);
 
     const labels = dadosMensais.map(item => item.mes);
@@ -71,7 +72,7 @@
 
     const ctx = document.getElementById('abastecimentosMes').getContext('2d');
     new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: labels,
             datasets: [{
@@ -84,6 +85,7 @@
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 y: {
                     beginAtZero: true,
@@ -104,34 +106,34 @@
 </script>
 
 <script>
-
+    console.log("combustivel aqui")
     const combustivel = @json($combustivel);
-    const labels = combustivel.map(item => item.tipo_combustivel);
-    const valores = combustivel.map(item => Number(item.total_valor))
-  
-    const ctx = document.getElementById('abastecimentosPorCombustivel').getContext('2d');
-    const grafico = new Chart(ctx, {
-      type: 'doughnut',
+    const labelsComb = combustivel.map(item => item.tipo_combustivel);
+    const valoresComb = combustivel.map(item => Number(item.total_valor))
+    const ctxComb = document.getElementById('abastecimentosPorCombustivel').getContext('2d');
+    new Chart(ctxComb, {
+      type: 'pie',
       data: {
-        labels: labels,
+        labels: labelsComb,
         datasets: [{
-          label: 'Valor por Combustível (Mês Atual)',
-          data: valores,
+          label: 'Valor por Combustível (Mês Atual) R$',
+          data: valoresComb,
           backgroundColor: [
             '#4CAF50', '#2196F3', '#FFC107', '#F44336', '#9C27B0' 
           ],
-          borderWidth: 1
+          borderWidth: 3
         }]
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
-            position: 'bottom'
+            position: 'top'
           },
           title: {
             display: true,
-            text: 'Distribuição de Abastecimento por Combustível - Mês Atual'
+            text: 'Distribuição de Abastecimento por Combustível'
           }
         }
       }
@@ -165,7 +167,7 @@ document.getElementById("mes-atual").textContent = mesAtual;
 
     .card-body {
     position: relative;
-    height: 300px;
+    height: 400px;
 }
 
     .card-body canvas {

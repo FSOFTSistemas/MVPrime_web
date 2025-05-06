@@ -11,7 +11,7 @@
     <div class="col-lg-3 col-6">
         <div class="small-box bg-success">
           <div class="inner">
-            <h3>10</h3>
+            <h3>{{ $totalVeiculos }}</h3>
     
             <p>Veículos</p>
           </div>
@@ -24,7 +24,7 @@
     <div class="col-lg-3 col-6">
         <div class="small-box bg-info">
           <div class="inner">
-            <h3>14</h3>
+            <h3>{{ $totalMotoristas }}</h3>
     
             <p>Motoristas</p>
           </div>
@@ -37,7 +37,7 @@
     <div class="col-lg-3 col-6">
         <div class="small-box bg-warning">
           <div class="inner">
-            <h3>R$ 1457</h3>
+            <h3>R$ {{ $totalMes }}</h3>
     
             <p>Abastecimentos no mês</p>
           </div>

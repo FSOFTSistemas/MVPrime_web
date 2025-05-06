@@ -12,9 +12,18 @@ class HomeService
 
   protected $prefeituraService;
 
-    public function __construct(PrefeituraService $prefeituraService)
+  protected $veiculosService;
+
+  protected $motoristaService;
+
+  protected $abastecimentoService;
+
+    public function __construct(PrefeituraService $prefeituraService, VeiculosService $veiculosService, MotoristaService $motoristaService, AbastecimentoService $abastecimentoService)
     {
         $this->prefeituraService = $prefeituraService;
+        $this->veiculosService = $veiculosService;
+        $this->motoristaService = $motoristaService;
+        $this->abastecimentoService = $abastecimentoService;
     }
 
     public function prefeiturasPorEmpresa($empresa_id)
@@ -22,6 +31,20 @@ class HomeService
         return $this->prefeituraService->prefeiturasPorEmpresa_id($empresa_id);
     }
 
+    public function veiculosPorPrefeitura($prefeitura_id)
+    {
+        return $this->veiculosService->listarVeiculosPorPrefeitura($prefeitura_id);
+    }
+
+    public function motoristaPorPrefeitura($prefeitura_id)
+    {
+        return $this->motoristaService->listarMotoristasPorPrefeitura($prefeitura_id);
+    }
+
+    public function abastecimentoPorPrefeitura($prefeitura_id)
+    {
+        return $this->abastecimentoService->listarPorPrefeitura($prefeitura_id);
+    }
 
   public function listarAbastecimentosMes()
   {
@@ -124,7 +147,7 @@ class HomeService
   {
     try {
         $token = session('jwt_token');
-        $response = Http::withToken($token)->get("{$this->apiUrl}/cads_posto/{$posto_id}");
+        $response = Http::withToken($token)->get("{$this->apiUrl}/cads_posto/6");
 
         return $response->successful() ? $response->json() : null;
     } catch (\Exception $e) {

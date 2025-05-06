@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->integer('empresa_id');
             $table->integer('tipo_usuario');
+            $table->integer('posto_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
