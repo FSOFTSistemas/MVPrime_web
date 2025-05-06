@@ -35,14 +35,14 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($abastecimentos as $item)
+            @forelse ($abastecimentos as $chave => $abastecimento)
                 <tr>
-                    <td>{{ \Carbon\Carbon::parse($item->data)->format('d/m/Y') }}</td>
-                    <td>{{ $item->placa }}</td>
-                    <td>{{ $item->motorista }}</td>
-                    <td>{{ $item->tipo_combustivel }}</td>
-                    <td>{{ $item->quantidade }} L</td>
-                    <td>R$ {{ number_format($item->valor, 2, ',', '.') }}</td>
+                    <td>{{ $abastecimento['data_abastecimento'] ? \Carbon\Carbon::parse($abastecimento['data_abastecimento'])->format('d/m/Y') : '' }}</td>
+                    <td>{{ $abastecimento['veiculo'] ? $abastecimento['veiculo']['placa'] : '' }}</td>
+                    <td>{{ $abastecimento['motorista'] ? $abastecimento['motorista']['nome'] : '' }}</td>
+                    <td>{{ $abastecimento['tipo_combustivel'] ? $abastecimento['tipo_combustivel'] : '' }}</td>
+                    <td>{{ $abastecimento['valor'] && $abastecimento['preco_combustivel'] ? number_format($abastecimento['valor']/$abastecimento['preco_combustivel'], 3) : '' }}L</td>
+                    <td>R${{ $abastecimento['valor']  ? $abastecimento['valor'] : '' }} </td>
                 </tr>
             @empty
                 <tr>

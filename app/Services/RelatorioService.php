@@ -18,8 +18,8 @@ class RelatorioService
     {
         $token = session('jwt_token');
         $response = Http::withToken($token)
-            ->get("{$this->baseUrl}/abastecimentos", $filtros);
-
+            ->post("{$this->baseUrl}/relatorio/abastecimentos", $filtros);
+            
         if (!$response->successful()) {
             throw new \Exception('Erro ao buscar dados da API de abastecimentos.');
         }
