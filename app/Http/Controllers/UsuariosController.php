@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\PrefeituraService;
 use App\Services\UserService;
+use App\Services\PostoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
@@ -12,11 +13,13 @@ class UsuariosController extends Controller
 {
     protected $userService;
     protected $prefeituraService;
+    protected $postoService;
 
-    public function __construct(UserService $userService, PrefeituraService $prefeituraService,)
+    public function __construct(UserService $userService, PrefeituraService $prefeituraService, PostoService $postoService)
     {
         $this->userService = $userService;
         $this->prefeituraService = $prefeituraService;
+        $this->postoService = $postoService;
     }
 
     public function index()
@@ -47,7 +50,8 @@ class UsuariosController extends Controller
     {
         $permissoes = Permission::all();
         $prefeituras = $this->prefeituraService->listarPrefeituras();
-        return view('usuario.create', compact('permissoes', 'prefeituras'));
+        $postos = $this->postoService->getPostos();
+        return view('usuario.create', compact('permissoes', 'prefeituras', 'postos'));
     }
 
     public function store(Request $request)

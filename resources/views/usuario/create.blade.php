@@ -63,6 +63,18 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="form-group row" id="posto-container" style="display: none;">
+                            <label for="posto" class="col-md-3 label-control">* Selecionar Posto:</label>
+                            <div class="col-md-6">
+                                <select name="posto" id="posto" class="form-control">
+                                <option value="" disabled>Selecione o Posto</option>
+                                @foreach ($postos as $posto)
+                                    <option value="{{ $posto['id'] }}">{{ $posto['nome'] }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                        </div>
                         
                         <div class="row mb-3">
                             <label for="permissoes" class="col-md-3 label-control">* Permissões:</label>
@@ -79,10 +91,6 @@
                                 </select>
                             </div>
                         </div>
-                        
-                        
-                        
-                        
 
                     </div>
 
@@ -137,5 +145,19 @@
                 $('#permissoes').val(null).trigger('change'); // Limpa o Select2
             });
         });
+
+        // exibe os postos para selecionar
+        document.getElementById('tipo_usuario').addEventListener('change', function() {
+            var tipoUsuario = this.value;
+            var postoContainer = document.getElementById('posto-container');
+
+            if (tipoUsuario == "2") {
+                postoContainer.style.display = 'flex';
+            } else {
+                postoContainer.style.display = 'none';
+            }
+        });
+
+        
     </script>
 @stop
