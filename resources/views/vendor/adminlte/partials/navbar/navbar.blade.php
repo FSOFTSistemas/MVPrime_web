@@ -26,7 +26,7 @@
                     onchange="document.getElementById('prefeitura-form').submit();"
                     style="border-radius: 5px; max-width: 250px;">
                     <option value="99" {{ session('prefeitura_id') == 99 ? 'selected' : '' }}>TODAS</option>
-                    @foreach (session('prefeituras', []) as $prefeitura)
+                    @foreach (session('prefeituras', []) ?? [] as $prefeitura)
                         <option value="{{ $prefeitura['id'] }}"
                             {{ session('prefeitura_id') == $prefeitura['id'] ? 'selected' : '' }}>
                             {{ $prefeitura['razao_social'] }}
