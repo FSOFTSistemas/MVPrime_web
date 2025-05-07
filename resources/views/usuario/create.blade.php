@@ -57,7 +57,7 @@
                             <label for="posto" class="col-md-3 label-control">* Selecionar Posto:</label>
                             <div class="col-md-6">
                                 <select name="posto_id" id="posto_id" class="form-control">
-                                <option value="" disabled>Selecione o Posto</option>
+                                <option value="" selected disabled>Selecione o Posto</option>
                                 @foreach ($postos as $posto)
                                     <option value="{{ $posto['id'] }}">{{ $posto['nome'] }}</option>
                                 @endforeach
@@ -143,10 +143,12 @@
 
             if (tipoUsuario == "2") {
                 postoContainer.style.display = 'flex';
+                postoIdInput.required = true;
             } else {
                 postoContainer.style.display = 'none';
                 if (postoIdInput) {
                     postoIdInput.value = '';
+                    postoIdInput.required = false;
                 }
             }
         });
