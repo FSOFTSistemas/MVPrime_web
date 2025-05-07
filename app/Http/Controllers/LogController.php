@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
 namespace App\Http\Controllers;
-use App\Services\logService;
+use App\Services\LogService;
 use Illuminate\Support\Facades\Log;
 
 class logController extends Controller
@@ -11,7 +11,7 @@ class logController extends Controller
     protected $logService;
 
 
-    public function __construct(logService $logService)
+    public function __construct(LogService $logService)
     {
         $this->logService = $logService;
     }
