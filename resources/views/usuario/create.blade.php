@@ -11,6 +11,7 @@
             <div class="card">
                 <form method="POST" action="{{ route('usuarios.store') }}">
                     @csrf
+                    <input type="hidden" name="prefeitura_id" id="prefeitura_id" value="{{session('prefeitura_id')}}"
                     <div class="card-body">
                         <div class="form-group row">
                             <label for="nome" class="col-md-3 label-control">* Nome:</label>
@@ -39,18 +40,6 @@
                                 <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required placeholder="Confirme a senha">
                             </div>
                         </div>
-                        
-                        <div class="form-group row">
-                            <label for="prefeitura_id" class="col-md-3 label-control">* Prefeitura:</label>
-                            <div class="col-md-6">
-                                <select name="prefeitura_id" id="prefeitura_id" class="form-control select2" required data-placeholder="Selecione a Prefeitura">
-                                    <option value="">Selecione a Prefeitura</option>
-                                    @foreach ($prefeituras as $prefeitura)
-                                        <option value="{{ $prefeitura['id'] }}">{{ $prefeitura['razao_social'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
 
                         <div class="form-group row">
                             <label for="tipo_usuario" class="col-md-3 label-control">* Tipo de usuário:</label>
@@ -67,7 +56,7 @@
                         <div class="form-group row" id="posto-container" style="display: none;">
                             <label for="posto" class="col-md-3 label-control">* Selecionar Posto:</label>
                             <div class="col-md-6">
-                                <select name="posto" id="posto" class="form-control">
+                                <select name="posto_id" id="posto_id" class="form-control">
                                 <option value="" disabled>Selecione o Posto</option>
                                 @foreach ($postos as $posto)
                                     <option value="{{ $posto['id'] }}">{{ $posto['nome'] }}</option>
@@ -150,11 +139,15 @@
         document.getElementById('tipo_usuario').addEventListener('change', function() {
             var tipoUsuario = this.value;
             var postoContainer = document.getElementById('posto-container');
+            var postoIdInput = document.getElementById('posto_id');
 
             if (tipoUsuario == "2") {
                 postoContainer.style.display = 'flex';
             } else {
                 postoContainer.style.display = 'none';
+                if (postoIdInput) {
+                    postoIdInput.value = '';
+                }
             }
         });
 

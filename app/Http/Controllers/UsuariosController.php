@@ -63,7 +63,7 @@ class UsuariosController extends Controller
                 'password' => 'required|string|confirmed|min:4',
                 'tipo_usuario' => 'required|integer',
                 'prefeitura_id' => 'required|integer',
-                'posto_id' => 'nullable|integer',
+                'posto_id' => 'required_if:tipo_usuario,2|integer',
                 'permissoes' => 'required|array',
                 'permissoes.*' => 'string'
             ]);
