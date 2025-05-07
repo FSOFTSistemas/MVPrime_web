@@ -38,7 +38,7 @@
         </thead>
         <tbody>
             @php
-                $listaPrefeituras = isset($prefeituras[0]) ? $prefeituras : [$prefeituras];
+                $listaPrefeituras = $prefeituras ? $prefeituras : [];
             @endphp
             @foreach ($listaPrefeituras ?? [] as $prefeitura)
                 <tr>
