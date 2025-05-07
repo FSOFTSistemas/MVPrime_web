@@ -58,7 +58,7 @@
                             <div class="col-md-6">
                                 <select name="posto_id" id="posto_id" class="form-control">
                                 <option value="" selected disabled>Selecione o Posto</option>
-                                @foreach ($postos as $posto)
+                                @foreach ($postos ?? [] as $posto)
                                     <option value="{{ $posto['id'] }}">{{ $posto['nome'] }}</option>
                                 @endforeach
                                 </select>
