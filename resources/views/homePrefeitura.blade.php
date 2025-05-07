@@ -63,17 +63,19 @@
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const mesLabels = @json($mesLabels);
-    const mesData = @json($mesData);
+    const dadosSecretarias = @json($abastecimentoPorSecretaria);
+
+    const labels = dadosSecretarias.map(item => item.secretaria_nome);
+    const valores = dadosSecretarias.map(item => (item.total_abastecido).toFixed(2));
 
     const ctxAbastecimentos = document.getElementById('abastecimentosMes').getContext('2d');
     const abastecimentoChart = new Chart(ctxAbastecimentos, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: mesLabels,
+            labels: labels,
             datasets: [{
                 label: 'Valores (R$)',
-                data: mesData,
+                data: valores,
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1

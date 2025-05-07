@@ -55,10 +55,8 @@ class HomeController extends Controller
                 $dadosPosto = $this->homeService->listarPosto($user->posto_id);
                 $totalAbastecimentosHoje = number_format($dadosPosto['total_abastecimento_hoje'], 2, ',', '.');
                 $totalAbastecimentosMes = $dadosPosto['valor_total_mes'];
-                $AbastecimentosMesAtual = number_format($dadosPosto['abastecimentos_mes_atual'] ?? 0 ,2, ',', '.');
+                $AbastecimentosMesAtual = number_format($dadosPosto['abastecimentos_mes_atual'], 2, ',', '.');
                 $valorPorCombustivel = $dadosPosto['combustivel'];
-
-                
 
                 return view('homePosto', [
                     'totalAbastecimentosHoje' => $totalAbastecimentosHoje,
@@ -68,31 +66,22 @@ class HomeController extends Controller
                 ]);
 
             case 3:
-                $totalVeiculos = count($this->homeService->veiculosPorPrefeitura(1));
-                $totalMotoristas = count($this->homeService->motoristaPorPrefeitura(1));
-                $abastecimentoPorPrefeitura = $this->homeService->abastecimentoPorPrefeitura(1);
+                $totalVeiculos = count($this->homeService->veiculosPorPrefeitura($user->prefeitura_id));
+                $totalMotoristas = count($this->homeService->motoristaPorPrefeitura($user->prefeitura_id));
+                $abastecimentoPorPrefeitura = $this->homeService->abastecimentoPorPrefeitura($user->prefeitura_id);
                 $mesAtual = Carbon::now()->format('Y-m');
                 $totalValorMesAtual = collect($abastecimentoPorPrefeitura)
                     ->filter(function ($item) use ($mesAtual) {
                         return Carbon::parse($item['data_abastecimento'])->format('Y-m') === $mesAtual;
                     })
                     ->sum('valor');
-
-
-                
-                // dd($abastecimentoPorPrefeitura);
-
-                $dadosDias = $this->formatarDadosDia($this->homeService->listarAbastecimentosPrefeituraDia($user->prefeitura_id));
-                $dadosMes = $this->formatarDadosMes($this->homeService->listarAbastecimentosPrefeituraMes($user->prefeitura_id));
+                $abastecimentoPorSecretaria = $this->homeService->abastecimentoPorSecretaria($user->prefeitura_id);
 
                 return view('homePrefeitura', [
-                    'diaLabels' => $dadosDias['labels'],
-                    'diaData' => $dadosDias['data'],
-                    'mesLabels' => $dadosMes['labels'],
-                    'mesData' => $dadosMes['data'],
                     'totalVeiculos' => $totalVeiculos,
                     'totalMotoristas' => $totalMotoristas,
-                    'totalMes' => $totalValorMesAtual
+                    'totalMes' => $totalValorMesAtual,
+                    'abastecimentoPorSecretaria' => $abastecimentoPorSecretaria
                 ]);
         }
     }

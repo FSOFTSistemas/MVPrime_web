@@ -46,6 +46,17 @@ class HomeService
         return $this->abastecimentoService->listarPorPrefeitura($prefeitura_id);
     }
 
+    public function abastecimentoPorSecretaria($prefeitura_id)
+    {
+        try{
+            $token = session('jwt_token');
+            $response = Http::withToken($token)->get("{$this->apiUrl}/abastecimentos/secretarias/{$prefeitura_id}");
+            return $response->successful() ? $response->json() : null;
+        } catch(\Exception $e) {
+            Log::error("Erro ao listar abastecimentos das secretarias: " . $e->getMessage());
+        }
+    }
+
   public function listarAbastecimentosMes()
   {
       try {
