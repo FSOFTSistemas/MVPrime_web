@@ -67,7 +67,7 @@
                     <div class="col-md-6">
                         <select class="form-control" id="secretaria" name="secretaria_id" required>
                             <option value="">Selecione uma Secretaria</option>
-                            @foreach ($secretarias as $secretaria)
+                            @foreach ($secretarias ?? [] as $secretaria)
                                 <option value="{{ $secretaria['id'] }}">
                                     {{ $secretaria['nome'] }}
                                 </option>

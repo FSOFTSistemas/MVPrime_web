@@ -64,7 +64,7 @@
                     <div class="col-md-6">
                         <select class="form-control" id="prefeitura" name="prefeitura_id" required>
                             <option value="">Selecione uma Prefeitura</option>
-                            @foreach ($prefeituras as $prefeitura)
+                            @foreach ($prefeituras ?? [] as $prefeitura)
                                 <option value="{{ $prefeitura['id'] }}">
                                     {{ $prefeitura['razao_social'] }}
                                 </option>

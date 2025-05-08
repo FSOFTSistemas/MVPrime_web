@@ -50,7 +50,7 @@
                 <div class="col-md-3">
                     <select class="form-control" id="secretaria" name="secretaria_id" required>
                         <option value="">Selecione uma Secretaria</option>
-                        @forelse ($secretarias as $secretaria)
+                        @forelse ($secretarias ?? [] as $secretaria)
                             <option value="{{ $secretaria['id'] }}">
                                 {{ $secretaria['nome'] }}
                             </option>
