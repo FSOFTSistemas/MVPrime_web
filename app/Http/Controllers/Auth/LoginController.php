@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission; // Importando o modelo de permissão do Spatie
 use App\Services\PrefeituraService;
 use App\Services\UserService;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -110,7 +111,7 @@ class LoginController extends Controller
             ])->post('https://gestao-api.dev.br:4000/api/auth/logout');
         } catch (\Exception $e) {
             // Caso ocorra um erro ao tentar invalidar o token na API, registra o erro
-            \Log::error('Erro ao invalidar o token na API de logout: ' . $e->getMessage());
+            Log::error('Erro ao invalidar o token na API de logout: ' . $e->getMessage());
         }
     }
 

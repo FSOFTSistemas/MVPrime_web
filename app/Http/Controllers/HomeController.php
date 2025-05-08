@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\HomeService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $prefeitura_id = session('prefeitura_id');
         Carbon::setLocale('pt_BR');
 
         
@@ -66,9 +68,13 @@ class HomeController extends Controller
                 ]);
 
             case 3:
-                $totalVeiculos = count($this->homeService->veiculosPorPrefeitura($user->prefeitura_id));
-                $totalMotoristas = count($this->homeService->motoristaPorPrefeitura($user->prefeitura_id));
-                $abastecimentoPorPrefeitura = $this->homeService->abastecimentoPorPrefeitura($user->prefeitura_id);
+                $totalVeiculos = $this->homeService->veiculosPorPrefeitura($prefeitura_id);
+                $totalVeiculos = is_null($totalVeiculos) ? 0 : count($totalVeiculos);
+
+                $totalMotoristas = $this->homeService->motoristaPorPrefeitura($prefeitura_id);
+                $totalMotoristas = is_null($totalMotoristas) ? 0 : count($totalMotoristas);
+                
+                $abastecimentoPorPrefeitura = $this->homeService->abastecimentoPorPrefeitura($prefeitura_id);
                 $mesAtual = Carbon::now()->format('Y-m');
                 $totalValorMesAtual = collect($abastecimentoPorPrefeitura)
                     ->filter(function ($item) use ($mesAtual) {
