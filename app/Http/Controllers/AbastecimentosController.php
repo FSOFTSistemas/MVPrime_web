@@ -9,6 +9,7 @@ use App\Services\VeiculosService;
 use App\Services\PostoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AbastecimentosController extends Controller
 {
@@ -31,11 +32,15 @@ class AbastecimentosController extends Controller
     public function index()
     {
         try {
-
-            $abastecimentos = $this->abastecimentoService->getAbastecimentos();
+            //dd($this->abastecimentoService->listarAbastecimentos());
+            //$abastecimentos = $this->abastecimentoService->getAbastecimentos();
+            //dd($abastecimentos);
+            $abastecimentos = $this->abastecimentoService->listarAbastecimentos()['data'];
+            //dd($abastecimentos);
             $veiculos = $this->veiculosService->getVeiculos();
             $motoristas = $this->motoristasService->getMotoristas();
             $postos = $this->postoService->getPostos();
+            
             return view('abastecimento.index', compact('abastecimentos', 'veiculos', 'motoristas', 'postos'));
         } catch (\Exception $e) {
             Log::error('Erro ao listar abastecimentos: ' . $e->getMessage());
