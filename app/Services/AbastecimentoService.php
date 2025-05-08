@@ -11,21 +11,21 @@ class AbastecimentoService
     protected $apiUrl = 'https://gestao-api.dev.br:4000/api/abastecimentos';
 
 
-    public function getAbastecimentos()
+    public function getAbastecimentos($page, $limit)
     {
         if(session('prefeitura_id') == 99)
         {
-            return $this->listarAbastecimentos();
+            return $this->listarAbastecimentos($page, $limit);
         }else{
             return $this->listarPorPrefeitura(session('prefeitura_id'));
         }
     }
 
-    public function listarAbastecimentos()
+    public function listarAbastecimentos($page, $limit)
     {
         try {
             $token = session('jwt_token');
-            $response = Http::withToken($token)->get($this->apiUrl);
+            $response = Http::withToken($token)->get($this->apiUrl, [ 'page' => $page, 'limit' => $limit ]);
 
             return $response->successful() ? $response->json() : null;
         } catch (\Exception $e) {

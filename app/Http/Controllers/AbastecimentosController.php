@@ -29,19 +29,40 @@ class AbastecimentosController extends Controller
 
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            //dd($this->abastecimentoService->listarAbastecimentos());
-            //$abastecimentos = $this->abastecimentoService->getAbastecimentos();
-            //dd($abastecimentos);
-            $abastecimentos = $this->abastecimentoService->listarAbastecimentos()['data'];
-            //dd($abastecimentos);
+
+            $page = $request->input('page', 1); // página atual, default = 1
+            $limit = $request->get('limit', 10);
+
+            $response = $this->abastecimentoService->listarAbastecimentos($page, $limit);
+    
+            if (!$response || !isset($response['data'])) {
+                return back()->with('error', 'Erro ao carregar os abastecimentos.');
+            }
+    
+            $abastecimentos = $response['data'];
+            $total = $response['totalPages'] ?? count($abastecimentos); // caso API não mande total, pega o count
+            $perPage = $response['perPage'] ?? 20; // define um padrão
+            $lastPage = $response['totalPages'] ?? ceil($total / $perPage);
+            $currentPage = $response['currentPage'] ?? $page;
+    
             $veiculos = $this->veiculosService->getVeiculos();
             $motoristas = $this->motoristasService->getMotoristas();
             $postos = $this->postoService->getPostos();
-            
-            return view('abastecimento.index', compact('abastecimentos', 'veiculos', 'motoristas', 'postos'));
+    
+            return view('abastecimento.index', compact(
+                'abastecimentos',
+                'veiculos',
+                'motoristas',
+                'postos',
+                'total',
+                'perPage',
+                'lastPage',
+                'currentPage',
+                'limit'
+            ));
         } catch (\Exception $e) {
             Log::error('Erro ao listar abastecimentos: ' . $e->getMessage());
             return back()->with('error', 'Erro ao carregar as abastecimentos.');

@@ -158,7 +158,7 @@ class HomeService
   {
     try {
         $token = session('jwt_token');
-        $response = Http::withToken($token)->get("{$this->apiUrl}/cads_posto/6");
+        $response = Http::withToken($token)->get("{$this->apiUrl}/cads_posto/{$posto_id}");
 
         return $response->successful() ? $response->json() : null;
     } catch (\Exception $e) {
