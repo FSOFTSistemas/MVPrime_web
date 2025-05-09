@@ -33,8 +33,8 @@ class HomeController extends Controller
             case 1:
                 $dadosDias = $this->formatarDadosDia($this->homeService->listarAbastecimentosDia());
                 $dadosMes = $this->formatarDadosMes($this->homeService->listarAbastecimentosMes());
-                $dadosPrefeitura = $this->homeService->listarAbastecimentosPrefeitura();
-
+                $dadosPrefeitura = $this->homeService->listarAbastecimentosPrefeitura($user->empresa_id);
+                // dd($dadosPrefeitura);
                 $dadosMaster = $this->homeService->listarMaster($user->empresa_id);
                 $totalPrefeituras = $dadosMaster['total_prefeituras'];
                 $totalUsuarios = $dadosMaster['total_usuarios'];

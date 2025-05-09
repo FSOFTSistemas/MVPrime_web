@@ -81,11 +81,11 @@ class HomeService
           return null;
       }
   }
-  public function listarAbastecimentosPrefeitura()
+  public function listarAbastecimentosPrefeitura($empresa_id)
   {
       try {
           $token = session('jwt_token');
-          $response = Http::withToken($token)->get("{$this->apiUrl}/abastecimentos_prefeitura_mes");
+          $response = Http::withToken($token)->get("{$this->apiUrl}/abastecimentos_prefeitura_mes/{$empresa_id}");
 
           return $response->successful() ? $response->json() : null;
       } catch (\Exception $e) {
@@ -97,7 +97,7 @@ class HomeService
   {
       try {
           $token = session('jwt_token');
-          $response = Http::withToken($token)->get("{$this->apiUrl}/abastecimentos_pref_mes");
+          $response = Http::withToken($token)->get("{$this->apiUrl}/abastecimentos_pref_mes/");
 
           return $response->successful() ? $response->json() : null;
       } catch (\Exception $e) {
