@@ -35,8 +35,11 @@ class AbastecimentosController extends Controller
 
             $page = $request->input('page', 1); // página atual, default = 1
             $limit = $request->get('limit', 10);
-
-            $response = $this->abastecimentoService->listarAbastecimentos($page, $limit);
+            //dd($request->all());
+            $response = $this->abastecimentoService->getAbastecimentos($page, $limit);
+            //dd(session('prefeitura_id'));
+            //dd($response);
+            //$response = [];
     
             if (!$response || !isset($response['data'])) {
                 return back()->with('error', 'Erro ao carregar os abastecimentos.');

@@ -13,11 +13,11 @@ class AbastecimentoService
 
     public function getAbastecimentos($page, $limit)
     {
-        if(session('prefeitura_id') == 99)
-        {
+        if(session('prefeitura_id') == 99 || !session('prefeitura_id'))
+        {       
             return $this->listarAbastecimentos($page, $limit);
         }else{
-            return $this->listarPorPrefeitura(session('prefeitura_id'));
+            return $this->listarPorPrefeitura(session('prefeitura_id'), $page, $limit);
         }
     }
 
@@ -34,11 +34,11 @@ class AbastecimentoService
         }
     }
 
-    public function listarPorPrefeitura($prefeituraId)
+    public function listarPorPrefeitura($prefeituraId, $page, $limit)
 {
     try {
         $token = session('jwt_token');
-        $response = Http::withToken($token)->get("{$this->apiUrl}/prefeitura/{$prefeituraId}");
+        $response = Http::withToken($token)->get("{$this->apiUrl}/prefeitura/{$prefeituraId}", [ 'page' => $page, 'limit' => $limit ]);
 
         return $response->successful() ? $response->json() : null;
     } catch (\Exception $e) {
