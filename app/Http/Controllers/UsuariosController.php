@@ -64,6 +64,7 @@ class UsuariosController extends Controller
                 'tipo_usuario' => 'required|integer',
                 'prefeitura_id' => 'required|integer',
                 'posto_id' => 'required_if:tipo_usuario,2|integer',
+                'id_cartao' => 'string|max:30',
                 'permissoes' => 'required|array',
                 'permissoes.*' => 'string'
             ]);
@@ -90,6 +91,7 @@ class UsuariosController extends Controller
             $dados = $request->validate([
                 'nome' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
+                'id_cartao' => 'string|max:30',
                 'permissoes' => 'required|array',
                 'permissoes.*' => 'string'
             ]);
