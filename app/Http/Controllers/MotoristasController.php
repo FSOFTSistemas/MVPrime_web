@@ -27,7 +27,7 @@ class MotoristasController extends Controller
 
             $motoristas = $this->motoristaService->getMotoristas();
             $secretarias = $this->secretariaService->getSecretarias();
-
+            
             $secretarias = $secretarias ?: [];
             return view('motorista.index', compact('motoristas', 'secretarias'));
 
@@ -57,6 +57,7 @@ public function store(Request $request)
             'cnh' => 'required|string',
             'vencimento_cnh' => 'required|date', // Valida como data
             'secretaria_id' => 'required|string', // Ou 'string' dependendo do tipo do campo
+            'id_cartao' => 'string|max:30',
         ]);
         // Formatar a data de vencimento para o formato 'Y-m-d' (YYYY-MM-DD)
         $dados['vencimento_cnh'] = Carbon::parse($dados['vencimento_cnh'])->format('Y-m-d');
@@ -84,6 +85,7 @@ public function store(Request $request)
                 'cnh'=> 'required|string',
                 'vencimento_cnh' => 'required|date',
                 'secretaria_id' => 'required|string',
+                'id_cartao' => 'string|max:30',
             ]);
 
             $dados['vencimento_cnh'] = Carbon::parse($dados['vencimento_cnh'])->format('Y-m-d');
