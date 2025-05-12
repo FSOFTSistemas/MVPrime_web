@@ -151,7 +151,12 @@
                 for (let campo of camposObrigatorios) {
                     let valor = $(`#${campo}`).val().trim();
                     if (!valor) {
-                        alert(`O campo ${campo.toUpperCase()} é obrigatório.`);
+                         Swal.fire({
+                            title: 'Erro!',
+                            text: `O campo ${campo.toUpperCase()} é obrigatório.`,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
                         $(`#${campo}`).focus();
                         return;
                     }
