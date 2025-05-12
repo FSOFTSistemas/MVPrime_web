@@ -92,9 +92,9 @@ class SecretariasController extends Controller
                 'responsavel' => 'required|string',
             ]);
             
-            $dados['prefeitura_id'] = 1;
+            $dados['prefeitura_id'] = session('prefeitura_id');
             $resultado = $this->secretariaService->atualizarSecretaria($id, $dados);
-
+            
             if ($resultado) {
                 
                 return redirect()->route('secretarias.index')->with('success', 'Secretaria atualizada com sucesso!');
