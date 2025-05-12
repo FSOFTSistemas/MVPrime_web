@@ -37,6 +37,7 @@ use Carbon\Carbon;
                 <th>Nome</th>
                 <th>Vencimento da CNH</th>
                 <th>Secretaria</th>
+                <th>Cartão</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -47,6 +48,7 @@ use Carbon\Carbon;
                     <td>{{ $motorista['nome'] }}</td>
                     <td>{{ Carbon::parse($motorista['vencimento_cnh'])->format('d/m/Y') }}</td>
                     <td>{{ $motorista['secretaria']['nome'] }}</td>
+                    <td>{{ $motorista['id_cartao'] }}</td>
                     <td>
                         <!-- Botão Editar -->
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"

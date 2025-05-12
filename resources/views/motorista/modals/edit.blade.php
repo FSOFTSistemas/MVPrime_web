@@ -1,3 +1,6 @@
+<?php
+use Carbon\Carbon;
+?>
 <!-- Modal Editar Motorista -->
 <div class="modal fade" id="editMotoristaModal{{ $motorista['id'] }}" tabindex="-1" role="dialog" aria-labelledby="editMotoristaModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -22,7 +25,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Vencimento CNH</label>
-                        <input type="date" class="form-control" name="vencimento_cnh" value="{{$motorista['vencimento_cnh']}}" required>
+                        <input type="date" class="form-control" name="vencimento_cnh" value="{{ \Carbon\Carbon::parse($motorista['vencimento_cnh'])->format('Y-m-d') }}" required>
                     </div>
 
 
@@ -36,6 +39,12 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Cartão</label>
+                        <input type="text" class="form-control" name="id_cartao" value="{{$motorista['id_cartao']}}" maxlength="30">
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

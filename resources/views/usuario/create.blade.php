@@ -65,6 +65,19 @@
                             </div>
                         </div>
                         
+                        <div class="form-group row input-container" id="cartao-container" style="display: none;">
+                            <label for="id_cartao" class="col-md-3 label-control" >Cartão:</label>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="id_cartao" name="id_cartao" maxlength="30">
+                                    <i class="fas fa-info-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        <strong>Aviso:</strong> Sem esta informação não será possível realizar abastecimento!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="row mb-3">
                             <label for="permissoes" class="col-md-3 label-control">* Permissões:</label>
                             <div class="col-md-6">
@@ -99,13 +112,38 @@
             color: var(--blue-2) !important;
             padding-left: 1.5rem !important;
         }
+
         .select2-container--default .select2-selection--multiple {
 
         }
-    </style>
+
+        .info-icon {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .info-tooltip {
+            display: none;
+            position: absolute;
+            top: 35px;
+            right: 0;
+            color: white;
+            background-color: var(--blue-1);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            width: 300px;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+        }
+    
+        .info-icon:hover + .info-tooltip {
+            display: block;
+        }
+</style>
 @stop
-
-
 
 @section('js')
     {{-- JQuery --}}
@@ -135,21 +173,28 @@
             });
         });
 
-        // exibe os postos para selecionar
+        
         document.getElementById('tipo_usuario').addEventListener('change', function() {
             var tipoUsuario = this.value;
             var postoContainer = document.getElementById('posto-container');
             var postoIdInput = document.getElementById('posto_id');
+            var cartaoContainer = document.getElementById('cartao-container');
+            var cartaoIdInput = document.getElementById('id_cartao');
+            
+            postoContainer.style.display = 'none';
+            cartaoContainer.style.display = 'none';
+            postoIdInput.required = false;
 
-            if (tipoUsuario == "2") {
+            if (tipoUsuario == "1") { // exibe o campo de cartão para selecionar
+                postoIdInput.value = '';
+                cartaoContainer.style.display = 'flex';
+            } else if (tipoUsuario == "2") { // exibe os postos para selecionar
+                cartaoIdInput.value = '';
                 postoContainer.style.display = 'flex';
                 postoIdInput.required = true;
             } else {
-                postoContainer.style.display = 'none';
-                if (postoIdInput) {
-                    postoIdInput.value = '';
-                    postoIdInput.required = false;
-                }
+                postoIdInput.value = '';
+                cartaoIdInput.value = '';
             }
         });
 
