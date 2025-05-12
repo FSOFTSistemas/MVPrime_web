@@ -62,13 +62,17 @@ class UsuariosController extends Controller
                 'email' => 'required|email|max:255',
                 'password' => 'required|string|confirmed|min:4',
                 'tipo_usuario' => 'required|integer',
-                'prefeitura_id' => 'required|integer',
+                'prefeitura_id' => 'required_unless:tipo_usuario,1|integer', //se tipo_usuario for master não precisa de prefeitura id
                 'posto_id' => 'required_if:tipo_usuario,2|integer',
-                'id_cartao' => 'string|max:30',
+                'id_cartao' => 'string|max:30|nullable',
                 'permissoes' => 'required|array',
-                'permissoes.*' => 'string'
+                
             ]);
-
+            
+            if($validatedData['tipo_usuario'] == 1) { //se usuario master => prefeitura_id é null
+                $validatedData['prefeitura_id'] = null;
+            }
+            
             $validatedData['empresa_id'] = Auth::user()->empresa_id;
             $user = $this->userService->createUser($validatedData);
 
@@ -79,7 +83,6 @@ class UsuariosController extends Controller
 
             return redirect()->back()->withInput()->withErrors('Erro ao criar usuário.');
         } catch (\Exception $e) {
-            dd($e->getMessage());
             return redirect()->back()->withInput()->withErrors('Erro ao criar usuário: ' . $e->getMessage());
         }
     }
