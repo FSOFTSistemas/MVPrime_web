@@ -57,8 +57,8 @@ class PostosController extends Controller
                 'endereco_id' => 'required|integer',
                 'prefeitura_id' => 'required|integer'
             ], [
-                'nome.required' => 'O campo Razão Social é obrigatório.',
-                'nome.regex' => 'A Razão Social deve conter apenas letras e espaços.',
+                'nome.required' => 'O campo Nome é obrigatório.',
+                'nome.regex' => 'O Nome deve conter apenas letras e espaços.',
             ]);
 
 
