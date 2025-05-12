@@ -12,7 +12,7 @@ class UserService
 
     public function getuser()
     {
-        if(session('prefeitura_id') == 99)
+        if(session('prefeitura_id') == 99 || !session('prefeitura_id'))
         {
             return $this->getAllUsers();
         }else{
@@ -105,7 +105,6 @@ class UserService
             if ($response->successful()) {
                 return $response->json();
             }
-
             dd($response->json());
             // Loga o erro caso não tenha sucesso
             Log::error("Erro ao criar usuário: " . $response->body());
