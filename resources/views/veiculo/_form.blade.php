@@ -17,39 +17,52 @@
                     <label for="placa" class="col-md-3 label-control">* Placa:</label>
                     <div class="col-md-6">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="placa" name="placa" required>
+                            <input type="text"
+                                class="form-control @error('placa') is-invalid @elseif(old('placa')) is-valid @enderror"
+                                id="placa" name="placa" value="{{ old('placa') }}" maxlength="7" required
+                                style="text-transform:uppercase;">
+
+                            <div id="placa-feedback" class="invalid-feedback" style="display: none;">
+                                A placa informada é inválida. Use o formato ABC1234 ou ABC1D23.
+                            </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label class="col-md-3 label-control">* Modelo:</label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" name="modelo" required>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label class="col-md-3 label-control">* Ano:</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" name="ano" required>
+                        <input type="text" class="form-control ano-picker" name="ano" value="{{ old('ano') }}"
+                            required>
+                        @error('ano')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label class="col-md-3 label-control">* Qtd de litros máxima:</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" name="quantidade_litros" required>
+                        <input type="number" class="form-control" name="quantidade_litros" required>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label class="col-md-3 label-control">* Qtd de abastecimentos:</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" name="quantidade_abastecimentos" required>
+                        <input type="number" class="form-control" name="quantidade_abastecimentos" required>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label class="col-md-3 label-control">* Período de limite:</label>
                     <div class="col-md-6">
@@ -61,7 +74,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="secretaria_id" class="col-md-3 label-control">* Secretaria:</label>
                     <div class="col-md-6">
@@ -75,7 +88,7 @@
                         </select>
                     </div>
                 </div>
-                
+
 
                 <div class="card-footer">
                     <a href="{{ route('veiculos.index') }}" class="btn btn-secondary">Voltar</a>
@@ -89,10 +102,67 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 @endsection
 
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <!-- Adicione a lib jQuery Mask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <!-- JS do Datepicker + dependências -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js">
+    </script>
+
+    <script>
+        $(function() {
+            $('.ano-picker').datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years",
+                language: "pt-BR",
+                autoclose: true
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const placaInput = document.getElementById('placa');
+            const feedback = document.getElementById('placa-feedback');
+
+            function validarPlaca(placa) {
+                placa = placa.toUpperCase();
+                const antiga = /^[A-Z]{3}[0-9]{4}$/;
+                const mercosul = /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/;
+                return antiga.test(placa) || mercosul.test(placa);
+            }
+
+            placaInput.addEventListener('input', function() {
+                let valor = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().substring(0, 7);
+                this.value = valor;
+
+                if (valor.length === 7) {
+                    if (validarPlaca(valor)) {
+                        this.classList.remove('is-invalid');
+                        this.classList.add('is-valid');
+                        feedback.style.display = 'none';
+                    } else {
+                        this.classList.remove('is-valid');
+                        this.classList.add('is-invalid');
+                        feedback.style.display = 'block';
+                    }
+                } else {
+                    this.classList.remove('is-valid', 'is-invalid');
+                    feedback.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
 
 @endsection
