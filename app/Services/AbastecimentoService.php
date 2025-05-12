@@ -11,13 +11,13 @@ class AbastecimentoService
     protected $apiUrl = 'https://gestao-api.dev.br:4000/api/abastecimentos';
 
 
-    public function getAbastecimentos($page, $limit)
+    public function getAbastecimentos($page, $limit, $listAll = null)
     {
         if(session('prefeitura_id') == 99 || !session('prefeitura_id'))
         {       
             return $this->listarAbastecimentos($page, $limit);
         }else{
-            return $this->listarPorPrefeitura(session('prefeitura_id'), $page, $limit);
+            return $this->listarPorPrefeitura(session('prefeitura_id'), $page, $limit, $listAll);
         }
     }
 
@@ -34,11 +34,11 @@ class AbastecimentoService
         }
     }
 
-    public function listarPorPrefeitura($prefeituraId, $page, $limit)
+    public function listarPorPrefeitura($prefeituraId, $page, $limit, $listAll)
 {
     try {
         $token = session('jwt_token');
-        $response = Http::withToken($token)->get("{$this->apiUrl}/prefeitura/{$prefeituraId}", [ 'page' => $page, 'limit' => $limit ]);
+        $response = Http::withToken($token)->get("{$this->apiUrl}/prefeitura/{$prefeituraId}", [ 'page' => $page, 'limit' => $limit, 'listAll' => $listAll ]);
 
         return $response->successful() ? $response->json() : null;
     } catch (\Exception $e) {
