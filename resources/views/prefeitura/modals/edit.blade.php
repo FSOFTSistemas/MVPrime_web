@@ -1,5 +1,5 @@
 <!-- Modal Editar Prefeitura -->
-<div class="modal fade" id="editPrefeituraModal{{ $prefeitura['id'] }}" tabindex="-1" role="dialog" aria-labelledby="editPrefeituraModalLabel" aria-hidden="true">
+<div class="modal fade" id="editPrefeituraModal{{ $prefeitura['id'] }}" tabindex="-1" role="dialog" aria-labelledby="editPrefeituraModalLabel" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form action="{{ route('prefeituras.update', $prefeitura['id']) }}" method="POST">
@@ -7,9 +7,6 @@
                 @method('PUT')
                 <div class="modal-header bg-warning">
                     <h5 class="modal-title text-white">Editar Prefeitura</h5>
-                    <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
@@ -36,10 +33,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-warning text-white">Atualizar</button>
+                    <button type="submit" class="btn btn-warning text-white  w-100" >Salvar / Sair</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
+

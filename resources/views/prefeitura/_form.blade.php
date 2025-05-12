@@ -26,21 +26,21 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="razao_social" class="col-md-3 label-control">* Razão Social:</label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="razao_social" name="razao_social" required>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="responsavel" class="col-md-3 label-control">* Responsável:</label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="responsavel" name="responsavel" required>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="endereco_id" class="col-md-3 label-control">* Endereço:</label>
                     <div class="col-md-4">
@@ -59,7 +59,7 @@
                         </button>
                     </div>
                 </div>
-                
+
                 <div class="card-footer">
                     <a href="{{ route('prefeituras.index') }}" class="btn btn-secondary">Voltar</a>
                     <button type="submit" class="btn bluebtn">Salvar</button>
@@ -74,7 +74,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalEnderecoLabel">Novo Endereço</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="formEndereco">
@@ -144,6 +143,20 @@
             });
 
             $('#salvarEndereco').on('click', function () {
+
+                //  Lista dos campos obrigatórios (exceto número)
+                const camposObrigatorios = ['cep', 'logradouro', 'bairro', 'cidade', 'uf'];
+
+                // Validação genérica
+                for (let campo of camposObrigatorios) {
+                    let valor = $(`#${campo}`).val().trim();
+                    if (!valor) {
+                        alert(`O campo ${campo.toUpperCase()} é obrigatório.`);
+                        $(`#${campo}`).focus();
+                        return;
+                    }
+                }
+
                 let endereco = {
                     cep: $('#cep').val(),
                     logradouro: $('#logradouro').val(),
@@ -179,6 +192,11 @@
                         } else {
                             alert('Erro ao salvar o endereço.');
                         }
+                        const campos = ['cep', 'logradouro', 'numero', 'bairro', 'cidade', 'uf'];
+
+                        campos.forEach(campo => {
+                            $(`#${campo}`).val('');
+                        });
                     },
                     error: function (xhr, status, error) {
                         console.error('Erro na requisição Ajax:', error);
