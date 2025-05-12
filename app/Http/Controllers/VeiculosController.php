@@ -46,7 +46,7 @@ class VeiculosController extends Controller
             $dados = $request->validate(
                 [
                     'placa' => ['required', 'regex:/^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/i'], // formato Mercosul ou ABC1234
-                    'modelo' => 'required|string',
+                    'modelo' => ['required|string', 'regex:/^[a-zA-Z0-9\s\p{L}]+$/u'] ,
                     'ano' => ['required', 'digits:4', "string", "between:$anoMinimo,$anoMaximo"],
                     'quantidade_litros' => 'required|string',
                     'quantidade_abastecimentos' => 'required|string',
@@ -65,6 +65,7 @@ class VeiculosController extends Controller
                     'secretaria_id.required' => 'O campo Secretaria é obrigatório.',
                     'placa.required' => 'O campo Placa é obrigatório.',
                     'modelo.string' => 'O campo Modelo deve ser uma string.',
+                    'modelo.regex' => 'O campo Modelo não pode ser apenas caracteres.'
                 ]
             );
             $dados['quantidade_litros'] = (int) $dados['quantidade_litros'];
