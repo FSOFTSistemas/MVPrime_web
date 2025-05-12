@@ -6,8 +6,8 @@ use App\Services\SecretariaService;
 use App\Services\PrefeituraService;
 use App\Services\EnderecoService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class SecretariasController extends Controller
 {
@@ -43,29 +43,51 @@ class SecretariasController extends Controller
         }
     }
 
-    public function store(Request $request)
-    {
-        try {
-            $dados = $request->validate([
-                'nome' => 'required|string',
-                'responsavel' => 'required|string',
-            ]);
-            
-            
-            $dados['prefeitura_id'] = session('prefeitura_id');
-            $resultado = $this->secretariaService->cadastrarSecretaria($dados);
-            
-            if ($resultado) {
-                
-                return redirect()->route('secretarias.index')->with('success', 'Secretaria cadastrada com sucesso!');
-            }
 
-            return back()->with('error', 'Erro ao cadastrar secretaria.');
-        } catch (\Exception $e) {
-            Log::error('Erro ao cadastrar secretaria: ' . $e->getMessage());
-            return back()->with('error', 'Erro inesperado ao cadastrar secretaria.');
+    public function store(Request $request)
+{
+    try {
+        $dados = $request->validate([
+            'nome' => [
+                'required',
+                'string',
+                'regex:/^[a-zA-Z\s\p{L}]+$/u',  // Permite apenas letras e espaços, sem números
+            ],
+            'responsavel' => [
+                'required',
+                'string',
+                'regex:/^[a-zA-Z\s\p{L}]+$/u',  // Permite apenas letras e espaços, sem números
+            ],
+        ],[
+            'nome.regex' => 'O Nome deve conter apenas letras e espaços.',
+            'responsavel.regex' => 'O Responsavel deve conter apenas letras e espaços.'
+        ]
+    );
+        
+        $dados['prefeitura_id'] = session('prefeitura_id');
+        $resultado = $this->secretariaService->cadastrarSecretaria($dados);
+        
+        if ($resultado) {
+            return redirect()->route('secretarias.index')->with('success', 'Secretaria cadastrada com sucesso!');
         }
+
+        return back()->with('error', 'Erro ao cadastrar secretaria.');
+
+    } catch (ValidationException $e) {
+        return redirect()->back()
+        ->with('error', $e->getMessage())
+        ->withInput();
+    } catch (\Exception $e) {
+        // Log de erro para erro inesperado
+        Log::error('Erro ao cadastrar secretaria: ' . $e->getMessage());
+        
+        // Erro personalizado para erro genérico
+        return back()->with('error', 'Erro inesperado ao cadastrar secretaria. Por favor, tente novamente mais tarde.');
     }
+}
+
+    
+
 
     public function edit($id, PrefeituraService $prefeituraService, EnderecoService $enderecoService)
     {
