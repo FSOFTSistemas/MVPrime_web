@@ -11,22 +11,22 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">CNPJ</label>
+                        <label class="form-label">CNPJ<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="cnpj" value="{{ $prefeitura['cnpj'] }}"
                             required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Razão Social</label>
+                        <label class="form-label">Razão Social<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="razao_social"
                             value="{{ $prefeitura['razao_social'] }}" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Responsável</label>
+                        <label class="form-label">Responsável<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="responsavel"
                             value="{{ $prefeitura['responsavel'] }}" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Endereço</label>
+                        <label class="form-label">Endereço<span class="text-danger">*</span></label>
                         <select class="form-control select2" name="endereco_id" required>
                             @foreach ($enderecos as $endereco)
                                 <option value="{{ $endereco['id'] }}"
