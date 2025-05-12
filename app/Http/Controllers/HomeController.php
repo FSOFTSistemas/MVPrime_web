@@ -55,7 +55,6 @@ class HomeController extends Controller
 
             case 2:
                 $dadosPosto = $this->homeService->listarPosto($user->posto_id);
-                // dd($dadosPosto);
                 $totalAbastecimentosHoje = number_format($dadosPosto['total_abastecimento_hoje'], 2, ',', '.');
                 $totalAbastecimentosMes = $dadosPosto['valor_total_mes'];
                 $AbastecimentosMesAtual = number_format($dadosPosto['abastecimentos_mes_atual'], 2, ',', '.');
