@@ -64,8 +64,8 @@
                     <td>{{ $veiculo['secretaria']['nome'] }}</td>
                     <td>
                         <!-- Botão Editar -->
-                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                            data-target="#editVeiculoModal{{ $veiculo['id'] }}">
+                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#editVeiculoModal{{ $veiculo['id'] }}">
                             ✏️
                         </button>
                         <!-- Botão Excluir -->
@@ -88,9 +88,34 @@
 @stop
 
 @section('css')
-    
+<!-- CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
 @stop
 
 @section('js')
-    
+<!-- JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Aplica ao abrir o modal
+        document.querySelectorAll('.modal').forEach(function(modal) {
+            modal.addEventListener('shown.bs.modal', function () {
+                $(modal).find('.datepicker-ano').datepicker({
+                    format: "yyyy",
+                    viewMode: "years",
+                    minViewMode: "years",
+                    autoclose: true,
+                    language: "pt-BR",
+                    orientation: "bottom"
+                }).datepicker('update');
+            });
+        });
+    });
+</script>
+
+
+
+
 @stop

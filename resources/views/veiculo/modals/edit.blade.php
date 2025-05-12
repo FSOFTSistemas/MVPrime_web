@@ -1,5 +1,6 @@
 <!-- Modal Editar Veiculo -->
-<div class="modal fade" id="editVeiculoModal{{ $veiculo['id'] }}" tabindex="-1" role="dialog" aria-labelledby="editVeiculoModalLabel" aria-hidden="true">
+<div class="modal fade" id="editVeiculoModal{{ $veiculo['id'] }}" tabindex="-1" role="dialog"
+    aria-labelledby="editVeiculoModalLabel" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form action="{{ route('veiculos.update', $veiculo['id']) }}" method="POST">
@@ -7,41 +8,50 @@
                 @method('PUT')
                 <div class="modal-header bg-warning">
                     <h5 class="modal-title text-white">Editar Veiculo</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Modelo</label>
-                        <input type="text" class="form-control" name="modelo" value="{{ $veiculo['modelo'] }}" required>
+                        <input type="text" class="form-control" name="modelo" value="{{ $veiculo['modelo'] }}"
+                            required pattern="[A-Za-zÀ-ÿ0-9\s]{3,}"
+                            title="Use apenas letras e números, mínimo de 3 caracteres">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Ano</label>
-                        <input type="text" class="form-control" name="ano" value="{{ $veiculo['ano'] }}" required>
+                        <input type="number" class="form-control" id="ano" name="ano" required min="1960"
+                            max="{{ date('Y') + 1 }}" step="1" placeholder="Ex: 2024">
+                        @error('ano')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label">Qtd de litros máxima</label>
-                        <input type="text" class="form-control" name="quantidade_litros" value="{{$veiculo['quantidade_litros']}}" required>
+                        <input type="number" class="form-control" name="quantidade_litros"
+                            value="{{ $veiculo['quantidade_litros'] }}" min="1" max="100" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Qtd de abastecimentos</label>
-                        <input type="text" class="form-control" name="quantidade_abastecimentos" value="{{ $veiculo['quantidade_abastecimentos'] }}" required>
+                        <input type="number" class="form-control" name="quantidade_abastecimentos"
+                            value="{{ $veiculo['quantidade_abastecimentos'] }}" min="1" max="100" required>
                     </div>
                     <div class="mb-3">
-                    <label class="form-label">Período de limite</label>
-                    <select class="form-control" name="limite_abastecimento_periodo" required>
-                        <option value="1" {{ $veiculo['limite_abastecimento_periodo'] == 1 ? 'selected' : '' }}>Dia</option>
-                        <option value="2" {{ $veiculo['limite_abastecimento_periodo'] == 2 ? 'selected' : '' }}>Semana</option>
-                        <option value="3" {{ $veiculo['limite_abastecimento_periodo'] == 3 ? 'selected' : '' }}>Mês</option>
-                    </select>
+                        <label class="form-label">Período de limite</label>
+                        <select class="form-control" name="limite_abastecimento_periodo" required>
+                            <option value="1"
+                                {{ $veiculo['limite_abastecimento_periodo'] == 1 ? 'selected' : '' }}>Dia</option>
+                            <option value="2"
+                                {{ $veiculo['limite_abastecimento_periodo'] == 2 ? 'selected' : '' }}>Semana</option>
+                            <option value="3"
+                                {{ $veiculo['limite_abastecimento_periodo'] == 3 ? 'selected' : '' }}>Mês</option>
+                        </select>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Secretaria</label>
                         <select class="form-control select2" name="secretaria_id" required>
                             @foreach ($secretarias as $secretaria)
-                            <option value="{{ $secretaria['id'] }}">
+                                <option value="{{ $secretaria['id'] }}">
                                     {{ $secretaria['nome'] }}
                                 </option>
                             @endforeach
@@ -49,8 +59,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-warning text-white">Atualizar</button>
+                    <button type="submit" class="btn btn-warning text-white  w-100">Salvar / Sair</button>
                 </div>
             </form>
         </div>
