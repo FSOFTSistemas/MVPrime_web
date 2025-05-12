@@ -41,9 +41,9 @@ class HomeService
         return $this->motoristaService->listarMotoristasPorPrefeitura($prefeitura_id);
     }
 
-    public function abastecimentoPorPrefeitura($prefeitura_id)
+    public function abastecimentoPorPrefeitura($prefeitura_id, $page = 1, $limit = 10, $listar)
     {
-        return $this->abastecimentoService->listarPorPrefeitura($prefeitura_id);
+        return $this->abastecimentoService->listarPorPrefeitura($prefeitura_id, $page, $limit, $listar);
     }
 
     public function abastecimentoPorSecretaria($prefeitura_id)

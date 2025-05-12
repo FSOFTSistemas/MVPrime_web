@@ -17,7 +17,7 @@ class AbastecimentoService
         {       
             return $this->listarAbastecimentos($page, $limit);
         }else{
-            return $this->listarPorPrefeitura(session('prefeitura_id'), $page, $limit);
+            return $this->listarPorPrefeitura(session('prefeitura_id'), $page, $limit, 0);
         }
     }
 
@@ -34,11 +34,11 @@ class AbastecimentoService
         }
     }
 
-    public function listarPorPrefeitura($prefeituraId, $page, $limit)
+    public function listarPorPrefeitura($prefeituraId, $page, $limit, $listAll)
 {
     try {
         $token = session('jwt_token');
-        $response = Http::withToken($token)->get("{$this->apiUrl}/prefeitura/{$prefeituraId}", [ 'page' => $page, 'limit' => $limit ]);
+        $response = Http::withToken($token)->get("{$this->apiUrl}/prefeitura/{$prefeituraId}", [ 'page' => $page, 'limit' => $limit, 'listAll' => $listAll ]);
 
         return $response->successful() ? $response->json() : null;
     } catch (\Exception $e) {
