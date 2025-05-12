@@ -11,13 +11,13 @@ class AbastecimentoService
     protected $apiUrl = 'https://gestao-api.dev.br:4000/api/abastecimentos';
 
 
-    public function getAbastecimentos($page, $limit)
+    public function getAbastecimentos($page, $limit, $listAll = null)
     {
         if(session('prefeitura_id') == 99 || !session('prefeitura_id'))
         {       
             return $this->listarAbastecimentos($page, $limit);
         }else{
-            return $this->listarPorPrefeitura(session('prefeitura_id'), $page, $limit, 0);
+            return $this->listarPorPrefeitura(session('prefeitura_id'), $page, $limit, $listAll);
         }
     }
 
