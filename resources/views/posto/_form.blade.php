@@ -25,21 +25,21 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="nome" class="col-md-3 label-control">* Nome:</label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="nome" name="nome" required>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="responsavel" class="col-md-3 label-control">* Responsável:</label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="responsavel" name="responsavel" required>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="endereco_id" class="col-md-3 label-control">* Endereço:</label>
                     <div class="col-md-5">
@@ -53,12 +53,13 @@
                         </select>
                     </div>
                     <div class="col-md-1">
-                        <button type="button" class="btn btn-outline-success w-100" data-toggle="modal" data-target="#modalEndereco">
+                        <button type="button" class="btn btn-outline-success w-100" data-toggle="modal"
+                            data-target="#modalEndereco">
                             +
                         </button>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="prefeitura_id" class="col-md-3 label-control">* Prefeitura:</label>
                     <div class="col-md-6">
@@ -72,7 +73,7 @@
                         </select>
                     </div>
                 </div>
-                
+
 
                 <div class="card-footer">
                     <a href="{{ route('postos.index') }}" class="btn btn-secondary">Voltar</a>
@@ -88,7 +89,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalEnderecoLabel">Novo Endereço</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="formEndereco">
@@ -135,14 +135,14 @@
 
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#cep').mask('00000-000');
             $('#cnpj').mask('00.000.000/0000-00');
 
-            $('#cep').on('blur', function () {
+            $('#cep').on('blur', function() {
                 let cep = $(this).val().replace(/[^0-9]/g, '');
                 if (cep.length == 8) {
-                    $.getJSON(`https://viacep.com.br/ws/${cep}/json/`, function (data) {
+                    $.getJSON(`https://viacep.com.br/ws/${cep}/json/`, function(data) {
                         if (!data.erro) {
                             $('#logradouro').val(data.logradouro);
                             $('#bairro').val(data.bairro);
@@ -151,13 +151,31 @@
                         } else {
                             alert('CEP não encontrado.');
                         }
-                    }).fail(function () {
+                    }).fail(function() {
                         alert('Erro ao buscar o CEP.');
                     });
                 }
             });
 
-            $('#salvarEndereco').on('click', function () {
+            $('#salvarEndereco').on('click', function() {
+                //  Lista dos campos obrigatórios (exceto número)
+                const camposObrigatorios = ['cep', 'logradouro', 'bairro', 'cidade', 'uf'];
+
+                // Validação genérica
+                for (let campo of camposObrigatorios) {
+                    let valor = $(`#${campo}`).val().trim();
+                    if (!valor) {
+                        Swal.fire({
+                            title: 'Erro!',
+                            text: `O campo ${campo.toUpperCase()} é obrigatório.`,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        $(`#${campo}`).focus();
+                        return;
+                    }
+                }
+
                 let endereco = {
                     cep: $('#cep').val(),
                     logradouro: $('#logradouro').val(),
@@ -175,7 +193,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function (response) {
+                    success: function(response) {
                         console.log(response);
                         if (response.success) {
                             // Cria a nova opção
@@ -193,8 +211,15 @@
                         } else {
                             alert('Erro ao salvar o endereço.');
                         }
+
+                        const campos = ['cep', 'logradouro', 'numero', 'bairro', 'cidade',
+                        'uf'];
+
+                        campos.forEach(campo => {
+                            $(`#${campo}`).val('');
+                        });
                     },
-                    error: function (xhr, status, error) {
+                    error: function(xhr, status, error) {
                         console.error('Erro na requisição Ajax:', error);
                         console.error('Status:', status);
                         alert('Erro na requisição Ajax.');
@@ -206,7 +231,7 @@
     </script>
 
     <script>
-        document.getElementById('btnBuscarCnpj').addEventListener('click', function () {
+        document.getElementById('btnBuscarCnpj').addEventListener('click', function() {
             const cnpj = document.getElementById('cnpj').value.replace(/\D/g, ''); // Remove não-dígitos
 
             if (cnpj.length !== 14) {

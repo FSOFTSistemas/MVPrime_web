@@ -8,6 +8,7 @@ use App\Services\EnderecoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class PostosController extends Controller
 {
@@ -51,11 +52,16 @@ class PostosController extends Controller
         try {
             $dados = $request->validate([
                 'cnpj' => 'required|string',
-                'nome' => 'required|string',
+                'nome' => ['required', 'regex:/^[A-Za-zÀ-ÿ\s]+$/u'],
                 'responsavel' => 'required|string',
                 'endereco_id' => 'required|integer',
                 'prefeitura_id' => 'required|integer'
+            ], [
+                'nome.required' => 'O campo Razão Social é obrigatório.',
+                'nome.regex' => 'A Razão Social deve conter apenas letras e espaços.',
             ]);
+
+
 
             $resultado = $this->postoService->cadastrarPosto($dados);
 
@@ -64,6 +70,11 @@ class PostosController extends Controller
             }
 
             return back()->with('error', 'Erro ao cadastrar posto.');
+
+        } catch (ValidationException $e) {
+            return redirect()->back()
+                ->with('error', $e->getMessage())
+                ->withInput();
         } catch (\Exception $e) {
             Log::error('Erro ao cadastrar posto: ' . $e->getMessage());
             return back()->with('error', 'Erro inesperado ao cadastrar posto.');
@@ -81,8 +92,7 @@ class PostosController extends Controller
                 'endereco_id' => 'required|integer',
             ]);
 
-            $dados['prefeituras_id'] = session('prefeitura_id');
-            ;
+            $dados['prefeituras_id'] = session('prefeitura_id');;
             $resultado = $this->postoService->atualizarPosto($id, $dados);
 
             if ($resultado && $resultado->successful()) {
@@ -91,8 +101,6 @@ class PostosController extends Controller
             }
 
             return back()->with('error', $resultado ? $resultado->status() : 500);
-
-
         } catch (\Exception $e) {
             Log::error("Erro ao atualizar posto ID {$id}: " . $e->getMessage());
             return back()->with('error', 'Erro inesperado ao atualizar posto.');
@@ -105,7 +113,7 @@ class PostosController extends Controller
             $resultado = $this->postoService->excluirPosto($id);
 
             if ($resultado) {
-                
+
                 return redirect()->route('postos.index')->with('success', 'Posto excluída com sucesso!');
             }
 
