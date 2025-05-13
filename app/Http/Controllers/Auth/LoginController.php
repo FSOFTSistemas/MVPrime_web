@@ -49,7 +49,8 @@ class LoginController extends Controller
                 [
                     'name' => $data['usuario']['nome'],
                     'empresa_id' => $data['usuario']['empresa_id'],
-                    'tipo_usuario' => $data['usuario']['tipo_usuario']
+                    'tipo_usuario' => $data['usuario']['tipo_usuario'],
+                    'posto_id' => $data['usuario']['posto_id']
                 ]
             );
 

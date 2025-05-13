@@ -58,7 +58,7 @@ class MotoristasController extends Controller
                     'cnh' => 'required|string',
                     'vencimento_cnh' => 'required|date|after_or_equal:today',
                     'secretaria_id' => 'required|string',
-                    'id_cartao' => 'string|max:30',
+                    'id_cartao' => 'string|max:30|nullable',
                 ],
                 [
                     'vencimento_cnh.after_or_equal' => 'A data de vencimento da CNH deve ser igual ou posterior a hoje.',
@@ -89,18 +89,18 @@ class MotoristasController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            // dd($request);
 
             $dados = $request->validate([
                 'nome' => 'required|string',
                 'cnh' => 'required|string',
                 'vencimento_cnh' => 'required|date',
                 'secretaria_id' => 'required|string',
-                'id_cartao' => 'string|max:30',
+                'id_cartao' => 'string|max:30|nullable',
             ]);
 
             $dados['vencimento_cnh'] = Carbon::parse($dados['vencimento_cnh'])->format('Y-m-d');
             $resultado = $this->motoristaService->atualizarMotorista($id, $dados);
-            // dd($dados);
 
             if ($resultado) {
 

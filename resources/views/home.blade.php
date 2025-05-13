@@ -232,12 +232,13 @@ document.getElementById("mes-atual").textContent = mesAtual;
     <style>
     .card-header {
         background-color: var(--blue-1) !important;
-        color: #fff;
+        color: #fff !important;
     }
 
     .content-wrapper {
         min-height: 100vh;
         overflow-x: hidden;
+        height: auto !important;
     }
 
     .card-body {

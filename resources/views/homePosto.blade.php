@@ -163,6 +163,7 @@ document.getElementById("mes-atual").textContent = mesAtual;
     .content-wrapper {
         min-height: 100vh;
         overflow-x: hidden;
+        height: auto !important;
     }
 
     .card-body {

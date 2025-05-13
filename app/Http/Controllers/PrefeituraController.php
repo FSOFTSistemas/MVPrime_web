@@ -26,6 +26,10 @@ class PrefeituraController extends Controller
     {
         try {
             $prefeituras = $this->prefeituraService->getPrefeituras();
+            if ($prefeituras && !isset($prefeituras[0])) {
+                $prefeituras = [$prefeituras];
+            }
+
             $enderecos = $this->enderecoService->listarEnderecos();
                 return view('prefeitura.index', compact('prefeituras', 'enderecos'));
         } catch (\Exception $e) {
