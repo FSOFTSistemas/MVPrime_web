@@ -10,7 +10,8 @@
 @section('content')
 
     <div class="alert alert-info alert-dismissible fade show position-relative top-3 end-0 m-3" role="alert">
-        <i class="fas fa-info-circle"></i> <strong>Aviso:</strong> Usuários do tipo MASTER só aparecerão quando o seletor de prefeitura estiver em TODOS.
+        <i class="fas fa-info-circle"></i> <strong>Aviso:</strong> Usuários do tipo MASTER só aparecerão quando o seletor de
+        prefeitura estiver em TODOS.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
@@ -43,6 +44,8 @@
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Email</th>
+                <th>Prefeitura</th>
+                <th>Tipo</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -52,6 +55,11 @@
                     <td>{{ $usuario['id'] }}</td>
                     <td>{{ $usuario['nome'] }}</td>
                     <td>{{ $usuario['email'] }}</td>
+                    <td>{{ $usuario['prefeitura']['razao_social'] ?? '---' }}</td>
+                    @php
+                        $tipos = [0 => 'Super', 1 => 'Master', 2 => 'Posto', 3 => 'Prefeitura'];
+                    @endphp
+                    <td>{{ $tipos[$usuario['tipo_usuario']] ?? 'Desconhecido' }}</td>
                     <td>
                         <!-- Botão Visualizar -->
                         <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
