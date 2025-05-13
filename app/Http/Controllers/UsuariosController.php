@@ -48,6 +48,14 @@ class UsuariosController extends Controller
         return redirect()->back()->withErrors('Usuário não encontrado.');
     }
 
+    public function edit($id)
+    {
+        $usuario = $this->userService->getUserById($id);
+        // dd($usuario);
+        $permissoes = Permission::all();
+        return view('usuario.edit', compact('usuario', 'permissoes'));
+    }
+
     public function create()
     {
         $permissoes = Permission::all();

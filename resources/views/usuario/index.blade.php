@@ -67,10 +67,9 @@
                             👁️
                         </button>
                         <!-- Botão Editar -->
-                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#editUsuarioModal{{ $usuario['id'] }}">
-                            ✏️
-                        </button>
+                        <a href="{{ route('usuarios.edit', $usuario['id'])}}" class="btn btn-warning btn-sm" >
+                             ✏️
+                        </a>
                         <!-- Botão Excluir -->
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#deleteUsuarioModal{{ $usuario['id'] }}">
