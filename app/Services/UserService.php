@@ -105,7 +105,6 @@ class UserService
             if ($response->successful()) {
                 return $response->json();
             }
-            dd($response->json());
             // Loga o erro caso não tenha sucesso
             Log::error("Erro ao criar usuário: " . $response->body());
 
@@ -158,7 +157,6 @@ class UserService
                 return $response->json(); // Retorna os dados atualizados
             }
 
-            dd($response->json());
             // Loga o erro caso a API retorne falha
             Log::error("Erro ao atualizar usuário ID {$id}: " . $response->body());
 
