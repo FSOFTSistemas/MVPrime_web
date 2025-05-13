@@ -7,47 +7,52 @@
 
 @section('content')
 
+<div class="alert alert-info alert-dismissible fade show position-relative top-3 end-0 m-3" role="alert">
+        <i class="fas fa-info-circle"></i> <strong>Aviso:</strong> Selecione a prefeitura desejada para visualizar os dados. Caso contrário, os dados serão exibidos para todas as prefeituras.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <div class="row mt-3">
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
               <div class="inner">
                 <h3>{{ $totalPrefeituras }}</h3>
-        
+
                 <p>Prefeituras</p>
               </div>
               <div class="icon">
                 <i class="fa fa-landmark"></i>
               </div>
             </div>
-          </div> 
+          </div>
 
         <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
               <div class="inner">
                 <h3>{{ $totalUsuarios }}</h3>
-        
+
                 <p>Usuários</p>
               </div>
               <div class="icon">
                 <i class="fa fa-users"></i>
               </div>
             </div>
-          </div>    
+          </div>
 
         <div class="col-lg-3 col-6">
             <div class="small-box bg-warning">
               <div class="inner">
                 <h3> R${{ $totalAbastecimento }}</h3>
-        
+
                 <p>Abastecimentos Hoje</p>
               </div>
               <div class="icon">
                 <i class="fa fa-gas-pump"></i>
               </div>
             </div>
-          </div>    
+          </div>
     </div>
-    
+
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -81,7 +86,12 @@
     </div>
 @stop
 
+@section('css')
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+@endsection
+
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const mesLabels = @json($mesLabels);
@@ -153,7 +163,7 @@
     }
 
     const mesesOriginais = [...new Set(dados.map(item => item.mes))].sort();
-    const mesesFormatados = mesesOriginais.map(formatarMes); 
+    const mesesFormatados = mesesOriginais.map(formatarMes);
     const prefeituras = [...new Set(dados.map(item => item.prefeitura_nome))];
 
     function randomColor() {
@@ -207,7 +217,7 @@
 
 <script>
     const meses = [
-  "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+  "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
 ];
 

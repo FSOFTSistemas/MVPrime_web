@@ -40,11 +40,12 @@
                     </div>
                 </div>
 
-                <div class="card-footer text-end">
-                    <button type="button" class="btn bg-gradient-info btn-edit mt-2">Editar</button>
-                    <button type="submit" class="btn new btn-success mt-2 d-none btn-save">Salvar</button>
+                <div class="card-footer text-center">
+                    <button type="button" class="btn bg-gradient-info btn-edit mt-2 w-50 ">Editar</button>
+                    <button type="submit" class="btn new btn-success mt-2 d-none btn-save w-50">Salvar</button>
                   </div>
             </form>
+
         </div>
     </div>
 @endsection
@@ -81,7 +82,7 @@
         .modal-title {
             font-size: 18px;
         }
-       
+
     </style>
 @endsection
 

@@ -8,6 +8,12 @@
 @stop
 
 @section('content')
+
+    <div class="alert alert-info alert-dismissible fade show position-relative top-3 end-0 m-3" role="alert">
+        <i class="fas fa-info-circle"></i> <strong>Aviso:</strong> Usuários do tipo MASTER só aparecerão quando o seletor de prefeitura estiver em TODOS.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <div class="row mb-3">
         <div class="col">
             <!-- Botão para ir para a tela de criação -->
@@ -16,6 +22,9 @@
             </a>
         </div>
     </div>
+
+
+
 
     <!-- DataTable Customizado -->
     @component('components.data-table', [
@@ -78,9 +87,10 @@
 @stop
 
 @section('css')
-    
+
+
 @stop
 
 @section('js')
-   
+
 @stop

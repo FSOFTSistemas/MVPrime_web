@@ -89,10 +89,13 @@
                     </div>
                 </div>
 
-
-                <div class="card-footer">
-                    <a href="{{ route('veiculos.index') }}" class="btn btn-secondary">Voltar</a>
-                    <button type="submit" class="btn bluebtn">Salvar</button>
+                 <div class="card-footer d-flex justify-content-between">
+                    <a href="{{ route('veiculos.index') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-1"></i> Voltar
+                    </a>
+                    <button type="submit" class="btn btn-primary w-50">
+                        <i class="fas fa-save me-1"></i> Salvar
+                    </button>
                 </div>
             </form>
         </div>
