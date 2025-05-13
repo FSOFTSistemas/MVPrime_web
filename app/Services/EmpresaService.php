@@ -12,7 +12,8 @@ class EmpresaService
 
     public function getEmpresa()
     {
-        if(Auth::user()->tipo_usuario = 0)
+
+        if(Auth::user()->tipo_usuario == 0)
         {
             return $this->listarEmpresas();
         }else{

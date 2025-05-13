@@ -26,6 +26,7 @@ class EmpresaController extends Controller
             $empresas = $this->empresaService->getEmpresa();
             $enderecos = $this->enderecoService->listarEnderecos();
 
+
             $user = Auth::user()->refresh();
             if ($user->tipo_usuario == 0) {
                 return view('empresa.index', compact('empresas', 'enderecos'));
@@ -89,7 +90,7 @@ class EmpresaController extends Controller
         try {
             $empresa = $this->empresaService->excluirEmpresa($id);
             if ($empresa) {
-                
+
                 return redirect()->route('empresas.index')->with('success', 'Empresa excluída com sucesso!');
             }
             return redirect()->back()->withInput()->withErrors('error', '500');
