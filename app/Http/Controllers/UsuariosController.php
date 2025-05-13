@@ -122,6 +122,7 @@ class UsuariosController extends Controller
                 $validatedData['prefeitura_id'] = null;
             }
 
+
             $validatedData['empresa_id'] = Auth::user()->empresa_id;
             $user = $this->userService->createUser($validatedData);
 
@@ -146,10 +147,28 @@ class UsuariosController extends Controller
             $dados = $request->validate([
                 'nome' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
-                'id_cartao' => 'string|max:30',
+                'password' => 'required|string|confirmed|min:4',
                 'permissoes' => 'required|array',
                 'permissoes.*' => 'string'
-            ]);
+            ],[
+                    'nome.required' => 'O campo nome é obrigatório.',
+                    'nome.string' => 'O campo nome deve ser uma string.',
+                    'nome.max' => 'O campo nome não pode ter mais que 255 caracteres.',
+
+                    'email.required' => 'O campo e-mail é obrigatório.',
+                    'email.email' => 'O campo e-mail deve conter um endereço de e-mail válido.',
+                    'email.max' => 'O campo e-mail não pode ter mais que 255 caracteres.',
+
+                    'password.required' => 'O campo senha é obrigatório.',
+                    'password.string' => 'O campo senha deve ser uma string.',
+                    'password.confirmed' => 'O campo senha e sua confirmação não coincidem.',
+                    'password.min' => 'O campo senha deve ter no mínimo 4 caracteres.',
+
+                    'permissoes.required' => 'O campo permissões é obrigatório.',
+                    'permissoes.array' => 'O campo permissões deve ser um array.',
+                ]
+        
+        );
 
             $dados['empresa_id'] = Auth::user()->empresa_id;
             $usuarioAtualizado = $this->userService->updateUser($id, $dados);
