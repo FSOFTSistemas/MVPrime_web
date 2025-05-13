@@ -61,17 +61,12 @@
                         <td>R$ {{ number_format($abastecimento['valor'], 2, ',', '.') }}</td>
 
                             <td>
-                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                    data-target="#viewAbastecimentoModal{{ $abastecimento['id'] }}">
-                                    👁️
-                                </button>
-                            
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                     data-target="#editAbastecimentoModal{{ $abastecimento['id'] }}">
                                     ✏️
                                 </button>
-                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#deleteAbastecimentoModal{{ $abastecimento['id'] }}">
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                    data-target="#deleteAbastecimentoModal{{ $abastecimento['id'] }}">
                                     🗑️
                                 </button>
                             </td>
