@@ -8,6 +8,7 @@
 @stop
 
 @section('content')
+
     <div class="card">
         <div class="card-body">
             <form action="{{ route('motoristas.store') }}" method="POST" id="form-motorista">

@@ -63,10 +63,15 @@ class SecretariasController extends Controller
             'responsavel.regex' => 'O Responsavel deve conter apenas letras e espaços.'
         ]
     );
-        
+
         $dados['prefeitura_id'] = session('prefeitura_id');
-        $resultado = $this->secretariaService->cadastrarSecretaria($dados);
+
+        if ($dados['prefeitura_id'] == '99' || $dados['prefeitura_id'] == null) {
+            return back()->with('error', 'Prefeitura não selecionada.');
+        }
         
+        $resultado = $this->secretariaService->cadastrarSecretaria($dados);
+
         if ($resultado) {
             return redirect()->route('secretarias.index')->with('success', 'Secretaria cadastrada com sucesso!');
         }
@@ -80,13 +85,13 @@ class SecretariasController extends Controller
     } catch (\Exception $e) {
         // Log de erro para erro inesperado
         Log::error('Erro ao cadastrar secretaria: ' . $e->getMessage());
-        
+
         // Erro personalizado para erro genérico
         return back()->with('error', 'Erro inesperado ao cadastrar secretaria. Por favor, tente novamente mais tarde.');
     }
 }
 
-    
+
 
 
     public function edit($id, PrefeituraService $prefeituraService, EnderecoService $enderecoService)
@@ -108,17 +113,17 @@ class SecretariasController extends Controller
     public function update(Request $request, $id)
     {
         try {
-        
+
             $dados = $request->validate([
                 'nome' => 'required|string',
                 'responsavel' => 'required|string',
             ]);
-            
+
             $dados['prefeitura_id'] = session('prefeitura_id');
             $resultado = $this->secretariaService->atualizarSecretaria($id, $dados);
-            
+
             if ($resultado) {
-                
+
                 return redirect()->route('secretarias.index')->with('success', 'Secretaria atualizada com sucesso!');
             }
 
@@ -135,7 +140,7 @@ class SecretariasController extends Controller
             $resultado = $this->secretariaService->excluirSecretaria($id);
 
             if ($resultado) {
-                
+
                 return redirect()->route('secretarias.index')->with('success', 'Secretaria excluída com sucesso!');
             }
 
