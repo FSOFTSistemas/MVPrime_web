@@ -25,7 +25,6 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $prefeitura_id = session('prefeitura_id');
-        // $posto_id = session('posto_id');
         Carbon::setLocale('pt_BR');
 
 

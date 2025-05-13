@@ -7,7 +7,7 @@
                 @method('DELETE')
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title">Excluir Abastecimento</h5>
-                    <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Fechar">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -15,7 +15,7 @@
                     <p>Tem certeza que deseja excluir o abastecimento <strong>{{ $abastecimento['id'] }}</strong>?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-danger">Excluir</button>
                 </div>
             </form>
