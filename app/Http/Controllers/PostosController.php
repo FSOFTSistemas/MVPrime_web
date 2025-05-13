@@ -9,16 +9,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use App\Services\AbastecimentoService;
 
 class PostosController extends Controller
 {
     protected $postoService;
     protected $enderecoService;
 
-    public function __construct(PostoService $postoService, EnderecoService $enderecoService)
+    public function __construct(PostoService $postoService, EnderecoService $enderecoService, AbastecimentoService $abastecimentoService)
     {
         $this->postoService = $postoService;
         $this->enderecoService = $enderecoService;
+        $this->abastecimentoService = $abastecimentoService;
     }
 
     public function index()
@@ -110,6 +112,11 @@ class PostosController extends Controller
     public function destroy($id)
     {
         try {
+            $abastecimentos = $this->abastecimentoService->listarPorPosto($id);
+            if($abastecimentos) {
+                throw new \Exception('Não é possível excluir o posto: existem abastecimentos vinculados.');
+            }
+
             $resultado = $this->postoService->excluirPosto($id);
 
             if ($resultado) {
@@ -120,7 +127,7 @@ class PostosController extends Controller
             return redirect()->route('postos.index')->with('error', 'Erro ao excluir posto.');
         } catch (\Exception $e) {
             Log::error("Erro ao excluir posto ID {$id}: " . $e->getMessage());
-            return redirect()->route('postos.index')->with('error', 'Erro inesperado ao excluir posto.');
+            return redirect()->route('postos.index')->with('error', $e->getMessage());
         }
     }
 }
