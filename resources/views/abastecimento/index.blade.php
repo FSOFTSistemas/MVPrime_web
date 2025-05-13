@@ -39,10 +39,9 @@
                     <th>Litros</th>
                     <th>Preço do litro</th>
                     <th>Valor Total</th>
-
+                    @can('gerenciar_usuarios')
                         <th>Ações</th>
-
-
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +58,7 @@
                         <td>{{ number_format($abastecimento['valor'] / $abastecimento['preco_combustivel'], 3, '.') }}</td>
                         <td>R$ {{ number_format($abastecimento['preco_combustivel'], 2, ',', '.') }}</td>
                         <td>R$ {{ number_format($abastecimento['valor'], 2, ',', '.') }}</td>
-
+                        @can('gerenciar_usuarios')
                             <td>
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                     data-target="#editAbastecimentoModal{{ $abastecimento['id'] }}">
@@ -70,7 +69,7 @@
                                     🗑️
                                 </button>
                             </td>
-
+                        @endcan
                     </tr>
 
                     @include('abastecimento.modals.edit', ['abastecimento' => $abastecimento])
