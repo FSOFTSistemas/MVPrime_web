@@ -46,9 +46,17 @@
     .label-control{
     text-align: right
   }
-  .card-footer {
-        text-align: right
-    }
+
+  .card-footer button{
+        background-color: var(--blue-1) !important;
+        color: #fff !important;
+        transition: 0.2s;
+        width: 25rem;
+  }
+
+  .card-footer button:hover {
+     background-color: var(--blue-2) !important
+  }
   @media (max-width: 768px) {
       .label-control{
         text-align: start
