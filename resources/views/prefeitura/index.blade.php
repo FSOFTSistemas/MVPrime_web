@@ -39,6 +39,7 @@
         <tbody>
             @php
                 $listaPrefeituras = $prefeituras ? $prefeituras : [];
+                // dd($listaPrefeituras);
             @endphp
             @foreach ($listaPrefeituras ?? [] as $prefeitura)
                 <tr>

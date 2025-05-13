@@ -79,7 +79,7 @@
                     <a href="{{ route('motoristas.index') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left me-1"></i> Voltar
                     </a>
-                    <button type="submit" class="btn btn-primary w-50">
+                    <button type="submit" class="btn">
                         <i class="fas fa-save me-1"></i> Salvar
                     </button>
                 </div>

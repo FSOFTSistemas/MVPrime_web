@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label for="prefeitura_id" class="col-md-3 label-control">* Prefeitura:</label>
                     <div class="col-md-6">
                         <select class="form-control" id="prefeitura" name="prefeitura_id" required>
@@ -72,7 +72,7 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
+                </div> --}}
 
                  <div class="card-footer d-flex justify-content-between">
                     <a href="{{ route('postos.index') }}" class="btn btn-outline-secondary">
