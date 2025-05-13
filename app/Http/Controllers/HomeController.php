@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function __construct(HomeService $home_service)
     {
         $this->homeService = $home_service;
-        
+
     }
     /**
      * Show the application dashboard.
@@ -28,8 +28,12 @@ class HomeController extends Controller
         // $posto_id = session('posto_id');
         Carbon::setLocale('pt_BR');
 
-        
+
         switch ($user->tipo_usuario) {
+            case 0:
+
+                return view('homeMaster');
+
             case 1:
                 $dadosDias = $this->formatarDadosDia($this->homeService->listarAbastecimentosDia());
                 $dadosMes = $this->formatarDadosMes($this->homeService->listarAbastecimentosMes());
@@ -39,7 +43,7 @@ class HomeController extends Controller
                 $totalUsuarios = $dadosMaster['total_usuarios'];
                 $totalAbastecimento = number_format($dadosMaster['total_abastecimento_hoje'], 2, ',', '.');
 
-                
+
 
                 return view('home', [
                     'diaLabels' => $dadosDias['labels'],
@@ -50,7 +54,7 @@ class HomeController extends Controller
                     'totalPrefeituras' => $totalPrefeituras,
                     'totalUsuarios' => $totalUsuarios,
                     'totalAbastecimento' => $totalAbastecimento
-                    
+
                 ]);
 
             case 2:
@@ -73,7 +77,7 @@ class HomeController extends Controller
 
                 $totalMotoristas = $this->homeService->motoristaPorPrefeitura($prefeitura_id);
                 $totalMotoristas = is_null($totalMotoristas) ? 0 : count($totalMotoristas);
-                
+
                 $abastecimentoPorPrefeitura = $this->homeService->abastecimentoPorPrefeitura($prefeitura_id, 1, 10, 1);
                 // dd($abastecimentoPorPrefeitura);
                 $mesAtual = Carbon::now()->format('Y-m');
