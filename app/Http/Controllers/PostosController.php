@@ -50,16 +50,17 @@ class PostosController extends Controller
     public function store(Request $request)
     {
         try {
+            $prefeitura_id = session('prefeitura_id');
             $dados = $request->validate([
                 'cnpj' => 'required|string',
                 'nome' => ['required', 'regex:/^[A-Za-zÀ-ÿ\s]+$/u'],
                 'responsavel' => 'required|string',
                 'endereco_id' => 'required|integer',
-                'prefeitura_id' => 'required|integer'
             ], [
                 'nome.required' => 'O campo Nome é obrigatório.',
                 'nome.regex' => 'O Nome deve conter apenas letras e espaços.',
             ]);
+            $dados['prefeitura_id'] = $prefeitura_id;
 
 
 
