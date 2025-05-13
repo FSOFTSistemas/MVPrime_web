@@ -21,7 +21,7 @@
                         <label for="cnpj" class="col-md-3 label-control">* CNPJ:</label>
                         <div class="col-md-3">
                             <input type="text" class="form-control" id="cnpj" name="cnpj"
-                                placeholder="Digite o CNPJ" required value="{{ old('cnpj', $empresas['cnpj'] ?? '') }}" readonly>
+                                placeholder="Digite o CNPJ" required value="{{ old('cnpj', $empresas['cnpj'] ?? '') }}">
 
                         </div>
                         <button class="btn btn-outline-primary" type="button" id="btnBuscarCnpj">
@@ -35,15 +35,14 @@
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="razao_social" name="razao_social"
                             placeholder="Razão Social" required
-                            value="{{ old('razao_social', $empresas['razao_social'] ?? '') }}" readonly>
+                            value="{{ old('razao_social', $empresas['razao_social'] ?? '') }}">
 
                     </div>
                 </div>
 
                 <div class="card-footer text-center">
-                    <button type="button" class="btn bg-gradient-info btn-edit mt-2 w-50 ">Editar</button>
-                    <button type="submit" class="btn new btn-success mt-2 d-none btn-save w-50">Salvar</button>
-                  </div>
+                        <button type="submit" class="btn new btn-success mt-2 btn-save w-50">Salvar</button>
+                </div>
             </form>
 
         </div>
@@ -82,7 +81,6 @@
         .modal-title {
             font-size: 18px;
         }
-
     </style>
 @endsection
 
@@ -143,15 +141,15 @@
         });
     </script>
 
-<script>
-    document.querySelectorAll('.btn-edit').forEach(button => {
-        button.addEventListener('click', function () {
-            const form = this.closest('form');
-            form.querySelectorAll('input').forEach(input => input.removeAttribute('readonly'));
-            form.querySelector('.btn-save').classList.remove('d-none');
-            this.classList.add('d-none');
+    <script>
+        document.querySelectorAll('.btn-edit').forEach(button => {
+            button.addEventListener('click', function() {
+                const form = this.closest('form');
+                form.querySelectorAll('input').forEach(input => input.removeAttribute('readonly'));
+                form.querySelector('.btn-save').classList.remove('d-none');
+                this.classList.add('d-none');
+            });
         });
-    });
-</script>
+    </script>
 
 @endsection

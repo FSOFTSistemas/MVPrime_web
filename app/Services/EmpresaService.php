@@ -12,7 +12,8 @@ class EmpresaService
 
     public function getEmpresa()
     {
-        if(Auth::user()->tipo_usuario = 0)
+
+        if(Auth::user()->tipo_usuario == 0)
         {
             return $this->listarEmpresas();
         }else{
@@ -106,6 +107,7 @@ class EmpresaService
             if ($response->successful()) {
                 return $response->json(); // Retorna os dados da empresa atualizada
             }
+            dd($response->body());
 
             // Loga o erro caso a API retorne falha
             Log::error("Erro ao atualizar empresa ID {$id}: " . $response->body());
