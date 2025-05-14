@@ -48,13 +48,12 @@ class Relatorio extends Controller
                 $filtros['motorista'] = $nomeMotorista;
             }
 
-            
-
             $pdf = Pdf::loadView('rel.pdf.rel_abast', [
                 'abastecimentos' => $abastecimentos,
                 'filtros' => $filtros,
             ]);
-            return $pdf->stream('rel.pdf.rel_abast');
+            
+            return $pdf->download('relatorio_abastecimentos.pdf');
         } catch (\Exception $e) {
             return back()->with('error', 'Erro ao gerar relatório: ' . $e->getMessage());
         }
