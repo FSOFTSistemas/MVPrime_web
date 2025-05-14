@@ -39,7 +39,7 @@ use Carbon\Carbon;
         'sortDirection' => $sortDirection
 
     ])
-        <thead class="table-primary">
+        <thead>
             <tr>
                 <th>ID</th>
                 <th>Log</th>

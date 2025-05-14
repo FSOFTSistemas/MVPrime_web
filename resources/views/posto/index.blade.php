@@ -27,7 +27,7 @@
         'showTotal' => false,
         'valueColumnIndex' => 1,
     ])
-        <thead class="table-primary">
+        <thead>
             <tr>
                 <th>ID</th>
                 <th>CNPJ</th>
