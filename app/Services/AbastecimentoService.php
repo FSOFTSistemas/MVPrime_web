@@ -74,4 +74,17 @@ class AbastecimentoService
         }
     }
 
+    public function listarPorPosto($postoId)
+    {
+        try {
+            $token = session('jwt_token');
+            $response = Http::withToken($token)->get("{$this->apiUrl}/posto/{$postoId}");
+
+            return $response->successful() ? $response->json() : null;
+        } catch (\Exception $e) {
+            Log::error("Erro ao listar abastecimentos do posto {$postoId}: " . $e->getMessage());
+            return null;
+        }
+    }
+
 }

@@ -39,13 +39,15 @@
         'showTotal' => false,
         'valueColumnIndex' => 1,
     ])
-        <thead class="table-primary">
+        <thead>
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Email</th>
                 <th>Prefeitura</th>
                 <th>Tipo</th>
+                <th>Posto</th>
+                <th>Cartão</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -60,17 +62,13 @@
                         $tipos = [0 => 'Super', 1 => 'Master', 2 => 'Posto', 3 => 'Prefeitura'];
                     @endphp
                     <td>{{ $tipos[$usuario['tipo_usuario']] ?? 'Desconhecido' }}</td>
+                    <td>{{ $usuario['posto']['nome'] ?? '---' }}</td>
+                    <td>{{ $usuario['id_cartao'] ?? '---' }}</td>
                     <td>
-                        <!-- Botão Visualizar -->
-                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#viewUsuarioModal{{ $usuario['id'] }}">
-                            👁️
-                        </button>
                         <!-- Botão Editar -->
-                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#editUsuarioModal{{ $usuario['id'] }}">
-                            ✏️
-                        </button>
+                        <a href="{{ route('usuarios.edit', $usuario['id'])}}" class="btn btn-warning btn-sm" >
+                             ✏️
+                        </a>
                         <!-- Botão Excluir -->
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#deleteUsuarioModal{{ $usuario['id'] }}">

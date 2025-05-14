@@ -7,12 +7,12 @@
 
 @section('content')
 
-<div class="alert alert-info alert-dismissible fade show position-relative top-3 end-0 m-3" role="alert">
+<div class="alert alert-info alert-dismissible fade show position-relative top-3 end-0 mt-3" role="alert">
         <i class="fas fa-info-circle"></i> <strong>Aviso:</strong> Selecione a prefeitura desejada para visualizar os dados. Caso contrário, os dados serão exibidos para todas as prefeituras.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-3 col-md-12">
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
               <div class="inner">

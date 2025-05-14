@@ -2,7 +2,7 @@
 
 <nav class="main-header navbar navbar-expand-lg navbar-dark" style="background-color: var(--blue-2);">
     <!-- Azul marinho escuro -->
-    <div class="container-fluid">
+    <div class="container-fluid nav-set">
         {{-- Navbar left links --}}
         <ul class="navbar-nav">
             {{-- Left sidebar toggler link --}}
@@ -16,9 +16,9 @@
         </ul>
 
         {{-- Navbar right links --}}
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto nav">
             <form action="{{ route('filtro.prefeitura') }}" method="POST" id="prefeitura-form"
-                class="d-flex align-items-center">
+                class="d-flex align-items-center mb-0">
                 @csrf
                 @if(Auth::user()->tipo_usuario == 1)
                 <label for="prefeitura" class="text-white mb-0 mr-2 text-nowrap">Selecione a Prefeitura:</label>
@@ -59,3 +59,32 @@
         </ul>
     </div>
 </nav>
+
+<style>
+    @media (max-width: 992px) {
+      #prefeitura {
+        width: 150px !important;
+      }
+      .nav{
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+      }
+      .nav-link {
+        margin-left: 1rem !important;
+      }
+      .user-menu{
+        margin-left: 2rem !important;
+        margin-right: 1rem !important
+      }
+      .nav form{
+        margin-bottom: 0 !important;
+      }
+    }
+    @media (max-width: 480px) {
+        .nav{
+            justify-content: center !important;
+        }
+    }
+
+</style>

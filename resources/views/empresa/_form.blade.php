@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="card-footer text-center">
-                        <button type="submit" class="btn new btn-success mt-2 btn-save w-50">Salvar</button>
+                        <button type="submit" class="btn new mt-2 btn-save w-50">Salvar</button>
                 </div>
             </form>
 
@@ -67,6 +67,7 @@
 
         .btn-outline-primary:hover {
             background-color: #1E3A5F;
+            border-color: #1E3A5F;
             color: #fff;
         }
 

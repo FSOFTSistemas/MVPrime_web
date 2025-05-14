@@ -31,7 +31,7 @@ use Carbon\Carbon;
         'showTotal' => false,
         'valueColumnIndex' => 1,
     ])
-        <thead class="table-primary">
+        <thead>
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
