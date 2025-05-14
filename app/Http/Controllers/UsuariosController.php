@@ -148,6 +148,7 @@ class UsuariosController extends Controller
                 'nome' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
                 'password' => 'required|string|confirmed|min:4',
+                'id_cartao' => 'string|max:30|nullable',
                 'permissoes' => 'required|array',
                 'permissoes.*' => 'string'
             ],[
@@ -163,6 +164,9 @@ class UsuariosController extends Controller
                     'password.string' => 'O campo senha deve ser uma string.',
                     'password.confirmed' => 'O campo senha e sua confirmação não coincidem.',
                     'password.min' => 'O campo senha deve ter no mínimo 4 caracteres.',
+
+                    'id_cartao.string' => 'O campo ID do cartão deve ser uma string.',
+                    'id_cartao.max' => 'O campo ID do cartão não pode ter mais que 30 caracteres.',
 
                     'permissoes.required' => 'O campo permissões é obrigatório.',
                     'permissoes.array' => 'O campo permissões deve ser um array.',

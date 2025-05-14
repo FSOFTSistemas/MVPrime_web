@@ -43,7 +43,22 @@
                       <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                     </div>
                 </div>
-
+                
+                @if( $usuario['tipo_usuario'] == 1)
+                    <div class="form-group row input-container" id="cartao-container" >
+                        <label for="id_cartao" class="col-md-3 label-control">Cartão:</label>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="id_cartao" name="id_cartao" maxlength="30">
+                                <i class="fas fa-info-circle info-icon"></i>
+                                <div class="info-tooltip">
+                                    <strong>Aviso:</strong> Sem esta informação não será possível realizar abastecimento!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                
                 <div class="row mb-3">
                     <label for="permissoes" class="col-md-3 label-control">* Permissões:</label>
                     <div class="col-md-6">
