@@ -76,6 +76,7 @@ class UsuariosController extends Controller
                     'prefeitura_id' => [
                         'required_unless:tipo_usuario,1',
                         'integer',
+                        'nullable',
                         function ($attribute, $value, $fail) use ($request) {
                             if (($request->input('tipo_usuario') == 3 || $request->input('tipo_usuario') == 2) && $value == 99) {
                                 $fail('Nenhuma prefeitura selecionada no seletor de prefeitura.');
