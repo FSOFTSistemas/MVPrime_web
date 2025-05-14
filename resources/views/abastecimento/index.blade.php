@@ -37,6 +37,7 @@
                     <th>Média KM/L</th>
                     <th>Litros</th>
                     <th>Preço do litro</th>
+                    <th>Valor Total</th>
                     @can('gerenciar_usuarios')
                         <th>Ações</th>
                     @endcan
