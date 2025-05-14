@@ -11,7 +11,7 @@
 
     <div class="mb-3 d-flex justify-content-">
         <form method="get" id="limitForm">
-            <label for="limitSelect" class="me-2">Itens por página:</label>
+            <label for="limitSelect" class="me-2" style="color:var(--blue-2)">Itens por página:</label>
             <select name="limit" id="limitSelect" class="form-select d-inline w-auto"
                 onchange="document.getElementById('limitForm').submit();">
                 <option value="10" {{ request('limit', $limit) == 10 ? 'selected' : '' }}>10</option>
