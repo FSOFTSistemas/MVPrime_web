@@ -46,7 +46,7 @@ class VeiculosController extends Controller
             $dados = $request->validate(
                 [
                     'placa' => ['required', 'regex:/^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/i'], // formato Mercosul ou ABC1234
-                    'modelo' => ['required|string', 'regex:/^[a-zA-Z0-9\s\p{L}]+$/u'] ,
+                    'modelo' => ['required', 'regex:/^[a-zA-Z0-9\s\p{L}]+$/u'] ,
                     'ano' => ['required', 'digits:4', "string", "between:$anoMinimo,$anoMaximo"],
                     'quantidade_litros' => 'required|string',
                     'quantidade_abastecimentos' => 'required|string',
@@ -81,11 +81,12 @@ class VeiculosController extends Controller
 
             return back()->with('error', 'Erro ao cadastrar veiculo.');
         } catch (ValidationException $e) {
-            Log::error('Erro de validação ao cadastrar veiculo: ' . $e->getMessage());
-            return back()->withInput()->with('error', 'Erro de validação: ' . $e->getMessage());
+            return redirect()->back()
+            ->with('error', $e->getMessage())
+            ->withInput();
         } catch (\Exception $e) {
             Log::error('Erro ao cadastrar veiculo: ' . $e->getMessage());
-            return back()->with('error', 'Erro inesperado ao cadastrar veiculo.');
+            return back()->with('error', $e->getMessage());
         }
     }
 

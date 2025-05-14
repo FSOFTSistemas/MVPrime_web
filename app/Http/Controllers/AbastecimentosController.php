@@ -47,9 +47,11 @@ class AbastecimentosController extends Controller
             $lastPage = $response['totalPages'] ?? ceil($total / $perPage);
             $currentPage = $response['currentPage'] ?? $page;
     
-            $veiculos = $this->veiculosService->getVeiculos();
-            $motoristas = $this->motoristasService->getMotoristas();
-            $postos = $this->postoService->getPostos();
+            $veiculos = $this->veiculosService->listarVeiculosPorPrefeitura(session('prefeitura_id'));
+            $motoristas = $this->motoristasService->listarMotoristasPorPrefeitura(session('prefeitura_id'));
+            $postos = $this->postoService->listarPostosPorPrefeitura(session('prefeitura_id'));
+
+            //dd($motoristas);
     
             return view('abastecimento.index', compact(
                 'abastecimentos',
