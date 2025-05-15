@@ -61,14 +61,18 @@
                         @endif
                     </td>
 
-                    <td>{{ $veiculo['secretaria']['nome'] }}</td>
+                    <td>
+                        @foreach ($veiculo['secretarias'] as $secretaria)
+                            <span>{{ $secretaria['nome'] }}</span><br>
+                        @endforeach
+                    </td>
+
                     <td>
                         <!-- Botão Editar -->
                         <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                             data-bs-target="#editVeiculoModal{{ $veiculo['id'] }}">
                             ✏️
                         </button>
-                        <a href="{{route("veiculos.edit", $veiculo['id'])}}">  ✏️ teste</a>
                         <!-- Botão Excluir -->
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#deleteVeiculoModal{{ $veiculo['id'] }}">

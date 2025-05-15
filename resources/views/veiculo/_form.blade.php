@@ -78,7 +78,7 @@
                 <div class="form-group row">
                     <label for="secretaria_id" class="col-md-3 label-control">* Secretaria:</label>
                     <div class="col-md-6">
-                        <select class="form-control select2" id="secretaria" name="secretaria_id" multiple required>
+                        <select class="form-control select2" id="secretaria" name="secretarias_ids[]" multiple required>
                             <option value="">Selecione uma Secretaria</option>
                             @foreach ($secretarias ?? [] as $secretaria)
                                 <option value="{{ $secretaria['id'] }}">

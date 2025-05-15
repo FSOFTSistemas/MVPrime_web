@@ -46,10 +46,11 @@ class VeiculosController extends Controller
 
     public function store(Request $request)
     {
-        $anoAtual = now()->year;
-        $anoMinimo = $anoAtual - 60;
-        $anoMaximo = $anoAtual + 1;
         try {
+            $anoAtual = now()->year;
+            $anoMinimo = $anoAtual - 60;
+            $anoMaximo = $anoAtual + 1;
+
             $dados = $request->validate(
                 [
                     'placa' => ['required', 'regex:/^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/i'], // formato Mercosul ou ABC1234
@@ -58,7 +59,7 @@ class VeiculosController extends Controller
                     'quantidade_litros' => 'required|string',
                     'quantidade_abastecimentos' => 'required|string',
                     'limite_abastecimento_periodo' => 'required|string',
-                    'secretaria_id' => 'required|string',
+                    'secretarias_ids' => 'required|array',
                 ],
                 [
                     'placa.regex' => 'O campo Placa deve seguir o formato Mercosul (ABC1A23) ou antigo (ABC1234).',
@@ -69,7 +70,7 @@ class VeiculosController extends Controller
                     'quantidade_litros.required' => 'O campo Quantidade de Litros é obrigatório.',
                     'quantidade_abastecimentos.required' => 'O campo Quantidade de Abastecimentos é obrigatório.',
                     'limite_abastecimento_periodo.required' => 'O campo Limite de Abastecimento por Período é obrigatório.',
-                    'secretaria_id.required' => 'O campo Secretaria é obrigatório.',
+                    'secretarias_ids.required' => 'O campo Secretaria é obrigatório.',
                     'placa.required' => 'O campo Placa é obrigatório.',
                     'modelo.string' => 'O campo Modelo deve ser uma string.',
                     'modelo.regex' => 'O campo Modelo não pode ser apenas caracteres.'
@@ -77,7 +78,6 @@ class VeiculosController extends Controller
             );
             $dados['quantidade_litros'] = (int) $dados['quantidade_litros'];
             $dados['quantidade_abastecimentos'] = (int) $dados['quantidade_abastecimentos'];
-            $dados['secretaria_id'] = (int) $dados['secretaria_id'];
             $dados['limite_abastecimento_periodo'] = (int) $dados['limite_abastecimento_periodo'];
             $resultado = $this->veiculoService->cadastrarVeiculo($dados);
 
@@ -111,14 +111,13 @@ class VeiculosController extends Controller
     public function update(Request $request, $id)
     {
         try {
-
             $dados = $request->validate([
                 'modelo' => 'required|string',
                 'ano' => 'required',
                 'quantidade_litros' => 'required|string',
                 'quantidade_abastecimentos' => 'required|string',
                 'limite_abastecimento_periodo' => 'required|string',
-                'secretaria_id' => 'required|string',
+                'secretarias_ids' => 'required|array',
             ]);
 
             $resultado = $this->veiculoService->atualizarVeiculo($id, $dados);

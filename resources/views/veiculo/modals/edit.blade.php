@@ -43,12 +43,13 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Secretaria <span class="text-danger">*</span></label>
-                        <select class="form-control select2" name="secretaria_id" required>
-                            @foreach ($secretarias as $secretaria)
-                                <option value="{{ $secretaria['id'] }}">
-                                    {{ $secretaria['nome'] }}
-                                </option>
+                        <label class="form-label">* Secretaria: <span class="text-danger">*</span></label>
+                        <select class="form-control select2" id="secretaria" name="secretarias_ids[]" multiple required>
+                            <option value="">Selecione uma Secretaria</option>
+                                @foreach ($secretarias ?? [] as $secretaria)
+                                    <option value="{{ $secretaria['id'] }}">
+                                        {{ $secretaria['nome'] }}
+                                    </option>
                             @endforeach
                         </select>
                     </div>
