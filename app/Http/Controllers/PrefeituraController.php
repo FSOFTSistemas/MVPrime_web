@@ -7,6 +7,7 @@ use App\Services\EmpresaService;
 use App\Services\EnderecoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 
@@ -78,6 +79,12 @@ class PrefeituraController extends Controller
             $resultado = $this->prefeituraService->cadastrarPrefeitura($dados);
 
             if ($resultado) {
+                $token = session('jwt_token');
+                $response = Http::withToken($token)->get('https://gestao-api.dev.br:4000/api/prefeituras');
+                
+                if ($response->ok()) {
+                    session(['prefeituras' => $response->json()]);
+    }
                 return redirect()->route('prefeituras.index')->with('success', 'Prefeitura cadastrada com sucesso!');
             }
 

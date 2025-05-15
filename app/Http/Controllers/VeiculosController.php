@@ -37,6 +37,13 @@ class VeiculosController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        $veiculo = $this->veiculoService->buscarVeiculoPorId($id);
+        $secretarias = $this->secretariaService->getSecretarias();
+        return view('veiculo.edit', compact('veiculo', 'secretarias'));
+    }
+
     public function store(Request $request)
     {
         $anoAtual = now()->year;
@@ -47,7 +54,7 @@ class VeiculosController extends Controller
                 [
                     'placa' => ['required', 'regex:/^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/i'], // formato Mercosul ou ABC1234
                     'modelo' => ['required', 'regex:/^[a-zA-Z0-9\s\p{L}]+$/u'] ,
-                    'ano' => ['required', 'digits:4', "string", "between:$anoMinimo,$anoMaximo"],
+                    'ano' => ['required', 'digits:4', "integer", "between:$anoMinimo,$anoMaximo"],
                     'quantidade_litros' => 'required|string',
                     'quantidade_abastecimentos' => 'required|string',
                     'limite_abastecimento_periodo' => 'required|string',
@@ -107,7 +114,7 @@ class VeiculosController extends Controller
 
             $dados = $request->validate([
                 'modelo' => 'required|string',
-                'ano' => 'required|string',
+                'ano' => 'required',
                 'quantidade_litros' => 'required|string',
                 'quantidade_abastecimentos' => 'required|string',
                 'limite_abastecimento_periodo' => 'required|string',
