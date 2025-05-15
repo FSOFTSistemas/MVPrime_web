@@ -39,7 +39,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 label-control">* Ano:</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control ano-picker" name="ano" value="{{ old('ano') }}"
+                        <input type="number" class="form-control ano-picker" name="ano" value="{{ old('ano') }}"
                             required>
                         @error('ano')
                             <div class="invalid-feedback">
@@ -78,7 +78,7 @@
                 <div class="form-group row">
                     <label for="secretaria_id" class="col-md-3 label-control">* Secretaria:</label>
                     <div class="col-md-6">
-                        <select class="form-control" id="secretaria" name="secretaria_id" required>
+                        <select class="form-control select2" id="secretaria" name="secretaria_id" multiple required>
                             <option value="">Selecione uma Secretaria</option>
                             @foreach ($secretarias ?? [] as $secretaria)
                                 <option value="{{ $secretaria['id'] }}">
@@ -107,10 +107,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <style>
+        .select2-selection__choice {
+            color: var(--blue-2) !important;
+            padding-left: 1.5rem !important;
+        }
+    </style>
 @endsection
 
 @section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <!-- Adicione a lib jQuery Mask -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
@@ -120,6 +127,17 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+        $('#secretaria').select2({
+            placeholder: "Selecione as secretarias",
+            allowClear: true,
+            width: '100%'
+        });
+    })
+    </script>       
 
     <script>
         $(function() {

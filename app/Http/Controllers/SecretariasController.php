@@ -6,6 +6,7 @@ use App\Services\SecretariaService;
 use App\Services\PrefeituraService;
 use App\Services\EnderecoService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
@@ -124,6 +125,12 @@ class SecretariasController extends Controller
 
             if ($resultado) {
 
+                $token = session('jwt_token');
+                $response = Http::withToken($token)->get('https://gestao-api.dev.br:4000/api/secretarias');
+                
+                if ($response->ok()) {
+                    session(['secretarias' => $response->json()]);
+    }
                 return redirect()->route('secretarias.index')->with('success', 'Secretaria atualizada com sucesso!');
             }
 

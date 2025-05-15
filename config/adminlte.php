@@ -319,7 +319,7 @@ return [
                     'text' => 'Prefeitura',
                     'url' => '/prefeituras',
                     'icon' => 'fas fa-landmark',
-                    'can' => 'gerenciar_prefeituras'
+                    'can' => 'gerenciar_usuarios'
                 ],
                 [
                     'text' => 'Secretarias',

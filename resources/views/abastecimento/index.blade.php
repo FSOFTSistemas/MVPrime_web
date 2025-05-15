@@ -11,7 +11,7 @@
 
     <div class="mb-3 d-flex justify-content-">
         <form method="get" id="limitForm">
-            <label for="limitSelect" class="me-2">Itens por página:</label>
+            <label for="limitSelect" class="me-2" style="color:var(--blue-2)">Itens por página:</label>
             <select name="limit" id="limitSelect" class="form-select d-inline w-auto"
                 onchange="document.getElementById('limitForm').submit();">
                 <option value="10" {{ request('limit', $limit) == 10 ? 'selected' : '' }}>10</option>
@@ -38,8 +38,9 @@
                     <th>Litros</th>
                     <th>Preço do litro</th>
                     <th>Valor Total</th>
-                    <th>Ações</th>
-
+                    @can('gerenciar_usuarios')
+                        <th>Ações</th>
+                    @endcan
 
                 </tr>
             </thead>
@@ -57,7 +58,7 @@
                         <td>{{ number_format($abastecimento['valor'] / $abastecimento['preco_combustivel'], 3, '.') }}</td>
                         <td>R$ {{ number_format($abastecimento['preco_combustivel'], 2, ',', '.') }}</td>
                         <td>R$ {{ number_format($abastecimento['valor'], 2, ',', '.') }}</td>
-
+                        @can('gerenciar_usuarios')
                             <td>
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                     data-target="#editAbastecimentoModal{{ $abastecimento['id'] }}">
@@ -68,7 +69,7 @@
                                     🗑️
                                 </button>
                             </td>
-
+                        @endcan
                     </tr>
 
                     @include('abastecimento.modals.edit', ['abastecimento' => $abastecimento])
@@ -181,7 +182,7 @@
             font-size: 14px;
             color: #495057;
         }
-    
+
         .dt-buttons .dt-button {
             border-radius: 4px !important;
             border: none !important;
@@ -191,7 +192,7 @@
             padding: 5px 10px;
             transition: 0.5s;
         }
-    
+
         .dt-buttons .dt-button:hover {
             color: var(--blue-2) !important;
             transition: all 0.5s;

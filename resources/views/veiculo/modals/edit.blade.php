@@ -19,7 +19,7 @@
                     <div class="mb-3">
                         <label class="form-label">Ano <span class="text-danger">*</span></label>
                         <input type="number" class="form-control" id="ano" name="ano" required min="1960"
-                            max="{{ date('Y') + 1 }}" step="1" placeholder="Ex: 2024">
+                            max="{{ date('Y') + 1 }}" step="1" placeholder="Ex: 2024" value="{{ $veiculo['ano'] }}">
                         @error('ano')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

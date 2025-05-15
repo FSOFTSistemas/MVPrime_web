@@ -68,6 +68,7 @@
                             data-bs-target="#editVeiculoModal{{ $veiculo['id'] }}">
                             ✏️
                         </button>
+                        <a href="{{route("veiculos.edit", $veiculo['id'])}}">  ✏️ teste</a>
                         <!-- Botão Excluir -->
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#deleteVeiculoModal{{ $veiculo['id'] }}">
