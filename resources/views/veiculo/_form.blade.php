@@ -52,7 +52,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 label-control">* Qtd de litros máxima:</label>
                     <div class="col-md-6">
-                        <input type="number" class="form-control" name="quantidade_litros" required>
+                        <input type="number" class="form-control" name="quantidade_litros"  min="1" max="650" required>
                     </div>
                 </div>
 

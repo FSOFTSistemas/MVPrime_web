@@ -27,7 +27,7 @@
                     <div class="mb-3">
                         <label class="form-label">Qtd de litros máxima <span class="text-danger">*</span></label>
                         <input type="number" class="form-control" name="quantidade_litros"
-                            value="{{ $veiculo['quantidade_litros'] }}" min="1" max="100" required>
+                            value="{{ $veiculo['quantidade_litros'] }}" min="1" max="650" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Qtd de abastecimentos <span class="text-danger">*</span></label>
