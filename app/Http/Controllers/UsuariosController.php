@@ -148,7 +148,7 @@ class UsuariosController extends Controller
             $dados = $request->validate([
                 'nome' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
-                'password' => 'required|string|confirmed|min:4',
+                'password' => 'nullable|string|confirmed|min:4',
                 'id_cartao' => 'string|max:30|nullable',
                 'permissoes' => 'required|array',
                 'permissoes.*' => 'string'
