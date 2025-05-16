@@ -33,14 +33,14 @@
                 <div class="form-group row">
                     <label for="password" class="col-md-3 label-control">Nova Senha:</label>
                     <div class="col-md-6">
-                      <input type="password" class="form-control" id="password" name="password" placeholder="(deixe em branco para manter a atual)">
+                      <input type="password" class="form-control" id="password" name="password" placeholder="(deixe em branco para manter a atual)" autocomplete="off">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="password_confirmation" class="col-md-3 label-control">Confirmar Senha</label>
                     <div class="col-md-6">
-                      <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                      <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="(deixe em branco para manter a atual)" autocomplete="off">
                     </div>
                 </div>
                 
