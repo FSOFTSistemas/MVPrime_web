@@ -32,6 +32,7 @@
                     <th>Veiculo</th>
                     <th>Motorista</th>
                     <th>Posto</th>
+                    <th>Secretaria</th>
                     <th>Tipo de Combustivel</th>
                     <th>KM Atual</th>
                     <th>Média KM/L</th>
@@ -52,6 +53,7 @@
                         <td>{{ $abastecimento['veiculo']['placa'] }}</td>
                         <td>{{ $abastecimento['motorista']['nome'] }}</td>
                         <td>{{ $abastecimento['posto']['nome'] }}</td>
+                        <td>{{ $abastecimento['secretaria']['nome'] ?? '--' }}</td>
                         <td>{{ $abastecimento['tipo_combustivel'] }}</td>
                         <td>{{ $abastecimento['km_atual'] }}</td>
                         <td>{{ $abastecimento['media_km_litro'] }}</td>
