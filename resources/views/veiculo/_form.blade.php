@@ -59,7 +59,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 label-control">* Qtd de abastecimentos:</label>
                     <div class="col-md-6">
-                        <input type="number" class="form-control" name="quantidade_abastecimentos" required>
+                        <input type="number" class="form-control" name="quantidade_abastecimentos" min="1" max="100" required>
                     </div>
                 </div>
 
