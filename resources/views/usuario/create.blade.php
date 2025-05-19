@@ -210,4 +210,32 @@
             }
         });
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const tipoUsuarioSelect = document.getElementById("tipo_usuario"); 
+    const permissoesSelect = $("#permissoes");
+
+    const permissoesPorTipo = {
+                1: [],
+                2: ["gerenciar_abastecimentos", "ver_empresa", "gerenciar_veiculos", "ver_usuario_idCartao", "gerenciar_motoristas"], 
+                3: ["gerenciar_secretarias", "gerenciar_abastecimentos", "gerenciar_enderecos", "gerenciar_postos", "gerenciar_motoristas", "deletar_secretarias", "deletar_veiculos", "deletar_postos", "deletar_motoristas", "deletar_enderecos", "ver_empresa",]
+            };
+
+    permissoesPorTipo[1] = Array.from(document.querySelectorAll("#permissoes option")).map(option => option.value)
+
+
+    tipoUsuarioSelect.addEventListener("change", function () {
+        const tipoSelecionado = parseInt(this.value);
+
+        permissoesSelect.val([]);
+
+        if (permissoesPorTipo[tipoSelecionado]) {
+            permissoesSelect.val(permissoesPorTipo[tipoSelecionado]).trigger("change");
+        }
+    });
+});
+
+
+    </script>
 @stop
