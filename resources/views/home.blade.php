@@ -66,7 +66,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Abastecimentos por Dia - <span id="mes-atual"></span></h3>
+                <h3 class="card-title">Abastecimentos por Dia - <span class="mes-atual"></span></h3>
             </div>
             <div class="card-body chart-container">
                 <canvas id="abastecimentosDia"></canvas>
@@ -81,6 +81,17 @@
             </div>
             <div class="card-body chart-container">
                 <canvas id="abastecimentosPrefeituras"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Abastecimentos por Tipo de combustível - <span class="mes-atual"></span></h3>
+            </div>
+            <div class="card-body chart-container">
+                <canvas id="abastecimentosPorCombustivel"></canvas>
             </div>
         </div>
     </div>
@@ -213,6 +224,40 @@
     });
 </script>
 
+<script>
+    console.log("combustivel aqui")
+    const combustivel = @json($grafico);
+    const labelsComb = combustivel.map(item => item.tipo_combustivel);
+    const valoresComb = combustivel.map(item => Number(item.total_valor))
+    const ctxComb = document.getElementById('abastecimentosPorCombustivel').getContext('2d');
+    new Chart(ctxComb, {
+      type: 'pie',
+      data: {
+        labels: labelsComb,
+        datasets: [{
+          label: 'Valor por Combustível (Mês Atual) R$',
+          data: valoresComb,
+          backgroundColor: [
+            '#4CAF50', '#2196F3', '#FFC107', '#F44336', '#9C27B0' 
+          ],
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top'
+          },
+          title: {
+            display: true,
+            text: 'Distribuição de Abastecimento por Combustível'
+          }
+        }
+      }
+    });
+  </script>
 
 
 <script>
@@ -223,8 +268,12 @@
 
 const dataAtual = new Date();
 const mesAtual = meses[dataAtual.getMonth()];
+console.log(mesAtual)
 
-document.getElementById("mes-atual").textContent = mesAtual;
+document.querySelectorAll(".mes-atual").forEach(element => {
+    element.textContent = mesAtual;
+});
+
 </script>
 @stop
 

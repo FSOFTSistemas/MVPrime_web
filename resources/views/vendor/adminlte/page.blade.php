@@ -57,6 +57,37 @@
   .card-footer button:hover {
      background-color: var(--blue-2) !important
   }
+  .form-switch .form-check-input {
+        width: 3.5rem;
+        height: 1.75rem;
+        background-color: #dee2e6;
+        border-radius: 1.75rem;
+        position: relative;
+        transition: background-color 0.3s ease-in-out;
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+    }
+    
+    .form-switch .form-check-input:checked {
+        background-color: var(--blue-1);
+    }
+    
+    .form-switch .form-check-input::before {
+        content: "";
+        position: absolute;
+        width: 1.5rem;
+        height: 1.5rem;
+        top: 0.125rem;
+        left: 0.125rem;
+        border-radius: 50%;
+        background-color: white;
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .form-switch .form-check-input:checked::before {
+        transform: translateX(1.75rem);
+    }
   @media (max-width: 768px) {
       .label-control{
         text-align: start

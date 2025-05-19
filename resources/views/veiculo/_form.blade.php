@@ -89,6 +89,23 @@
                     </div>
                 </div>
 
+                <div class="form-group row">
+                  <label class="col-md-3 form-label d-block label-control">Veículo a Diesel?</label>
+                  <div class="form-check form-switch">
+                      <input type="hidden" name="status" value="0">
+                      <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="ativoSwitch"
+                          name="diesel_combustivel"
+                          value="1"
+                          {{ old('status', $veiculo['diesel_combustivel'] ?? false) ? 'checked' : '' }}>
+                      <label class="form-check-label ms-2" for="ativoSwitch" id="ativoLabel">
+                          {{ old('status', $veiculo['diesel_combustivel'] ?? false) ? 'Sim' : 'Não' }}
+                      </label>
+                  </div>
+                </div>
+
                  <div class="card-footer d-flex justify-content-between">
                     <a href="{{ route('veiculos.index') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left me-1"></i> Voltar
@@ -184,6 +201,17 @@
             });
         });
     </script>
+
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const switchInput = document.getElementById('ativoSwitch');
+      const label = document.getElementById('ativoLabel');
+      label.textContent = switchInput.checked ? 'Sim' : 'Não';
+      switchInput.addEventListener('change', function () {
+          label.textContent = this.checked ? 'Sim' : 'Não';
+      });
+  });
+</script>
 
 
 @endsection

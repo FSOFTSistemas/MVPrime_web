@@ -50,6 +50,8 @@ class VeiculosController extends Controller
             $anoAtual = now()->year;
             $anoMinimo = $anoAtual - 60;
             $anoMaximo = $anoAtual + 1;
+            dd($request);
+
 
             $dados = $request->validate(
                 [
@@ -60,6 +62,7 @@ class VeiculosController extends Controller
                     'quantidade_abastecimentos' => 'required|string',
                     'limite_abastecimento_periodo' => 'required|string',
                     'secretarias_ids' => 'required|array',
+                    'diesel_combustivel' => 'boolean'
                 ],
                 [
                     'placa.regex' => 'O campo Placa deve seguir o formato Mercosul (ABC1A23) ou antigo (ABC1234).',
@@ -118,8 +121,8 @@ class VeiculosController extends Controller
                 'quantidade_abastecimentos' => 'required|string',
                 'limite_abastecimento_periodo' => 'required|string',
                 'secretarias_ids' => 'required|array',
+                'diesel_combustivel' => 'boolean'
             ]);
-
             $resultado = $this->veiculoService->atualizarVeiculo($id, $dados);
 
             if ($resultado) {

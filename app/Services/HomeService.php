@@ -167,4 +167,17 @@ class HomeService
     }
   }
 
+  public function graficoCombustivelMaster($prefeitura_id)
+  {
+    try {
+        $token = session('jwt_token');
+        $response = Http::withToken($token)->get("{$this->apiUrl}/graficoMaster/{$prefeitura_id}");
+
+        return $response->successful() ? $response->json() : null;
+    } catch (\Exception $e) {
+        Log::error("Erro ao listar gráfico de abastecimentos da prefeitura: " . $e->getMessage());
+        return null;
+    }
+  }
+
 }
