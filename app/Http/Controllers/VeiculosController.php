@@ -50,7 +50,7 @@ class VeiculosController extends Controller
             $anoAtual = now()->year;
             $anoMinimo = $anoAtual - 60;
             $anoMaximo = $anoAtual + 1;
-            dd($request);
+            // dd($request);
 
 
             $dados = $request->validate(
@@ -76,7 +76,8 @@ class VeiculosController extends Controller
                     'secretarias_ids.required' => 'O campo Secretaria é obrigatório.',
                     'placa.required' => 'O campo Placa é obrigatório.',
                     'modelo.string' => 'O campo Modelo deve ser uma string.',
-                    'modelo.regex' => 'O campo Modelo não pode ser apenas caracteres.'
+                    'modelo.regex' => 'O campo Modelo não pode ser apenas caracteres.',
+                    'diesel_combustivel.boolean' => 'O campo precisa ser do tipo booleano.'
                 ]
             );
             $dados['quantidade_litros'] = (int) $dados['quantidade_litros'];

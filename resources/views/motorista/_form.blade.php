@@ -8,6 +8,9 @@
 @stop
 
 @section('content')
+<div class="alert alert-info alert-dismissible fade show position-relative top-3 end-0 mt-3" role="alert">
+        <i class="fas fa-info-circle"></i> <strong>Aviso:</strong> Antes de criar um motorista, certifique que uma secretaria foi criada.
+    </div>
 
     <div class="card">
         <div class="card-body">

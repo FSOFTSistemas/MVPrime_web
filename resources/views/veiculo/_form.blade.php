@@ -8,6 +8,9 @@
 @stop
 
 @section('content')
+<div class="alert alert-info alert-dismissible fade show position-relative top-3 end-0 mt-3" role="alert">
+        <i class="fas fa-info-circle"></i> <strong>Aviso:</strong> Antes de criar um motorista, certifique que uma secretaria foi criada.
+    </div>
     <div class="card">
         <div class="card-body">
             <form action="{{ route('veiculos.store') }}" method="POST" id="form-veiculo">
@@ -92,7 +95,7 @@
                 <div class="form-group row">
                   <label class="col-md-3 form-label d-block label-control">Veículo a Diesel?</label>
                   <div class="form-check form-switch">
-                      <input type="hidden" name="status" value="0">
+                      <input type="hidden" name="diesel_combustivel" value="0">
                       <input
                           class="form-check-input"
                           type="checkbox"
