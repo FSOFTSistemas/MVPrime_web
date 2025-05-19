@@ -67,6 +67,20 @@ use Carbon\Carbon;
                     </div>
 
                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label">Secretaria</label>
+                            <select class="form-control select2" name="secretaria_id" required>
+                                @foreach ($secretarias ?? [] as $secretaria)
+                                <option value="{{ $secretaria['id'] }}" {{ $abastecimento['secretaria_id'] == $secretaria['id'] ? 'selected' : '' }}>
+                                        {{ $secretaria['nome'] }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                    </div>
+
+                    <div class="row">
                         <div class="mb-3 col-md-6">
                             <label class="form-label">Km Atual</label>
                             <input type="text" class="form-control" name="km_atual" value="{{ $abastecimento['km_atual'] }}" required>
