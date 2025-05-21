@@ -42,7 +42,7 @@ class HomeController extends Controller
                 $totalUsuarios = $dadosMaster['total_usuarios'];
                 $totalAbastecimento = number_format($dadosMaster['total_abastecimento_hoje'], 2, ',', '.');
                 $dadosCombustivel = $this->homeService->graficoCombustivelMaster($prefeitura_id);
-                $graficoCombustivel = $dadosCombustivel['grafico'];
+                $graficoCombustivel = $dadosCombustivel['grafico'] ?? 0;
                 // dd($graficoCombustivel);
 
 
